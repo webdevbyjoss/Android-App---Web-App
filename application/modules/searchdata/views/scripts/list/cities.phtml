@@ -1,0 +1,4 @@
+<option value="">[ <?php echo $this->T('select-city'); ?> ]</option>
+<?php foreach ($this->cities as $region): ?>
+<option value="<?php echo $this->url(array('city' => ($this->getLocale() == 'uk') ? $region->seo_name_uk : $region->seo_name), 'city')  ?>"><?php echo ($this->getLocale() == 'uk') ? $region->name_uk : $region->name ?></option>
+<?php endforeach; ?>

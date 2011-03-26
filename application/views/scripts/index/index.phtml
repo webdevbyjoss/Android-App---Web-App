@@ -1,0 +1,45 @@
+<?php
+// client side action specific functionality
+$this->headScript()->appendFile('/js/specialists.js');
+
+// load custom title
+$this->headTitle($this->T('site-window-title'));
+
+$this->headMeta()
+	->setName('description', $this->T('meta-description'))
+	->setName('keywords', $this->T('meta-keywords'));
+
+// get locale to use for interface
+$loc = $this->getLocale();
+
+?>
+<div class="city-finder">
+<h1><?php echo $this->T('in-what-city-you-are-right-now'); ?></h1>
+
+<div><?php echo $this->T('in-what-city-you-are-right-now-description'); ?></div>
+
+<select id="city-finder-regions" class="finder-selectbox-control">
+<option value="0">[ <?php echo $this->T('select-country-region'); ?> ]</option>
+<?php foreach ($this->regions as $region): ?>
+<option value="<?php echo $region->region_id ?>"><?php echo ($loc == 'uk') ? $region->name_uk : $region->name ?></option>
+<?php endforeach; ?>
+</select>
+<select id="city-finder-city" class="finder-selectbox-control hidden-element"></select>
+</div>
+
+<?php if ($this->lastItems): ?>
+<h1>Останні надходження</h1>
+
+<div id="services-list">
+<?php 
+foreach ($this->lastItems as $item):
+// get locale to use for interface
+// TODO: add multilingular cities names
+$citySeoTitle = $item['city_seo_name'];
+$cityTitle = $item['name'];
+?>
+<a title="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" class="thumb" href="<?php echo $this->url(array('city' => $citySeoTitle, 'problem' => $item['seo_name'], 'id' => $item['id']) ,'city_problem_item'); ?>">
+<img alt="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" src="/images/problem/thumb/<?php echo $item['photo'] ?>" /></a>
+<?php endforeach; ?>
+</div>
+<?php endif; ?>

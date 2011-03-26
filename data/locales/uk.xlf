@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:iws="http://www.idiominc.com/ws/asset">
+<file original="index.html" source-language="ru" target-language="uk" tool="cli">
+<body>
+	<trans-unit id="site-name">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">Повідом Владу</target>
+	</trans-unit>
+	<trans-unit id="meta-description">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">повідомити владу про проблеми які бачиш на вулиці</target>
+	</trans-unit>
+	<trans-unit id="meta-keywords">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">ями на дорогах, відкриті каналізаційні люки, переповнені смітники</target>
+	</trans-unit>
+	<trans-unit id="slogan">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">допоможемо владі зробити Україну кращою</target>
+	</trans-unit>
+	<trans-unit id="logo">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">Логотип</target>
+	</trans-unit>
+	<trans-unit id="beta-version">
+		<source xml:lang="ru">сайт на стадии тестирования</source>
+		<target xml:lang="uk">сайт на етапі тестування</target>
+	</trans-unit>
+	<trans-unit id="beta-welcome-text">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">&lt;h2&gt;Повідом владу – база даних інфраструктурних проблем України &lt;/h2&gt;&lt;p&gt;
+		Цей сайт для тих хто хоче взяти участь в створенні  єдиної всеукраїнської бази даних інфраструктурних проблем України з метою їх активного висвітлення та вирішення. 
+		Приєднуйтеся до нас, завантажуйте програму для свого мобільного, фотографуйте проблемні місця та надсилайте анонімні скарги на наш сайт.
+			&lt;/p&gt;</target>
+	</trans-unit>
+	<trans-unit id="error-page-header">
+		<source xml:lang="ru">Произошла ошибка</source>
+		<target xml:lang="uk">Виникла помилка</target>
+	</trans-unit>
+	<trans-unit id="error">
+		<source xml:lang="ru">Ошибка</source>
+		<target xml:lang="uk">Помилка</target>
+	</trans-unit>
+	<trans-unit id="page-not-found">
+		<source xml:lang="ru">Страница не найдена</source>
+		<target xml:lang="uk">Сторінку не знайдено</target>
+	</trans-unit>
+	<trans-unit id="application-internal-error">
+		<source xml:lang="ru">Внутренняя ошибка приложения</source>
+		<target xml:lang="uk">Внутрішня помилка застосунку</target>
+	</trans-unit>
+	<trans-unit id="page-has-been-moved">
+		<source xml:lang="ru">Возможно, адрес страницы изменился или ссылка, по которой вы кликнули, неправильная.</source>
+		<target xml:lang="uk">Можливо, сторінка змінила адресу або посилання, яким ви скористалися, є неправильним.</target>
+	</trans-unit>
+	<trans-unit id="try-visit-the-following-pages">
+		<source xml:lang="ru">Попробуйте перейти на следующие страницы</source>
+		<target xml:lang="uk">Спробуйте відвідати наступні сторінки</target>
+	</trans-unit>
+	<trans-unit id="home-page">
+		<source xml:lang="ru">Гравная страница</source>
+		<target xml:lang="uk">Головна сторінка</target>
+	</trans-unit>
+	<trans-unit id="login-page">
+		<source xml:lang="ru">Страница входа</source>
+		<target xml:lang="uk">Сторінка входу</target>
+	</trans-unit>
+	<trans-unit id="interface-languages-available">
+		<source xml:lang="ru">языки интерфейса</source>
+		<target xml:lang="uk">мови інтерфейсу</target>
+	</trans-unit>
+	<trans-unit id="send-us-your-feedback">
+		<source xml:lang="ru">оставьте нам свой отзыв</source>
+		<target xml:lang="uk">надішліть нам свій відгук</target>
+	</trans-unit>
+	<trans-unit id="feedback">
+		<source xml:lang="ru">Оставить отзыв</source>
+		<target xml:lang="uk">Залишити відгук</target>
+	</trans-unit>
+	<trans-unit id="Your-opinion-is-important-for-us">
+		<source xml:lang="ru">Ваше мнение важно для нас</source>
+		<target xml:lang="uk">Ваша думка важлива для нас</target>
+	</trans-unit>
+	<trans-unit id="thanks-for-your-feedback">
+		<source xml:lang="ru">Сообщение отправлено! Спасибо за ваш отзыв.</source>
+		<target xml:lang="uk">Повідомлення надіслано! Дякуємо за ваш відгук.</target>
+	</trans-unit>
+	<trans-unit id="site-window-title">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">База даних інфраструктурних проблем України</target>
+	</trans-unit>
+	<trans-unit id="help">
+		<source xml:lang="ru">Cправка</source>
+		<target xml:lang="uk">Довідка</target>
+	</trans-unit>
+	<trans-unit id="search">
+		<source xml:lang="ru">Поиск</source>
+		<target xml:lang="uk">Пошук</target>
+	</trans-unit>
+	<trans-unit id="login">
+		<source xml:lang="ru">Вход</source>
+		<target xml:lang="uk">Вхід</target>
+	</trans-unit>
+	<trans-unit id="access-denied">
+		<source xml:lang="ru">Доступ запрещен</source>
+		<target xml:lang="uk">Доступ заборонено</target>
+	</trans-unit>
+	<trans-unit id="access-denied-explained">
+		<source xml:lang="ru">У вас нет прав на доступ к даной странице</source>
+		<target xml:lang="uk">у вас немає права на доступ до даної сторінки</target>
+	</trans-unit>
+	<trans-unit id="back">
+		<source xml:lang="ru">назад</source>
+		<target xml:lang="uk">назад</target>
+	</trans-unit>
+	<trans-unit id="forward">
+		<source xml:lang="ru">вперед</source>
+		<target xml:lang="uk">вперед</target>
+	</trans-unit>
+	<trans-unit id="pages">
+		<source xml:lang="ru">Страницы:</source>
+		<target xml:lang="uk">Cторінки:</target>
+	</trans-unit>
+	<trans-unit id="no-search-results">
+		<source xml:lang="ru">По вашему запросу результатов не найдено</source>
+		<target xml:lang="uk">За вашим запитом не знайдено жодного результату</target>
+	</trans-unit>
+	<trans-unit id="search-form-usage">
+		<source xml:lang="ru">Использование поиска</source>
+		<target xml:lang="uk">Використання сайту</target>
+	</trans-unit>
+	<trans-unit id="links">
+		<source xml:lang="ru">Ссылки</source>
+		<target xml:lang="uk">Посилання</target>
+	</trans-unit>
+	<trans-unit id="articles">
+		<source xml:lang="ru">Статьи</source>
+		<target xml:lang="uk">Статті</target>
+	</trans-unit>
+	<trans-unit id="catalog">
+		<source xml:lang="ru">Каталог</source>
+		<target xml:lang="uk">Каталог</target>
+	</trans-unit>
+	<trans-unit id="news">
+		<source xml:lang="ru">новости</source>
+		<target xml:lang="uk">новини</target>
+	</trans-unit>
+	<trans-unit id="terms-and-conditions">
+		<source xml:lang="ru">Условия предоставления услуг</source>
+		<target xml:lang="uk">Умови надання послуг</target>
+	</trans-unit>
+	<trans-unit id="for-developers">
+		<source xml:lang="ru">разработчикам</source>
+		<target xml:lang="uk">розробникам</target>
+	</trans-unit>
+	<trans-unit id="contacts">
+		<source xml:lang="ru">контакты</source>
+		<target xml:lang="uk">контакти</target>
+	</trans-unit>
+	<trans-unit id="about-us">
+		<source xml:lang="ru">о проекте</source>
+		<target xml:lang="uk">про проект</target>
+	</trans-unit>
+	<trans-unit id="did-you-mean">
+		<source xml:lang="ru">Воможно, имелось в виду:</source>
+		<target xml:lang="uk">Можливо, малося на увазі:</target>
+	</trans-unit>
+	<trans-unit id="query-is-incorrect">
+		<source xml:lang="ru">Введите интересующий вас вид услуг</source>
+		<target xml:lang="uk">Введіть вид послуг, що вас цікавить</target>
+	</trans-unit>
+	<trans-unit id="questions-answers">
+		<source xml:lang="ru">Вопросы и ответы</source>
+		<target xml:lang="uk">Питання та відповіді</target>
+	</trans-unit>
+	<trans-unit id="under-construction">
+		<source xml:lang="ru">Раздел в разработке. Очень скоро он будет готов к запуску</source>
+		<target xml:lang="uk">Ми працюємо над цим розділом, незабаром він буде готовий до запуску</target>
+	</trans-unit>
+	<trans-unit id="under-construction-email">
+		<source xml:lang="ru">Сейчас сайт в активной разработке и регистрация еще не доступна.
+		Оставте свой адрес електронной почты и мы сообщим Вам когда регистрация будет открыта.</source>
+		<target xml:lang="uk">Наразі сайт знаходиться в активній розробці, тож поки реєстрація недоступна.<br /> 
+		Залиште свою електронну адресу, і ми повідомимо Вам, коли реєстрацію буде відкрито.</target>
+	</trans-unit>
+	<trans-unit id="example-email">
+		<source xml:lang="ru">пример: alexandrtest@mail.ru</source>
+		<target xml:lang="uk">приклад: alexandrtest@mail.ru</target>
+	</trans-unit>
+	<trans-unit id="ff-title">
+		<source xml:lang="ru">Спасибо, что помогаете нам стать лучше!</source>
+		<target xml:lang="uk">Дякуємо, що допомагаєте нам стати кращими!</target>
+	</trans-unit>
+	<trans-unit id="ff-select-option">
+		<source xml:lang="ru">Выберите пункт, наиболее точно характеризующий Ваше сообщение</source>
+		<target xml:lang="uk">Виберіть пункт, що найбільш точно характеризує Ваше повідомлення</target>
+	</trans-unit>
+	<trans-unit id="ff-option-errors">
+		<source xml:lang="ru">что то не работает</source>
+		<target xml:lang="uk">щось не працює</target>
+	</trans-unit>
+	<trans-unit id="ff-option-search-fail">
+		<source xml:lang="ru">не удалось найти нужную информацию</source>
+		<target xml:lang="uk">не вдалося знайти потрібну інформацію</target>
+	</trans-unit>
+	<trans-unit id="ff-option-too-slow">
+		<source xml:lang="ru">сайт работает слишком медленно</source>
+		<target xml:lang="uk">сайт працює надто повільно</target>
+	</trans-unit>
+	<trans-unit id="ff-option-make-better">
+		<source xml:lang="ru">совет по улучшению ресурса</source>
+		<target xml:lang="uk">порада щодо покращення ресурсу</target>
+	</trans-unit>
+	<trans-unit id="ff-option-partnership">
+		<source xml:lang="ru">предлагаю сотрудничество с моим сайтом или компанией</source>
+		<target xml:lang="uk">пропоную співпрацю з моїм сайтом або компанією</target>
+	</trans-unit>
+	<trans-unit id="ff-option-affiliate">
+		<source xml:lang="ru">хочу быть вашим представителем в своем городе</source>
+		<target xml:lang="uk">хочу бути вашим представником у своєму місті</target>
+	</trans-unit>
+	<trans-unit id="ff-dont-forget">
+		<source xml:lang="ru">Укажите електронный адрес для связи с Вами (<b>не обьязательно</b>)</source>
+		<target xml:lang="uk">Вкажіть електронну адресу для зв’язку з Вами (<b>не обов’язково</b>)</target>
+	</trans-unit>
+	<trans-unit id="ff-send-message">
+		<source xml:lang="ru">отправить сообщение</source>
+		<target xml:lang="uk">надіслати повідомлення</target>
+	</trans-unit>
+	<trans-unit id="ff-not-now">
+		<source xml:lang="ru">не сейчас</source>
+		<target xml:lang="uk">не зараз</target>
+	</trans-unit>
+	<trans-unit id="url-city">
+		<source xml:lang="ru">город</source>
+		<target xml:lang="uk">місто</target>
+	</trans-unit>
+	<trans-unit id="select-country-region">
+		<source xml:lang="ru">выберите область</source>
+		<target xml:lang="uk">виберіть область</target>
+	</trans-unit>
+	<trans-unit id="select-city">
+		<source xml:lang="ru">выберите город</source>
+		<target xml:lang="uk">виберіть місто</target>
+	</trans-unit>
+	<trans-unit id="in-what-city-you-are-right-now">
+		<source xml:lang="ru">Какой город Вас интересует?</source>
+		<target xml:lang="uk">З якого ви міста?</target>
+	</trans-unit>
+	<trans-unit id="in-what-city-you-are-right-now-description">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">Виберіть місто для перегляду переліку скарг та проблем в інфраструктурі</target>
+	</trans-unit>
+	<trans-unit id="specialists">
+		<source xml:lang="ru">Специалисты</source>
+		<target xml:lang="uk">Спеціалісти</target>
+	</trans-unit>
+	<trans-unit id="what-type-of-service-in-city">
+		<source xml:lang="ru"> %s</source>
+		<target xml:lang="uk">Перелік проблем в місті %s</target>
+	</trans-unit>
+	<trans-unit id="specialists-in-city">
+		<source xml:lang="ru">Перелік проблем в місті %s</source>
+		<target xml:lang="uk">Будівництво та ремонт в місті %s</target>
+	</trans-unit>
+	<trans-unit id="services-in-city">
+		<source xml:lang="ru">%s в городе %s</source>
+		<target xml:lang="uk">%s в місті %s</target>
+	</trans-unit>
+	<trans-unit id="country-administrative-districts">
+		<source xml:lang="ru">Административные области Украины</source>
+		<target xml:lang="uk">Адміністративні області України</target>
+	</trans-unit>
+	<trans-unit id="signup-signin">
+		<source xml:lang="ru">Вход / Регистрация</source>
+		<target xml:lang="uk">Вхід / Реєстрація</target>
+	</trans-unit>
+	<trans-unit id="subscribed-successfully">
+		<source xml:lang="ru">Подписка завершена!</source>
+		<target xml:lang="uk">Підписку виконано!</target>
+	</trans-unit>
+	<trans-unit id="subscribed-successfully-details-message">
+		<source xml:lang="ru">Ваш електронный адрес <b>%s</b> успешно подписан на новости от нашего сайта</source>
+		<target xml:lang="uk">Вашу електронну адресу <b>%s</b> успішно підписано на новини від нашого сайту</target>
+	</trans-unit>
+	<trans-unit id="return-to-city-page">
+		<source xml:lang="ru">возврат на страницу города %s</source>
+		<target xml:lang="uk">повернутися на сторінку міста %s</target>
+	</trans-unit>
+	<trans-unit id="no-searrch-results-description">
+		<source xml:lang="ru">К сожалению, в городе %s не зарегистрировано ни одного специалиста по такому виду деятельности как %s. 
+			Попробуйте разширить регион поиска, включив ближайшые города и областные центры:</source>
+		<target xml:lang="uk">На жаль, в місті %s не зареєстровано жодного спеціаліста з такого виду діяльності як %s.
+			Спробуйте розширити регіон пошуку, включивши найближчі міста та областні центри:</target>
+	</trans-unit>
+	<trans-unit id="no-search-results-with-extras-description">
+		<source xml:lang="ru">К сожалению, в отмеченых городах не зарегистрировано ни одного специалиста по такому виду деятельности как %s.
+Попробуйте разширить регион поиска, включив дополнительные города или областные центры, в которых есть квалифицированые специалисты:</source>
+		<target xml:lang="uk">На жаль, у вибраних містах не зареєстровано жодного спеціаліста з такого виду діяльності як %s.
+Спробуйте розширити регіон пошуку, включивши додаткові міста чи областні центри, в яких знайдете кваліфікованих спеціалістів:</target>
+	</trans-unit>
+	<trans-unit id="is-that-your-specialization">
+		<source xml:lang="ru">%s – это ваша специализация?</source>
+		<target xml:lang="uk">%s – це ваша спеціалізація?</target>
+	</trans-unit>
+	<trans-unit id="is-that-your-specialization-description">
+		<source xml:lang="ru">Тогда &lt;a href="%s">зарегистрируйтесь&lt;/a>, как специалист по виду деятельности %s,
+и получите возможность найти новых клиентов из своего региона через наш сайт и сеть партнерских сайтов.</source>
+		<target xml:lang="uk">Тоді &lt;a href="%s">зареєструйтеся&lt;/a>, як спеціаліст з виду діяльності %s,
+та отримайте можливість знайти нових клієнтів зі свого регіону через наш сайт і мережу партнерських сайтів.</target>
+	</trans-unit>
+	<trans-unit id="closest-administrative-centers">
+		<source xml:lang="ru">ближайшие областные центры</source>
+		<target xml:lang="uk">найближчі областні центри</target>
+	</trans-unit>
+	<trans-unit id="closest-towns">
+		<source xml:lang="ru">ближайшие города</source>
+		<target xml:lang="uk">найближчі міста</target>
+	</trans-unit>
+	<trans-unit id="change-city">
+		<source xml:lang="ru">сменить город</source>
+		<target xml:lang="uk">змінити місто</target>
+	</trans-unit>
+	
+	<trans-unit id="report">
+		<source xml:lang="ru">жалоба</source>
+		<target xml:lang="uk">скарга</target>
+	</trans-unit>
+	<trans-unit id="report-categories">
+		<source xml:lang="ru">категории жалоб</source>
+		<target xml:lang="uk">категорії скарг</target>
+	</trans-unit>
+	
+</body>
+</file>
+</xliff>

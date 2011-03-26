@@ -1,0 +1,43 @@
+<?php
+// client side action specific functionality
+$this->headScript()->appendFile('/js/city.js');
+
+// get locale to use for interface
+$loc = $this->getLocale();
+$cityTitle = ($loc == 'uk') ? $this->city->name_uk : $this->city->name;
+$citySeoTitle = ($loc == 'uk') ? $this->city->seo_name_uk : $this->city->seo_name;
+
+// load custom title
+$this->headTitle($this->T('what-type-of-service-in-city', $cityTitle));
+
+$this->headMeta()->setName('description', $this->T('what-type-of-service-in-city', $cityTitle))
+		->setName('keywords', $cityTitle . ', ' . $this->T('meta-keywords'));
+
+$this->setBreadcrumbs(array(
+	'Головна' => '/',
+	'Проблеми міста ' . $cityTitle  => '',
+));
+
+?>
+<div class="services-finder">
+<h1><?php echo $this->T('what-type-of-service-in-city', $cityTitle); ?> </h1>
+<?php /* ?>
+<input type="text" id="services-finder-select-control" class="finder-select-control" />
+<?php */ ?>
+
+<?php if ($this->data->count() > 0): ?>
+
+<div id="services-list">
+<?php foreach ($this->data as $item): ?>
+<a title="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>"  class="thumb" href="<?php echo $this->url(array('city' => $citySeoTitle, 'problem' => $item['seo_name'], 'id' => $item['id']) ,'city_problem_item'); ?>">
+<img alt="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" src="/images/problem/thumb/<?php echo $item['photo'] ?>" /></a>
+<?php endforeach; ?>
+</div>
+
+<?php echo $this->paginationControl($this->data, 'Sliding', 'search_pagination_control.phtml'); ?>
+
+<?php else: ?>
+<div>Для міста <?php echo $cityTitle ?> поки жодної проблеми не додано.</div>
+<?php endif; ?>
+
+</div>

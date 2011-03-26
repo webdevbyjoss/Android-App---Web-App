@@ -1,0 +1,50 @@
+<div id="search-panel-main" class="search-panel">
+<div class="search-form-column-city">
+<div class="item-title-main-block">
+<span class="item-title-main"><?php echo ($this->getLocale() == 'uk') ? $this->city->name_uk : $this->city->name ?></span>
+<span class="edit-city">[ <a href="/"><?php echo $this->T('change-city') ?></a> ]</span>
+</div>
+<div class="label"><?php echo $this->T('report-categories');?></div>
+
+<?php if (empty($this->problem)): ?>
+<div class="item-element">
+	<span class="item-title">Всі категорії</span>
+	<?php /* ?><span class="label">10 скарг</span> <?php */ ?>
+</div>
+
+	<?php foreach ($this->categories as $cat): ?>
+	<div class="item-element">
+		<a href="<?php echo $this->url(array('city' => $this->city->seo_name_uk, 'problem' => $cat->seo_name),'city_problem') ?>" 
+		class="item-title"><?php echo $cat->name ?></a>
+	<?php /* ?><span class="label">10 скарг</span><?php */ ?>
+	</div>
+	<?php endforeach; ?>
+	
+
+<?php else: ?>
+<div class="item-element">
+	<a href="<?php echo $this->url(array('city' => $this->city->seo_name_uk),'city') ?>" class="item-title">Всі категорії</a>
+	<?php /* ?><span class="label">10 скарг</span> <?php */ ?>
+</div>
+
+
+	<?php foreach ($this->categories as $cat): ?>
+	<?php if ($this->problem->id == $cat->id): ?>
+	<div class="item-element">
+		<span class="item-title"><?php echo $cat->name ?></span>
+	<?php /* ?><span class="label">10 скарг</span><?php */ ?>
+	</div>
+	<?php else: ?>
+	<div class="item-element">
+		<a href="<?php echo $this->url(array('city' => $this->city->seo_name_uk, 'problem' => $cat->seo_name),'city_problem') ?>" 
+		class="item-title"><?php echo $cat->name ?></a>
+	<?php /* ?><span class="label">10 скарг</span><?php */ ?>
+	</div>
+	<?php endif; ?>
+	<?php endforeach; ?>
+
+
+
+<?php endif; ?>
+</div>
+</div>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="<?php echo $this->getLocale() ?>">
+<head>
+<?php echo $this->headMeta(); ?>
+
+<?php echo $this->headTitle($this->T('site-name'))->setSeparator(' — '); ?>
+<meta charset="utf-8" />
+<link rel="icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<?php echo $this->headLink()->prependStylesheet('/css/layout.css')
+                              ->prependStylesheet('/css/search-form.css') ?>
+<?php if (APPLICATION_ENV == 'production'): ?>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+<?php /* ?>
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-15610072-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<?php */ ?>
+<?php else:
+  	$this->headScript()
+  	->prependFile('/js/jquery.tmpl.min.js')
+	->prependFile('/js/jquery-1.4.2.min.js')
+  	;
+  endif; ?>
+<?php echo $this->headScript()
+  	->appendFile('/js/layout.js')
+  	->appendFile('/js/jquery.typing-0.2.0.min.js')
+  	->appendFile('/js/jquery.form.js')
+  	->appendFile('/js/autoresize.jquery.min.js')
+  	;
+  	?>
+<script> var locale = "<?php echo $this->getLocale() ?>"; </script>
+<script type="text/javascript" src="http://userapi.com/js/api/openapi.js?22"></script>
+</head>
+<body>
+<script type="text/javascript">VK.init({apiId: 2224938});</script>
+<div id="page"><div id="page-inner">
+<div id="top-menu-right">
+	
+</div>
+
+<div id="header">
+<div id="logo">
+<?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'index' && $this->getActionName() == 'index'): ?>
+<img alt="<?php echo $this->T('logo'); ?> повідом владу" src="<?php echo $this->getImagesUrl() . '/report-logo.png' ?>" />
+<div id="header-site-name">Повідом Владу</div>
+<?php else: ?>
+<a href="/"><img alt="<?php echo $this->T('logo'); ?> повідом владу" src="<?php echo $this->getImagesUrl() . '/report-logo.png' ?>" /></a>
+<div id="header-site-name"><a href="/">Повідом Владу</a></div>
+<?php endif; ?>
+<div id="beta-mark"><img alt="<?php echo $this->T('beta-version'); ?>" src="<?php echo $this->getImagesUrl() . 'beta.png'; ?>" /></div>
+</div>
+<div id="top-menu">
+<div id="top-menu-left">
+	<a <?php if ($this->getModuleName() == 'default' && ($this->getControllerName() == 'index' || $this->getControllerName() == 'catalog')): ?>class="active"<?php endif; ?> href="/">Перелік проблем</a>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'links'): ?>class="active"<?php endif; ?> href="/links">Програма для мобільного</a>
+	<?php $this->renderSubNavigation(); ?>
+	</div>
+</div>
+<?php /* ?>
+<div id="header-search-form" class="header-search-form-wide">
+<div id="header-search-form-block">
+</div>
+</div>
+<?php */ ?>
+</div>
+<div id="main">
+<div id="main-inner">
+<div id="page-content">
+<?php echo $this->renderBreadcrumbs(); ?>
+<?php echo $this->layout()->content ?>
+</div>
+<div id="panel">
+	<?php if (!empty($this->city)):
+		echo $this->partial('city-panel.phtml', array(
+			  'city' => $this->city
+			, 'categories' => $this->categories
+			, 'category_id' => $this->category_id
+			, 'problem' => $this->problem
+		));
+	endif; ?>
+	<?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'index'): ?>
+	<div class="search-panel">
+	<?php echo $this->T('beta-welcome-text') ?>
+	</div>
+	<?php endif; ?>
+	<?php /* ?>
+	<div id="search-panel-extra" class="search-panel">
+		<div class="label">останні обговорення</div>
+		<div><a href="">як поставити штукатурку?</a></div>
+		<div><a href="">зняти пластикові вікна?</a></div>
+		<div><a href="">вибираємо свердло</a></div>
+		<div><a href="">кришиться цегла</a></div>
+		<div><a href="">як правильно підібрати колір ламінату?</a></div>
+		<div><a href="">як поставити штукатурку?</a></div>
+		<div><a href="">як поставити штукатурку?</a></div>
+	</div>
+	<div id="search-panel-info" class="search-panel">
+		<div class="label">останні пропозиції роботи</div>
+		<div><a href="">шукаємо грущиків для цікавої роботи</a></div>
+		<div><a href="">потрібні різноробочі</a></div>
+	</div>
+	<?php */ ?>
+	
+	
+	<div class="search-panel">
+		<h2>Поділіться інформацією з друзями</h2>
+		<div id="vk_like"></div>
+		<script type="text/javascript">
+		VK.Widgets.Like("vk_like", {type: "full", verb: 1});
+		</script>
+	</div>
+
+</div>
+</div>
+</div>
+<div id="footer">
+	<div id="footer-menu">
+	<?php /* ?>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'about-us'): ?>class="active"<?php endif; ?> href="<?php echo $this->url(
+	array(
+		'lang' => $this->getLocale(),
+		'controller' => 'about-us',
+		'action' => 'index',
+		'module' => 'default',
+	)
+	,'default'); ?>"><?php echo $this->T('about-us'); ?></a>
+	<?php */ ?>
+	<?php /* ?>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'news'): ?>class="active"<?php endif; ?> href="<?php echo $this->url(
+	array(
+		'lang' => $this->getLocale(),
+		'controller' => 'news',
+		'action' => 'index',
+		'module' => 'default',
+	)
+	,'default'); ?>"><?php echo $this->T('news'); ?></a>
+	<?php */ ?>
+	
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'terms-and-conditions'): ?>class="active"<?php endif; ?> href="/terms-and-conditions"><?php echo $this->T('terms-and-conditions'); ?></a>
+	
+	<?php /* ?>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'for-developers'): ?>class="active"<?php endif; ?> href="<?php echo $this->url(
+	array(
+		'lang' => $this->getLocale(),
+		'controller' => 'for-developers',
+		'action' => 'index',
+		'module' => 'default',
+	)
+	,'default'); ?>"><?php echo $this->T('for-developers'); ?></a>
+	<?php */ ?>
+	<?php /* ?>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'contacts'): ?>class="active"<?php endif; ?> href="<?php echo $this->url(
+	array(
+		'lang' => $this->getLocale(),
+		'controller' => 'contacts',
+		'action' => 'index',
+		'module' => 'default',
+	)
+	,'default'); ?>"><?php echo $this->T('contacts'); ?></a>
+	<?php */ ?>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'help'): ?>class="active"<?php endif; ?> href="/help"><?php echo $this->T('help'); ?></a>
+	</div>
+	<div id="copyright">&copy; 2011 Повідом Владу</div>
+</div>
+<?php echo $this->feedbackForm(); ?>
+</body>
+</html>

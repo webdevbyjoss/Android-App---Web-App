@@ -1,0 +1,18 @@
+<?php $this->headTitle()->prepend($this->T('access-denied')); ?>
+
+<h1><?php echo $this->T('error-page-header') ?></h1>
+
+<h2><?php echo $this->T('access-denied'); ?></h2>
+<div class="message error">
+<?php echo $this->T('access-denied-explained'); ?>
+</div>
+
+<?php /* TODO: add here the list of suggestions what to do if you received the error page,
+for example - login (if user is not loged in) or contact site administration (click here for contact form),
+or visit the following list of pages 1,2,3,.. */ ?>
+
+<?php if (DEBUG_ENABLE): ?>
+<h6>Role: "<?php echo $this->role ?>"</h6>
+<h6>Resource: "<?php echo $this->resource ?>"</h6>
+<pre><?php echo $this->stack_trace ?></pre>
+<?php endif ?>
