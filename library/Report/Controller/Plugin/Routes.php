@@ -50,8 +50,8 @@ class Report_Controller_Plugin_Routes extends Zend_Controller_Plugin_Abstract
         $router->addRoute('city_problem', $cityServiceRoute);
 
         
-        // http://domain-name.com/город/днепропетровск/канализация/
-        // http://domain-name.com/місто/заліщики/ями-на-дорогах/
+        // http://domain-name.com/город/днепропетровск/канализация/отчет/235
+        // http://domain-name.com/місто/заліщики/ями-на-дорогах/звіт/235
         $cityServiceRoute = new Zend_Controller_Router_Route(
         	'@url-city/:city/:problem/@report/:id',
             	array(

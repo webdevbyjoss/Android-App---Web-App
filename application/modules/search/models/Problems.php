@@ -53,32 +53,45 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	 * @param string $lat
 	 * @return Zend_Db_Table_Row
 	 */
-	public function createItem($message, $address, $lng, $lat, $type)
+	public function createItem($message, $lng, $lat, $type)
 	{
+		// validate message
+		if (strlen($message) < 5) {
+			throw new Search_Model_ProblemsException('Message is too short. Should be at least 5 characters. Received: ' . $message);
+		}
+
+		// if coordinates are passed then lets try to recognize the city
+		if (empty($lng) || empty($lat) ){
+			throw new Search_Model_ProblemsException('Coordinates are empty. Received lng:' . $lng .' and lat:' . $lat );
+		}
+		
+		// try to recognize city
+		$Cities = new Searchdata_Model_Cities();
+		$currentCity = $Cities->getCityByCoords($lng, $lat);
+		
+		// throw exception if city wasn't recognized
+		if (empty($currentCity->city_id)) {
+			throw new Search_Model_ProblemsException('City not found. Received lng:' . $lng .' and lat:' . $lat);
+		}
+
 		$row = $this->createRow();
 		$row->msg = $message;
-		$row->address = $address;
 		$row->lng = $lng;
 		$row->lat = $lat;
 		$row->category_id = $type;
 		
-		// TODO: recognize city_id by coordinates
-		if (empty($lng) && empty($lat) && !empty($address)) {
-			// TODO: recognize city by address
-			
-		} elseif (!empty($lng) && !empty($lat)) {
-
-			// if coordinates are passed then lets try to recognize the city
-			$Cities = new Searchdata_Model_Cities();
-			$currentCity = $Cities->getCityByCoords($lng, $lat);
-			$row->city_id = $currentCity->city_id;
-			
-		}
+		$row->created = new Zend_Db_Expr('NOW()');
+		$row->updated = new Zend_Db_Expr('NOW()');
 		
-		// save recotd to generate item ID
+		$row->city_id = $currentCity->city_id;
+		
+		// save record to generate item ID
+		// we should begin transaction here to remove DB record if image upload fails 
+		$db = $this->getAdapter();
+		$db->beginTransaction();
 		$row->save();
-
-		// this is the template we use to name photos
+		
+		// name photos
 		$filename = $row->id. '.jpg';
 		$filepath = realpath(APPLICATION_PATH . '/../public_html/images/problem');
 		$imageFile = $filepath . '/' . $filename;
@@ -98,15 +111,23 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 		
 		if ($res === false) {
 			$messages = $upload->getMessages();
-			var_dump($messages);
+			$db->rollBack();
+			throw new Search_Model_ProblemsException('Error during file upload: ' . implode(' ', $messages));
 		} else {
-			
 			// generate thumbnail
-			$this->resizeThumb($imageFile, $thumbFile, 150, 150);
+			$res = $this->resizeThumb($imageFile, $thumbFile, 150, 150);
+			
+			// check if thumbnail were generated successfully
+			if (empty($res)) {
+				$db->rollBack();
+				throw new Search_Model_ProblemsException('Thumbs generation errors. Please contact support.');
+			}
+			
 			$row->photo = $filename;
 			$row->save();
 		}
 		
+		$db->commit();
 		return $row;
 	}
 	

@@ -1,1 +1,7 @@
-OK|http://povidom-vladu.org.ua<?php echo $this->url(array('city' => 'тернопіль', 'problem' => 'інші-скарги', 'id' => $this->id) ,'city_problem_item'); ?>
+<?php if (!empty($this->fail_message)): ?>
+FAIL: <?php echo $this->fail_message ?>
+<?php else: 
+
+?>
+OK|http://povidom-vladu.org.ua
+<?php endif;?>

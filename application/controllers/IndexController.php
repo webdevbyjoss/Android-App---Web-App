@@ -30,14 +30,24 @@ class IndexController extends Custom_Controller_Action
 		$mobileAppData = $this->_request->getPost();
 		
 		$Problems = new Search_Model_Problems();
-		$elem = $Problems->createItem(
-			$mobileAppData['msg'],
-			$mobileAppData['adr'],
-			$mobileAppData['long'], 
-			$mobileAppData['lat'],
-			$mobileAppData['type']
-		);
 		
-		$this->view->id = $elem->id;
+		try {
+
+			$elem = $Problems->createItem(
+				$mobileAppData['msg'],
+				$mobileAppData['long'], 
+				$mobileAppData['lat'],
+				$mobileAppData['type']
+			);
+			
+		} catch (Search_Model_ProblemsException $e) {
+			
+			$this->fail_message = $e->getMessage();
+			return;
+		}
+		
+		// connect to URL shorterer and generate beautifull short URL
+		// TODO: this should be moved to model level
+		$this->view->shortUrl = $this->view->url(array('city' => 'тернопіль', 'problem' => 'інші-скарги', 'id' => $elem->id) ,'city_problem_item');
    }
 }

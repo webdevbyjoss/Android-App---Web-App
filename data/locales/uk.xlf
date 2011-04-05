@@ -323,12 +323,12 @@
 	</trans-unit>
 	
 	<trans-unit id="report">
-		<source xml:lang="ru">жалоба</source>
-		<target xml:lang="uk">скарга</target>
+		<source xml:lang="ru">отчет</source>
+		<target xml:lang="uk">звіт</target>
 	</trans-unit>
 	<trans-unit id="report-categories">
-		<source xml:lang="ru">категории жалоб</source>
-		<target xml:lang="uk">категорії скарг</target>
+		<source xml:lang="ru">категории отчетов</source>
+		<target xml:lang="uk">категорії звітів</target>
 	</trans-unit>
 	
 </body>
