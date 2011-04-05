@@ -112,7 +112,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 		if ($res === false) {
 			$messages = $upload->getMessages();
 			$db->rollBack();
-			throw new Search_Model_ProblemsException('Error during file upload: ' . implode(' ', $messages));
+			throw new Search_Model_ProblemsException('Error during file upload.' . implode(' ', $messages));
 		} else {
 			// generate thumbnail
 			$res = $this->resizeThumb($imageFile, $thumbFile, 150, 150);

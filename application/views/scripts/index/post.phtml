@@ -1,7 +1,2 @@
-<?php if (!empty($this->fail_message)): ?>
-FAIL: <?php echo $this->fail_message ?>
-<?php else: 
-
-?>
-OK|http://povidom-vladu.org.ua
-<?php endif;?>
+<?php if (!empty($this->fail_message)): ?>FAIL: <?php echo $this->fail_message ?>
+<?php else: ?>OK|<?php echo $this->shortUrl ?><?php endif;?>

@@ -12,6 +12,7 @@ class IndexController extends Custom_Controller_Action
     {
 		$Regions = new Searchdata_Model_Regions();
 		// Ukraine has ID = 1
+		// TODO: move this outside of controller
 		$CountryCodeUkraine = 1;
 		$this->view->regions = $Regions->getItems($CountryCodeUkraine);
 		
@@ -27,27 +28,34 @@ class IndexController extends Custom_Controller_Action
     	/**
     	 * Save data to database and retrieve record ID
     	 */
-		$mobileAppData = $this->_request->getPost();
-		
+		$data = $this->_request->getPost();
 		$Problems = new Search_Model_Problems();
 		
 		try {
-
 			$elem = $Problems->createItem(
-				$mobileAppData['msg'],
-				$mobileAppData['long'], 
-				$mobileAppData['lat'],
-				$mobileAppData['type']
+				$data['msg'],
+				$data['long'], 
+				$data['lat'],
+				$data['type']
 			);
-			
 		} catch (Search_Model_ProblemsException $e) {
-			
-			$this->fail_message = $e->getMessage();
+			$this->view->fail_message = $e->getMessage();
 			return;
 		}
+
+		// get city and category information
+		$Cities = new Searchdata_Model_Cities();
+		$cityInfo = $Cities->find($elem->city_id)->current();
+
+		$Categories = new Searchdata_Model_Category();
+		$categoryInfo = $Categories->find($elem->category_id)->current();
 		
 		// connect to URL shorterer and generate beautifull short URL
 		// TODO: this should be moved to model level
-		$this->view->shortUrl = $this->view->url(array('city' => 'тернопіль', 'problem' => 'інші-скарги', 'id' => $elem->id) ,'city_problem_item');
+		$apiKeyGoogleShorter = 'AIzaSyBEIpKhCjmeYGR6SmYjXcW2WEzKu-Pwo6A';
+		$GooglShort = new Custom_GoogleShort($apiKeyGoogleShorter);
+		
+		$url = $this->view->absoluteUrl(array('city' => $cityInfo->seo_name_uk, 'problem' => $categoryInfo->seo_name, 'id' => $elem->id) ,'city_problem_item');
+		$this->view->shortUrl = $GooglShort->shorten($url);
    }
 }

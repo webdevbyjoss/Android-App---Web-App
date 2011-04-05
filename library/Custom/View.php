@@ -17,6 +17,21 @@ class Custom_View extends Zend_View
 	}
 	
 	/**
+	 * This function will generate absolute URL
+	 * 
+	 * @param array $urlOptions
+	 * @param $name
+	 * @param $reset
+	 */
+	public function absoluteUrl(array $urlOptions = array(), $name = null, $reset = false)
+	{
+		$server = Zend_Controller_Front::getInstance()->getRequest()->getServer();
+		$url = parent::url($urlOptions, $name, $reset);
+		
+		return strtolower(trim(array_shift(explode('/', $server['SERVER_PROTOCOL'])))) . '://' . $server['HTTP_HOST'] . $url;
+	}
+	
+	/**
 	 * Next two methods will add the sub-navigation functionality that will allow to add navigation URLs
 	 * to the line under the main navigation
 	 *
