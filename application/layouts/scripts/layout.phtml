@@ -12,10 +12,9 @@
 <?php if (APPLICATION_ENV == 'production'): ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
-<?php /* ?>
-<script>
+<script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-15610072-1']);
+  _gaq.push(['_setAccount', 'UA-22670858-1']);
   _gaq.push(['_trackPageview']);
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -23,7 +22,6 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
-<?php */ ?>
 <?php else:
   	$this->headScript()
   	->prependFile('/js/jquery.tmpl.min.js')
@@ -50,12 +48,13 @@
 <div id="header">
 <div id="logo">
 <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'index' && $this->getActionName() == 'index'): ?>
-<img alt="<?php echo $this->T('logo'); ?> повідом владу" src="<?php echo $this->getImagesUrl() . '/report-logo.png' ?>" />
-<div id="header-site-name">Повідом Владу</div>
+<img alt="<?php echo $this->T('logo'); ?> повідом владу" src="<?php echo $this->getImagesUrl() . 'report-logo.png' ?>" />
+<div id="header-site-name"><?php echo $this->T('site-name'); ?></div>
 <?php else: ?>
-<a href="/"><img alt="<?php echo $this->T('logo'); ?> повідом владу" src="<?php echo $this->getImagesUrl() . '/report-logo.png' ?>" /></a>
-<div id="header-site-name"><a href="/">Повідом Владу</a></div>
+<a href="/"><img alt="<?php echo $this->T('logo'); ?> повідом владу" src="<?php echo $this->getImagesUrl() . 'report-logo.png' ?>" /></a>
+<div id="header-site-name"><a href="/"><?php echo $this->T('site-name'); ?></a></div>
 <?php endif; ?>
+<div id="slogan"><?php echo $this->T('slogan'); ?></div>
 <div id="beta-mark"><img alt="<?php echo $this->T('beta-version'); ?>" src="<?php echo $this->getImagesUrl() . 'beta.png'; ?>" /></div>
 </div>
 <div id="top-menu">
@@ -109,7 +108,14 @@
 		<div><a href="">потрібні різноробочі</a></div>
 	</div>
 	<?php */ ?>
-	
+
+	<?php if (!empty($this->mapCoords)) {
+		echo $this->partial('google-map.phtml', array(
+			'lat' => $this->mapCoords['lat'],
+			'lng' => $this->mapCoords['lng'],
+			'label' => $this->mapCoords['label']
+		));
+	} ?>
 	
 	<div class="search-panel">
 		<h2>Поділіться інформацією з друзями</h2>
@@ -169,7 +175,7 @@
 	<?php */ ?>
 	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'help'): ?>class="active"<?php endif; ?> href="/help"><?php echo $this->T('help'); ?></a>
 	</div>
-	<div id="copyright">&copy; 2011 Повідом Владу</div>
+	<div id="copyright">&copy; 2011 <?php echo $this->T('site-name'); ?></div>
 </div>
 <?php echo $this->feedbackForm(); ?>
 </body>

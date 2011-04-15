@@ -54,7 +54,19 @@ class CatalogController extends Custom_Controller_Action
 		$this->view->citySeoTitle = $city['city']->seo_name_uk;
 		
 		$Problems = new Search_Model_Problems();
-		$this->view->problem = $Problems->find($itemId)->current();
+		$problem = $Problems->find($itemId)->current();
+		
+		if (empty($problem)) {
+			throw new Zend_Controller_Action_Exception('Report #' . $itemId . ' is not found', 404);
+		}
+
+		$this->view->mapCoords = array(
+			'lat' => $problem->lat,
+			'lng' => $problem->lng,
+			'label' => $problem->msg
+		);
+		
+		$this->view->problem = $problem;
 	}
 	
 	private function getCityInfo($cityTitle)

@@ -1,2 +1,20 @@
-<?php if (!empty($this->fail_message)): ?>FAIL: <?php echo $this->fail_message ?>
-<?php else: ?>OK|<?php echo $this->shortUrl ?><?php endif;?>
+<?php 
+
+if (!empty($this->fail_message)) { 
+
+	$responce = array(
+		'status' => 'FAIL',
+		'message' => $this->fail_message
+	);
+
+} else {
+
+	$responce = array(
+		'status' => 'OK',
+		'url' => $this->shortUrl,
+		'drophash' => $this->dropHash 
+	);
+
+}
+
+echo Zend_Json::encode($responce);

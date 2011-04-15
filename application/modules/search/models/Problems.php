@@ -4,6 +4,11 @@
  */
 class Search_Model_Problems extends Zend_Db_Table_Abstract
 {
+	/**
+	 * The ammount of minutes user is able to drop records from database
+	 */
+	const DROP_TIME = 15;
+	
 	protected $_name = 'problems';
 	
 	/**
@@ -53,7 +58,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	 * @param string $lat
 	 * @return Zend_Db_Table_Row
 	 */
-	public function createItem($message, $lng, $lat, $type)
+	public function createItem($message, $lng, $lat, $type, $dropHash)
 	{
 		// validate message
 		if (strlen($message) < 5) {
@@ -79,6 +84,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 		$row->lng = $lng;
 		$row->lat = $lat;
 		$row->category_id = $type;
+		$row->drophash = $dropHash;
 		
 		$row->created = new Zend_Db_Expr('NOW()');
 		$row->updated = new Zend_Db_Expr('NOW()');
@@ -129,6 +135,19 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 		
 		$db->commit();
 		return $row;
+	}
+	
+	/**
+	 * Drop
+	 * 
+	 * @param string $dropHash
+	 */
+	public function dropReport($dropHash)
+	{
+		$whereDrophash = $this->getAdapter()->quoteInto('drophash = ?', $dropHash);
+		$whereTime = 'created >= NOW() - INTERVAL ' . self::DROP_TIME . ' MINUTE';
+
+		$this->delete(array($whereDrophash, $whereTime));
 	}
 	
 	/**

@@ -30,19 +30,25 @@ class IndexController extends Custom_Controller_Action
     	 */
 		$data = $this->_request->getPost();
 		$Problems = new Search_Model_Problems();
+
+		// to allow user to drop the report during some time (~15 minutes) after it was added
+		// we should generate a hash value - a special password to drop records from database
+		$dropHash = md5(microtime());
+		$this->view->dropHash = $dropHash;
 		
 		try {
 			$elem = $Problems->createItem(
 				$data['msg'],
 				$data['long'], 
 				$data['lat'],
-				$data['type']
+				$data['type'],
+				$dropHash
 			);
 		} catch (Search_Model_ProblemsException $e) {
 			$this->view->fail_message = $e->getMessage();
 			return;
 		}
-
+		
 		// get city and category information
 		$Cities = new Searchdata_Model_Cities();
 		$cityInfo = $Cities->find($elem->city_id)->current();
@@ -58,4 +64,17 @@ class IndexController extends Custom_Controller_Action
 		$url = $this->view->absoluteUrl(array('city' => $cityInfo->seo_name_uk, 'problem' => $categoryInfo->seo_name, 'id' => $elem->id) ,'city_problem_item');
 		$this->view->shortUrl = $GooglShort->shorten($url);
    }
+   
+   /**
+    * This is used to remove information
+    */
+   public function removeAction()
+   {
+   		$this->_helper->layout->disableLayout();
+   		$data = $this->_request->getPost();
+   		
+   		$Problems = new Search_Model_Problems();
+   		$Problems->dropReport($data['drophash']);
+   }
+
 }

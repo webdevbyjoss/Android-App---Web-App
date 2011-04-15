@@ -4,7 +4,7 @@
 <body>
 	<trans-unit id="site-name">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Повідом Владу</target>
+		<target xml:lang="uk">Повідом владу</target>
 	</trans-unit>
 	<trans-unit id="meta-description">
 		<source xml:lang="ru"></source>
@@ -16,7 +16,7 @@
 	</trans-unit>
 	<trans-unit id="slogan">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">допоможемо владі зробити Україну кращою</target>
+		<target xml:lang="uk">хай у владі знають як вони лажають</target>
 	</trans-unit>
 	<trans-unit id="logo">
 		<source xml:lang="ru"></source>
@@ -28,9 +28,13 @@
 	</trans-unit>
 	<trans-unit id="beta-welcome-text">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">&lt;h2&gt;Повідом владу – база даних інфраструктурних проблем України &lt;/h2&gt;&lt;p&gt;
-		Цей сайт для тих хто хоче взяти участь в створенні  єдиної всеукраїнської бази даних інфраструктурних проблем України з метою їх активного висвітлення та вирішення. 
-		Приєднуйтеся до нас, завантажуйте програму для свого мобільного, фотографуйте проблемні місця та надсилайте анонімні скарги на наш сайт.
+		<target xml:lang="uk">&lt;h2&gt;Кращі умови навколо нас!&lt;/h2&gt;&lt;p&gt;
+		Всі ми хочемо жити без ям на дорогах, переповнених смітників, нагромаджень бруду посеред міст.
+		Однак для цього кожен повиннен сам вимагати у влади оперативно реагувати та вирішувати ті проблеми що ми бачимо 
+		навколо себе. Цей сайт для тих хто хоче долучитися до збору, накопичення, обговорення та розповсюдження інформації, 
+		з метою активного висвітлення та пришвидшення вирішення проблем місцевою владою. 
+		Завантажуйте програму для свого мобільного, фотографуйте проблемні місця та 
+		надсилайте анонімні звіти на наш сайт.
 			&lt;/p&gt;</target>
 	</trans-unit>
 	<trans-unit id="error-page-header">
@@ -249,7 +253,7 @@
 	</trans-unit>
 	<trans-unit id="in-what-city-you-are-right-now-description">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Виберіть місто для перегляду переліку скарг та проблем в інфраструктурі</target>
+		<target xml:lang="uk">Виберіть місто для перегляду переліку звітів та обговорення наявних проблем</target>
 	</trans-unit>
 	<trans-unit id="specialists">
 		<source xml:lang="ru">Специалисты</source>
@@ -321,7 +325,6 @@
 		<source xml:lang="ru">сменить город</source>
 		<target xml:lang="uk">змінити місто</target>
 	</trans-unit>
-	
 	<trans-unit id="report">
 		<source xml:lang="ru">отчет</source>
 		<target xml:lang="uk">звіт</target>
@@ -330,7 +333,10 @@
 		<source xml:lang="ru">категории отчетов</source>
 		<target xml:lang="uk">категорії звітів</target>
 	</trans-unit>
-	
+		<trans-unit id="location-on-map">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">Розміщення на карті</target>
+	</trans-unit>
 </body>
 </file>
 </xliff>

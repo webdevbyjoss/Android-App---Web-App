@@ -8,6 +8,14 @@ body {
     min-width: 400px;
 }
 
+a {
+	color: gray;
+}
+
+a.active {
+	color: black;
+}
+
 caption, th, td, input, textarea, select, option, legend, fieldset {
     font-family:Tahoma,Verdana,Arial,Helvetica,"Bitstream Vera Sans",sans-serif;
 }
@@ -67,7 +75,7 @@ h4 {
 #top-menu a {
 	padding-right: 10px;
 	padding-left: 10px;
-	color: gray;
+	/*color: gray;*/
 	white-space: nowrap;
 }
 
@@ -106,7 +114,7 @@ h4 {
 }
 
 #top-menu a.active {
-	color: black;
+	/*color: black;*/
 	text-decoration: none;
 	cursor: default;
 }
@@ -133,16 +141,25 @@ h4 {
 
 #beta-mark {
 	position: absolute;
-	left: 410px;
+	left: 370px;
 	top: 7px;
 }
 
 #header-site-name {
-	font-size: 3.5em;
+	font-size: 3em;
 	padding-left: 20px;
 	float: left;
-	padding-top: 20px;
+	padding-top: 15px;
 	font-weight: bold;
+}
+
+#slogan {
+	float: left;
+	clear:both;
+	position: relative;
+	top: -20px;
+	left: 85px;
+	color: gray;
 }
 
 #header-site-name a {
@@ -350,7 +367,7 @@ span.item-title {
 }
 
 #footer-menu a {
-	color: gray;
+	/*color: gray;*/
 	padding: 5px;
 	text-transform: lowercase;
 }
