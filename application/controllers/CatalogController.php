@@ -54,7 +54,7 @@ class CatalogController extends Custom_Controller_Action
 		$this->view->citySeoTitle = $city['city']->seo_name_uk;
 		
 		$Problems = new Search_Model_Problems();
-		$problem = $Problems->find($itemId)->current();
+		$problem = $Problems->getReportById($itemId);
 		
 		if (empty($problem)) {
 			throw new Zend_Controller_Action_Exception('Report #' . $itemId . ' is not found', 404);

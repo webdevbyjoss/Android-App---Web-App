@@ -74,7 +74,13 @@ class IndexController extends Custom_Controller_Action
    		$data = $this->_request->getPost();
    		
    		$Problems = new Search_Model_Problems();
-   		$Problems->dropReport($data['drophash']);
+   		
+   		try {
+   			$Problems->dropReport($data['drophash']);
+   		} catch (Search_Model_ProblemsException $e) {
+			$this->view->fail_message = $e->getMessage();
+			return;
+		}
    }
 
 }

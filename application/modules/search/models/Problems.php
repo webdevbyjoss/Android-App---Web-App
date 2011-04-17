@@ -9,6 +9,12 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	 */
 	const DROP_TIME = 15;
 	
+	/**
+	 * Means that this is deleted
+	 */
+	const IS_DELETED = 1;
+	const IS_NOT_DELETED = 0;
+	
 	protected $_name = 'problems';
 	
 	/**
@@ -26,9 +32,30 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 			$select->where('category_id IN (' . $categoryId . ')');
 		}
 		$select->where('city_id = ?', $cityId);
+		
+		// exclude reports being removed
+		$select->where('is_deleted = ?', self::IS_NOT_DELETED);
+		
 		$select->joinLeft('category', 'problems.category_id = category.id', 'seo_name');
 		$select->order('id DESC');
 		return new Zend_Paginator_Adapter_DbSelect($select);
+	}
+	
+	/**
+	 * Returns the report
+	 * 
+	 * @param int $id
+	 * @return Zend_Db_Table_Row
+	 */
+	public function getreportById($id)
+	{
+		$select = $this->select();
+
+		$select->where('id = ?', $id);
+		// exclude reports being removed
+		$select->where('is_deleted = ?', self::IS_NOT_DELETED);
+		
+		return $this->fetchAll($select)->current();
 	}
 	
 	/**
@@ -146,8 +173,16 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	{
 		$whereDrophash = $this->getAdapter()->quoteInto('drophash = ?', $dropHash);
 		$whereTime = 'created >= NOW() - INTERVAL ' . self::DROP_TIME . ' MINUTE';
-
-		$this->delete(array($whereDrophash, $whereTime));
+		
+		$data = array(
+			'is_deleted' => self::IS_DELETED,
+		);
+		
+		$num = $this->update($data, array($whereDrophash, $whereTime));
+		
+		if (empty($num)) {
+			throw new Search_Model_ProblemsException("Report with drophash #$dropHash can not me removed. Please contact support.");
+		}
 	}
 	
 	/**
