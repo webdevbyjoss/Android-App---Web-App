@@ -60,7 +60,7 @@
 <div id="top-menu">
 <div id="top-menu-left">
 	<a <?php if ($this->getModuleName() == 'default' && ($this->getControllerName() == 'index' || $this->getControllerName() == 'catalog')): ?>class="active"<?php endif; ?> href="/">Перелік проблем</a>
-	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'links'): ?>class="active"<?php endif; ?> href="/links">Програма для мобільного</a>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'download'): ?>class="active"<?php endif; ?> href="/download">Програма для мобільного</a>
 	<?php $this->renderSubNavigation(); ?>
 	</div>
 </div>
@@ -118,7 +118,7 @@
 	} ?>
 	
 	<div class="search-panel">
-		<h2>Поділіться інформацією з друзями</h2>
+		<h2>Поділіться цією інформацією з друзями</h2>
 		<div id="vk_like"></div>
 		<script type="text/javascript">
 		VK.Widgets.Like("vk_like", {type: "full", verb: 1});
@@ -151,8 +151,6 @@
 	,'default'); ?>"><?php echo $this->T('news'); ?></a>
 	<?php */ ?>
 	
-	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'terms-and-conditions'): ?>class="active"<?php endif; ?> href="/terms-and-conditions"><?php echo $this->T('terms-and-conditions'); ?></a>
-	
 	<?php /* ?>
 	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'for-developers'): ?>class="active"<?php endif; ?> href="<?php echo $this->url(
 	array(
@@ -174,6 +172,10 @@
 	,'default'); ?>"><?php echo $this->T('contacts'); ?></a>
 	<?php */ ?>
 	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'help'): ?>class="active"<?php endif; ?> href="/help"><?php echo $this->T('help'); ?></a>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'terms-and-conditions'): ?>class="active"<?php endif; ?> href="/terms-and-conditions"><?php echo $this->T('terms-and-conditions'); ?></a>
+	
+	<a id="feedbackLink" title="<?php echo $this->T('send-us-your-feedback') ?>" href="#"><?php echo $this->T('feedback') ?></a>
+	
 	</div>
 	<div id="copyright">&copy; 2011 <?php echo $this->T('site-name'); ?></div>
 </div>

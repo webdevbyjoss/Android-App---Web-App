@@ -106,6 +106,13 @@ class Searchdata_Model_Cities extends Zend_Db_Table_Abstract
     
     /**
      * Returns the list of cities that are no more than 250 km from current coordinates
+     * 
+     * TODO: we SHOULD use pre-calculated values for each city
+     * 
+     * @param float $lat
+     * @param float $lng
+     * @param int $distance
+     * @return array
      */
     public function getRelatedCities($lat, $lng, $distance = 250)
     {

@@ -46,6 +46,8 @@ class IndexController extends Custom_Controller_Action
 			);
 		} catch (Search_Model_ProblemsException $e) {
 			$this->view->fail_message = $e->getMessage();
+			// QUICK FIX: we need to create an error reporting mechanism
+			mail(ADMIN_EMAIL, '[POVIDOM-VLADU] Report FAIL at povidom-vladu.org.ua', $e->getMessage());
 			return;
 		}
 		

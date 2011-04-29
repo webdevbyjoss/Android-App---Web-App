@@ -14,10 +14,6 @@ class Users_FeedbackController extends Zend_Controller_Action
 	{
 		$this->_helper->layout->disableLayout();
 
-		//send feedback message to ofuz over Zend_Http_Client
-		$ofuzUri = "http://todo.nash-master.com/ofuz_helper.php";
-		
-		$client = new Zend_Http_Client($ofuzUri);
 		$req = $this->getRequest();
 		
 		$category = $req->getParam('category');
@@ -34,12 +30,10 @@ class Users_FeedbackController extends Zend_Controller_Action
 			case "6": $category = "affiliate"; break;
 		}
 
-		$client->setParameterPost(array(
-			"category" => $category,
-			"message" => $req->getParam("message"),
-			"email" => $req->getParam("email"),
-			"telephone" => $req->getParam("telephone")
-		));
-		$ofuz_response = $client->request("POST")->getBody();
+		$message = 'Category: ' . $category . "\n\n" .
+		$req->getParam("message") . "\n\n" . 
+		'Email: ' . $req->getParam("email");
+		
+		mail(ADMIN_EMAIL, '[POVIDOM-VLADU] Feedback form message', $message);
 	}
 }

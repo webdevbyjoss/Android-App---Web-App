@@ -68,6 +68,10 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	{
 		$select = $this->getAdapter()->select();
 		$select->from('problems', array('id', 'msg', 'photo'));
+		
+		// exclude reports being removed
+		$select->where('is_deleted = ?', self::IS_NOT_DELETED);
+		
 		$select->limit($amount);
 		$select->order('id DESC');
 		$select->joinLeft('city', 'problems.city_id = city.city_id', array('city.seo_name_uk as city_seo_name', 'name_uk as name'));
@@ -94,18 +98,34 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 
 		// if coordinates are passed then lets try to recognize the city
 		if (empty($lng) || empty($lat) ){
-			throw new Search_Model_ProblemsException('Coordinates are empty. Received lng:' . $lng .' and lat:' . $lat );
+			throw new Search_Model_ProblemsException('Coordinates are empty. Received lat:' . $lat . 'lng:' . $lng );
 		}
 		
 		// try to recognize city
 		$Cities = new Searchdata_Model_Cities();
 		$currentCity = $Cities->getCityByCoords($lng, $lat);
 		
-		// throw exception if city wasn't recognized
-		if (empty($currentCity->city_id)) {
-			throw new Search_Model_ProblemsException('City not found. Received lng:' . $lng .' and lat:' . $lat);
+		// process the situation if city wasn't recognized using city-boundaries algorythm
+		if (empty($currentCity)) {
+			
+			// try to find the closest available city and assign report to that city
+			$relatedCities = $Cities->getRelatedCities($lat, $lng, 50); // max search range is 50km
+			$currentCity = current($relatedCities);
+			
+			// throw new Search_Model_ProblemsException('City not found. Received lat:' . $lat . 'lng:' . $lng );
+			// report exceptional situation to administrator
+			mail(ADMIN_EMAIL, '[POVIDOM-VLADU] City-boundaries algorythm error', 
+			'City not found using city-boundaries algorythm. Received lat:' . $lat . 'lng:' . $lng 
+			. '. Assigned to "' . $currentCity['name_uk'] . '", city_id = "' . $currentCity['city_id'] . '"');
+			
+			$cityID = $currentCity['city_id'];
+			
+		} else {
+			$cityID = $currentCity->city_id;
 		}
-
+		
+		
+		
 		$row = $this->createRow();
 		$row->msg = $message;
 		$row->lng = $lng;
@@ -116,7 +136,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 		$row->created = new Zend_Db_Expr('NOW()');
 		$row->updated = new Zend_Db_Expr('NOW()');
 		
-		$row->city_id = $currentCity->city_id;
+		$row->city_id = $cityID;
 		
 		// save record to generate item ID
 		// we should begin transaction here to remove DB record if image upload fails 

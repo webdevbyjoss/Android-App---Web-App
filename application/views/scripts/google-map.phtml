@@ -9,7 +9,8 @@
 	      zoom: 16,
 	      center: latlng,
 	      disableDefaultUI: true,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	      zoomControl: true,
+	      mapTypeId: google.maps.MapTypeId.HYBRID
 	    };
 	    // create map
 	    var map = new google.maps.Map(document.getElementById("googlemap"), myOptions);

@@ -12,6 +12,12 @@ $env = getenv('APPLICATION_ENV');
 defined('APPLICATION_ENV')
 	|| define('APPLICATION_ENV', (empty($env) ? 'production' : $env));
 
+/**
+ * Its bad practice to have email hardcoded here :) 
+ * FIXME: Move this to configuration
+ */
+define('ADMIN_EMAIL', 'joseph.chereshnovsky@gmail.com,oleksiy.oliynyk@gmail.com');
+	
 if ('development' == APPLICATION_ENV) {
 	/*
 	 * Put errors ON for debugging this file

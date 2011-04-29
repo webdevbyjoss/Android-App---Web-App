@@ -1,5 +1,12 @@
 <?php 
 
+// load custom title
+$this->headTitle($this->problem->msg);
+
+$this->headMeta()
+	->setName('description', $this->T('meta-description'))
+	->setName('keywords', $this->T('meta-keywords'));
+
 // get locale to use for interface
 $loc = $this->getLocale();
 

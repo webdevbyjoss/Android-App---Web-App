@@ -779,3 +779,22 @@ h2.comments {
 #breadcrumbs {
 	padding-bottom: 20px;
 }
+
+#homepage-download-link {
+	-moz-border-radius: 5px 5px 5px 5px;
+    background-color: #d1ffcc;
+    margin-bottom: 10px;
+    margin-top:10px;
+    padding: 20px 20px 20px;
+    text-decoration: none;
+    /*color: #333333;*/
+    color: #8aa887;
+    font-size: 2em;
+    display: block;
+    text-align: center;
+}
+
+#homepage-download-link:hover {
+	background-color: #bbffb2;
+	color: #7ca876;
+}
