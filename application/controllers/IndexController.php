@@ -38,7 +38,7 @@ class IndexController extends Custom_Controller_Action
 		
 		try {
 			$elem = $Problems->createItem(
-				$data['msg'],
+				trim($data['msg']),
 				$data['long'], 
 				$data['lat'],
 				$data['type'],

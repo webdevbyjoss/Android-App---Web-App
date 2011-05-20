@@ -18,8 +18,8 @@
 	    var marker = new google.maps.Marker({
 	        position: latlng,
 	        map: map, 
-	        title:"<?php echo $this->label ?>",
-	        icon: "/images/report-logo.png"
+	        title:"<?php echo trim($this->label) ?>"
+	        // icon: "/images/report-logo.png"
 	    });
 	  }
 	  $(document).ready(function () {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:iws="http://www.idiominc.com/ws/asset">
-<file original="index.html" source-language="ru" target-language="uk" tool="cli">
+<file original="" source-language="ru" target-language="uk" tool="cli">
 <body>
 	<trans-unit id="site-name">
 		<source xml:lang="ru"></source>
@@ -8,7 +8,7 @@
 	</trans-unit>
 	<trans-unit id="meta-description">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">повідомити владу про проблеми які бачиш на вулиці</target>
+		<target xml:lang="uk">повідомити владу про проблеми, які бачиш на вулиці</target>
 	</trans-unit>
 	<trans-unit id="meta-keywords">
 		<source xml:lang="ru"></source>
@@ -16,11 +16,11 @@
 	</trans-unit>
 	<trans-unit id="slogan">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">хай у владі знають як вони лажають</target>
+		<target xml:lang="uk">кращі умови життя в своєму місті</target>
 	</trans-unit>
 	<trans-unit id="logo">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Логотип</target>
+		<target xml:lang="uk">Повідом владу</target>
 	</trans-unit>
 	<trans-unit id="beta-version">
 		<source xml:lang="ru">сайт на стадии тестирования</source>
@@ -29,15 +29,17 @@
 	<trans-unit id="beta-welcome-text">
 		<source xml:lang="ru"></source>
 		<target xml:lang="uk">&lt;h2&gt;Кращі умови навколо нас!&lt;/h2&gt;&lt;p&gt;
-		Всі ми хочемо жити без ям на дорогах, переповнених смітників, нагромаджень бруду посеред міст.
-		Однак для цього кожен повиннен сам вимагати у влади оперативно реагувати та вирішувати ті проблеми що ми бачимо 
-		навколо себе. <br /><br /> Цей сайт для тих хто хоче долучитися до збору, накопичення, обговорення та розповсюдження інформації, 
-		з метою активного висвітлення та пришвидшення вирішення проблем місцевою владою.
-		<a href="/download" id="homepage-download-link">Завантажуйте програму для свого мобільного</a>
-		Фотографуйте проблемні місця та надсилайте анонімні звіти на наш сайт.
+		Кожен може допомогти владі оперативно реагувати та вирішувати проблеми у місті.
+		<a href="/download" id="homepage-download-link">Завантажте програму для свого мобільного</a>
+		Фотографуйте проблемні місця та надсилайте анонімні звіти для обговорення та координації спільних дій з іншими громадськими активістами на сайті.
 			&lt;/p&gt;
-		<p><b>Не маєш мобільного на ОС Android?</b> <br />
-		Незабаром з’явиться можливість додавання інформації безпосередньо на сайті!</p>
+		<div><b>Проявіть активну громадську позицію</b><br />
+		Напишіть заяву в органи місцевого самоврядування про проблему, яку хочете вирішити у своєму місті. 
+		Поділіться власним досвідом взаємодії з владою при розгляді заяв і вирішенні проблеми.<br />
+		Злагодженими діями можна допомогти державному апарату працювати ефективніше.
+		<br /><br />
+		Долучись до створення кращого життя навколо нас!
+		</div>
 		</target>
 	</trans-unit>
 	<trans-unit id="error-page-header">
@@ -94,7 +96,7 @@
 	</trans-unit>
 	<trans-unit id="site-window-title">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">База даних інфраструктурних проблем України</target>
+		<target xml:lang="uk">Мережа громадських активістів для координованого вирішення проблем у кожному місті</target>
 	</trans-unit>
 	<trans-unit id="help">
 		<source xml:lang="ru">Cправка</source>
@@ -256,7 +258,7 @@
 	</trans-unit>
 	<trans-unit id="in-what-city-you-are-right-now-description">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Виберіть місто для перегляду переліку звітів та обговорення наявних проблем</target>
+		<target xml:lang="uk">Виберіть місто, щоб переглянути перелік звітів й обговорень наявних проблем</target>
 	</trans-unit>
 	<trans-unit id="specialists">
 		<source xml:lang="ru">Специалисты</source>
