@@ -780,21 +780,50 @@ h2.comments {
 	padding-bottom: 20px;
 }
 
-#homepage-download-link {
+/* buttons */
+
+.large-column-button {
 	-moz-border-radius: 5px 5px 5px 5px;
-    background-color: #d1ffcc;
+    
     margin-bottom: 10px;
     margin-top:10px;
     padding: 20px 20px 20px;
     text-decoration: none;
     /*color: #333333;*/
-    color: #8aa887;
+    
     font-size: 2em;
     display: block;
     text-align: center;
+    line-height: 0.8em;
+}
+
+#homepage-upload-link {
+	background-color: #ffccd1;
+	color: #b2747b;
+}
+
+#homepage-upload-link:hover {
+	background-color: #ffa6b0;
+	color: #b2747b;
+}
+
+
+
+
+#homepage-download-link {
+	background-color: #d1ffcc;
+	color: #8aa887;
 }
 
 #homepage-download-link:hover {
 	background-color: #bbffb2;
 	color: #7ca876;
+}
+
+
+
+
+
+.news-description {
+	padding-bottom: 20px;
 }

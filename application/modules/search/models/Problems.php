@@ -93,7 +93,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	{
 		// validate message
 		if (strlen($message) < 5) {
-			throw new Search_Model_ProblemsException('Message is too short. Should be at least 5 characters. Received: ' . $message);
+			
 		}
 
 		// if coordinates are passed then lets try to recognize the city
@@ -124,7 +124,10 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 			$cityID = $currentCity->city_id;
 		}
 		
-		
+		// add additional check to make sure that city was recognized correctly
+		if (empty($cityID)) {
+			throw new Search_Model_ProblemsException('City is not supported. lat:' . $lat . 'lng:' . $lng);
+		}
 		
 		$row = $this->createRow();
 		$row->msg = $message;

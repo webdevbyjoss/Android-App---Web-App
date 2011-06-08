@@ -16,7 +16,7 @@
 	</trans-unit>
 	<trans-unit id="slogan">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">кращі умови життя в своєму місті</target>
+		<target xml:lang="uk">вимагай кращі умови життя в своєму місті</target>
 	</trans-unit>
 	<trans-unit id="logo">
 		<source xml:lang="ru"></source>
@@ -25,22 +25,6 @@
 	<trans-unit id="beta-version">
 		<source xml:lang="ru">сайт на стадии тестирования</source>
 		<target xml:lang="uk">сайт на етапі тестування</target>
-	</trans-unit>
-	<trans-unit id="beta-welcome-text">
-		<source xml:lang="ru"></source>
-		<target xml:lang="uk">&lt;h2&gt;Кращі умови навколо нас!&lt;/h2&gt;&lt;p&gt;
-		Кожен може допомогти владі оперативно реагувати та вирішувати проблеми у місті.
-		<a href="/download" id="homepage-download-link">Завантажте програму для свого мобільного</a>
-		Фотографуйте проблемні місця та надсилайте анонімні звіти для обговорення та координації спільних дій з іншими громадськими активістами на сайті.
-			&lt;/p&gt;
-		<div><b>Проявіть активну громадську позицію</b><br />
-		Напишіть заяву в органи місцевого самоврядування про проблему, яку хочете вирішити у своєму місті. 
-		Поділіться власним досвідом взаємодії з владою при розгляді заяв і вирішенні проблеми.<br />
-		Злагодженими діями можна допомогти державному апарату працювати ефективніше.
-		<br /><br />
-		Долучись до створення кращого життя навколо нас!
-		</div>
-		</target>
 	</trans-unit>
 	<trans-unit id="error-page-header">
 		<source xml:lang="ru">Произошла ошибка</source>
@@ -341,6 +325,10 @@
 		<trans-unit id="location-on-map">
 		<source xml:lang="ru"></source>
 		<target xml:lang="uk">Розміщення на карті</target>
+	</trans-unit>
+	<trans-unit id="news">
+		<source xml:lang="ru"></source>
+		<target xml:lang="uk">Новини</target>
 	</trans-unit>
 </body>
 </file>

@@ -60,7 +60,8 @@
 <div id="top-menu">
 <div id="top-menu-left">
 	<a <?php if ($this->getModuleName() == 'default' && ($this->getControllerName() == 'index' || $this->getControllerName() == 'catalog')): ?>class="active"<?php endif; ?> href="/">Перелік проблем</a>
-	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'download'): ?>class="active"<?php endif; ?> href="/download">Програма для мобільного</a>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'download'): ?>class="active"<?php endif; ?> href="/download">Завантажити</a>
+	<a id="feedbackLink" title="<?php echo $this->T('send-us-your-feedback') ?>" href="#"><?php echo $this->T('feedback') ?></a>
 	<?php $this->renderSubNavigation(); ?>
 	</div>
 </div>
@@ -87,9 +88,32 @@
 		));
 	endif; ?>
 	<?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'index'): ?>
+	
 	<div class="search-panel">
-	<?php echo $this->T('beta-welcome-text') ?>
+	<h2>Провідомити про проблему</h2>
+	
+	<b>Фотографуйте</b> проблеми у вашому місті та <b>додавайте</b> зроблені фото на сайт. <b>Анонімно</b>, за 1 хвилину.
+
+	<a href="#" id="homepage-upload-link" class="large-column-button">Додати фото</a>
+	
+	Скористайтеся мобільним телефоном з <b>камерою</b> та <b>GPS</b> щоб швидше 
+	і зручніше збирати та надсилати матеріали.
+	
+	<a href="/download" id="homepage-download-link" class="large-column-button">Завантажити програму<br /> для мобільного</a>
+	
+	<b>Пам’ятайте!</b> Кожен з нас може допомогти владі оперативно реагувати та вирішувати проблеми у власному місті.
+	<br /><a style="float: right;" href="/help">дізнатися більше...</a>
+	
 	</div>
+	
+	<div class="search-panel">
+		<h2>Новини</h2>
+		<p><i>7 червня 2011</i>. Додано новий тип проблем щодо відсутності освітлення вулиць, парків, скверів, підземних переходів. Використовуйте пункт "<b>Відсутнє освітлення</b>".</p>
+		<p><i>5 червня 2011</i>. Отримали відгуки користувачів. <b>Дякуємо за вашу підтримку та пропозиції</b>!</p>
+		<p><i>29 травня 2011</i>. Перший звіт про проблему в місті <b>Рубіжне</b> Луганської області.</p>
+		<p><a href="/news">читати всі новини</a></p>
+	</div>
+	
 	<?php endif; ?>
 	<?php /* ?>
 	<div id="search-panel-extra" class="search-panel">
@@ -171,10 +195,9 @@
 	)
 	,'default'); ?>"><?php echo $this->T('contacts'); ?></a>
 	<?php */ ?>
-	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'help'): ?>class="active"<?php endif; ?> href="/help"><?php echo $this->T('help'); ?></a>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'news'): ?>class="active"<?php endif; ?> href="/news">Новини</a>
 	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'terms-and-conditions'): ?>class="active"<?php endif; ?> href="/terms-and-conditions"><?php echo $this->T('terms-and-conditions'); ?></a>
-	
-	<a id="feedbackLink" title="<?php echo $this->T('send-us-your-feedback') ?>" href="#"><?php echo $this->T('feedback') ?></a>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'help'): ?>class="active"<?php endif; ?> href="/help">Про проект</a>
 	
 	</div>
 	<div id="copyright">&copy; 2011 <?php echo $this->T('site-name'); ?></div>
