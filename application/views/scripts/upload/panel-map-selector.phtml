@@ -1,0 +1,7 @@
+<h2>Попередній перегляд зображення</h2>
+<img width="99%" src="<?php echo $this->imageUrl ?>" />
+
+<div id="category-selectbox" class="upload-report-text">
+щоб знати куди звертатися по вирішення проблеми<br />
+<select id="category"><option value="">[ виберіть категорію ]</option><?php foreach($this->categories as $cat): ?><option value="<?php echo $cat->id ?>"><?php echo $cat->name ?></option><?php endforeach; ?></select>
+</div>

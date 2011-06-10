@@ -12,9 +12,6 @@ var citiesCache = Array();
 // init search form
 $(document).ready(function () {
 	
-	// place focus in search field
-	$('#services-finder-select-control').focus();
-	
 	// bind change action for region select control
 	$('#city-finder-regions').change(function(){
 		

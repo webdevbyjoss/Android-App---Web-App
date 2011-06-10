@@ -17,4 +17,12 @@ class Searchdata_ListController extends Zend_Controller_Action
         
         $this->_helper->layout->disableLayout();
     }
+    
+	public function citiescoordsAction()
+    {
+        $Cities = new Searchdata_Model_Cities();
+        $this->view->cities = $Cities->getItems($this->_getParam('regionid'));
+        
+        $this->_helper->layout->disableLayout();
+    }
 }

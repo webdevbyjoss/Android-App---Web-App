@@ -2,6 +2,12 @@
 // client side action specific functionality
 $this->headScript()->appendFile('/js/specialists.js');
 
+// loaf AJAX uploader 
+$this->headScript()->appendFile('/js/ajax-uploader/fileuploader.js')
+				   ->appendFile('/js/init-ajax-uploader.js');
+
+$this->headLink()->appendStylesheet('/js/ajax-uploader/fileuploader.css');
+
 // load custom title
 $this->headTitle($this->T('site-window-title'));
 
@@ -11,6 +17,8 @@ $this->headMeta()
 
 // get locale to use for interface
 $loc = $this->getLocale();
+
+$this->addPanel($this->partial('panel-social-share.phtml'));
 
 ?>
 <div class="city-finder">

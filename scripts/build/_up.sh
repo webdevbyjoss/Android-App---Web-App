@@ -25,6 +25,7 @@ rsync -avz $APP_DIR/library/Joss/* $REMOTE_APP_DIR/library/Joss/
 rsync -avz /var/www/zend/Zend/* $REMOTE_APP_DIR/library/Zend/
 rsync -avz /var/www/zend/ZendX/* $REMOTE_APP_DIR/library/ZendX/
 rsync -avz $APP_DIR/library/Report/* $REMOTE_APP_DIR/library/Report/
+rsync -avz $APP_DIR/library/SimpleImage.php $REMOTE_APP_DIR/library/SimpleImage.php
 
 # scripts 
 rsync -uv $APP_DIR/scripts/zf-cli.php $REMOTE_APP_DIR/scripts/zf-cli.php

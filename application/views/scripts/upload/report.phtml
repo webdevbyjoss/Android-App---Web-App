@@ -1,0 +1,47 @@
+<?php 
+
+$this->headScript()->appendFile('http://maps.google.com/maps/api/js?sensor=false&language=uk&region=UA');
+$this->headScript()->appendFile('/js/upload-report.js');
+
+// load custom title
+$pageTitle = 'Звіт про проблему'; 
+$this->headTitle($pageTitle);
+
+
+$this->addPanel($this->partial('upload/panel-map-selector.phtml', array(
+	'imageUrl' => $this->imageUrl,
+	'categories' => $this->categories,
+)));
+
+// <h1><?php echo $pageTitle ></h1>
+
+?>
+
+<div id="upload-report-form-container">
+
+<div class="upload-report-text">
+коротко в кількох словах опишіть проблему <br />
+<input id="problem-description" type="text"  size="90" maxlength="90" />
+</div>
+
+<div class="upload-report-text" id="tip-mesasge">вкажіть розміщення проблеми перетягуючи маркер</div>
+<div style="width: 99%; height: 400px;" id="location_map"></div>
+
+<?php /* ?>
+
+<div id="quick-map-switch" class="upload-report-text">
+для миттєвого пересування по карті виберіть область та місто:<br />
+<select id="city-finder-regions" class="finder-selectbox-control" style="margin-bottom: 15px; margin-top: 0;">
+<option value="0">[ <?php echo $this->T('select-country-region'); ?> ]</option>
+<?php foreach ($this->regions as $region): ?>
+<option value="<?php echo $region->region_id ?>"><?php echo $region->name_uk ?></option>
+<?php endforeach; ?>
+</select>
+<select id="city-finder-city" class="finder-selectbox-control hidden-element" style="margin-bottom: 15px; margin-top: 0;"></select>
+</div>
+
+<?php */ ?>
+
+<div class="upload-report-text"><a href="#" id="submit-report-button">надіслати звіт</a></div>
+
+</div>

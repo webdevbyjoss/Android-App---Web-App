@@ -15,6 +15,17 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	const IS_DELETED = 1;
 	const IS_NOT_DELETED = 0;
 	
+	/**
+	 * Report photo size
+	 */
+	const PHOTO_WIDTH = 700;
+	const PHOTO_HEIGHT = 700;
+	
+	/**
+	 * Table name
+	 * 
+	 * @var string
+	 */
 	protected $_name = 'problems';
 	
 	/**
@@ -92,9 +103,15 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	public function createItem($message, $lng, $lat, $type, $dropHash)
 	{
 		// validate message
-		if (strlen($message) < 5) {
-			
-		}
+		// if (strlen($message) < 5) {
+		// 	
+		//}
+		
+	    // NOTE: the fix of ugly hosting bug with
+    	// megic quotes GPC turned on so all slashes are automatically escaped
+    	if (get_magic_quotes_gpc()) {
+    		$message = stripslashes($message);
+    	}
 
 		// if coordinates are passed then lets try to recognize the city
 		if (empty($lng) || empty($lat) ){
@@ -169,6 +186,142 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 			$messages = $upload->getMessages();
 			$db->rollBack();
 			throw new Search_Model_ProblemsException('Error during file upload.' . implode(' ', $messages));
+		} else {
+			
+			// resize photo
+			include 'SimpleImage.php';
+			$image = new SimpleImage();
+			$image->load($imageFile);
+			
+			$w = $image->getWidth();
+			$h = $image->getHeight();
+			
+			if ($w >= $h) {
+				$image->resizeToWidth(self::PHOTO_WIDTH);
+			} else {
+				$image->resizeToHeight(self::PHOTO_HEIGHT);
+			}
+			$image->save($imageFile);
+			
+			// generate thumbnail
+			$res = $this->resizeThumb($imageFile, $thumbFile, 150, 150);
+			
+			// check if thumbnail were generated successfully
+			if (empty($res)) {
+				$db->rollBack();
+				throw new Search_Model_ProblemsException('Thumbs generation errors. Please contact support.');
+			}
+			
+			$row->photo = $filename;
+			$row->save();
+		}
+		
+		$db->commit();
+		return $row;
+	}
+	
+	/**
+	 * Creates a new record in problems table from file in filesystem and returns Zend_Db_Table_Row
+	 * 
+	 * @param string $message
+	 * @param string $address
+	 * @param string $lng
+	 * @param string $lat
+	 * @param string $dropHash
+	 * @param string $imageFilename
+	 * @return Zend_Db_Table_Row
+	 */
+	public function createItemFromFile($message, $lng, $lat, $type, $dropHash, $imageUserFile)
+	{
+		// validate message
+		// if (strlen($message) < 5) {
+		// 	
+		//}
+
+		// if coordinates are passed then lets try to recognize the city
+		if (empty($lng) || empty($lat) ){
+			throw new Search_Model_ProblemsException('Coordinates are empty. Received lat:' . $lat . 'lng:' . $lng );
+		}
+		
+		// try to recognize city
+		$Cities = new Searchdata_Model_Cities();
+		$currentCity = $Cities->getCityByCoords($lng, $lat);
+		
+		// process the situation if city wasn't recognized using city-boundaries algorythm
+		if (empty($currentCity)) {
+			
+			// try to find the closest available city and assign report to that city
+			$relatedCities = $Cities->getRelatedCities($lat, $lng, 50, 0); // max search range is 50km and don't skip internal radius
+			$currentCity = current($relatedCities);
+			
+			// throw new Search_Model_ProblemsException('City not found. Received lat:' . $lat . 'lng:' . $lng );
+			// report exceptional situation to administrator
+			mail(ADMIN_EMAIL, '[POVIDOM-VLADU] City-boundaries algorythm error', 
+			'City not found using city-boundaries algorythm. Received lat:' . $lat . 'lng:' . $lng 
+			. '. Assigned to "' . $currentCity['name_uk'] . '", city_id = "' . $currentCity['city_id'] . '"');
+			
+			$cityID = $currentCity['city_id'];
+			
+		} else {
+			$cityID = $currentCity->city_id;
+		}
+		
+		// add additional check to make sure that city was recognized correctly
+		if (empty($cityID)) {
+			throw new Search_Model_ProblemsException('City is not supported. lat:' . $lat . 'lng:' . $lng);
+		}
+		
+		$row = $this->createRow();
+		$row->msg = $message;
+		$row->lng = $lng;
+		$row->lat = $lat;
+		$row->category_id = $type;
+		$row->drophash = $dropHash;
+		
+		$row->created = new Zend_Db_Expr('NOW()');
+		$row->updated = new Zend_Db_Expr('NOW()');
+		
+		$row->city_id = $cityID;
+		
+		// save record to generate item ID
+		// we should begin transaction here to remove DB record if image upload fails 
+		$db = $this->getAdapter();
+		$db->beginTransaction();
+		$row->save();
+		
+		// name photos
+		$filename = $row->id. '.jpg';
+		$filepath = realpath(APPLICATION_PATH . '/../public_html/images/problem');
+		$imageFile = $filepath . '/' . $filename;
+		$thumbFile = $filepath . '/thumb/' . $filename;
+
+    	/**
+    	 * Process image and save it into apropriate location with the mane ID.jpg
+    	 */
+
+		// move, rename and resize file
+		
+		// TODO: we should add errors check here
+		$res = true;
+		
+		include 'SimpleImage.php';
+		$image = new SimpleImage();
+		$image->load($imageUserFile);
+		
+		$w = $image->getWidth();
+		$h = $image->getHeight();
+		
+		if ($w >= $h) {
+			$image->resizeToWidth(self::PHOTO_WIDTH);
+		} else {
+			$image->resizeToHeight(self::PHOTO_HEIGHT);
+		}
+		
+		$image->save($imageFile);
+
+		if ($res === false) {
+			$db->rollBack();
+			throw new Search_Model_ProblemsException('Error during file processing.');
 		} else {
 			// generate thumbnail
 			$res = $this->resizeThumb($imageFile, $thumbFile, 150, 150);

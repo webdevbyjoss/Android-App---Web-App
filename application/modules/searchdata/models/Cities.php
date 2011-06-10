@@ -111,10 +111,11 @@ class Searchdata_Model_Cities extends Zend_Db_Table_Abstract
      * 
      * @param float $lat
      * @param float $lng
-     * @param int $distance
+     * @param int $distance radius to include
+     * @param int $accurancy radius to skip
      * @return array
      */
-    public function getRelatedCities($lat, $lng, $distance = 250)
+    public function getRelatedCities($lat, $lng, $distance = 250, $accurancy = 2)
     {
     	$db = $this->getAdapter();
     	
@@ -139,7 +140,7 @@ class Searchdata_Model_Cities extends Zend_Db_Table_Abstract
 			SQRT(1 - (SIN(RADIANS(city.latitude -  ' . $lat . ' )/2)
 		* SIN(RADIANS(city.latitude - ' . $lat . ' )/2)
 			+ COS(RADIANS( ' . $lat . ' )) * COS(RADIANS(city.latitude))
-			* SIN(RADIANS( city.longitude - ' . $lng . ')/2) * SIN(RADIANS( city.longitude - ' . $lng . ')/2)))))) * 1.17) BETWEEN 2 AND ' . $distance . '
+			* SIN(RADIANS( city.longitude - ' . $lng . ')/2) * SIN(RADIANS( city.longitude - ' . $lng . ')/2)))))) * 1.17) BETWEEN ' . $accurancy . ' AND ' . $distance . '
 		ORDER BY DISTANCE ASC';
     	
 		$cities = $db->fetchAll($sql);

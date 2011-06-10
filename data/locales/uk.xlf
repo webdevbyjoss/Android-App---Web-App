@@ -230,19 +230,19 @@
 	</trans-unit>
 	<trans-unit id="select-country-region">
 		<source xml:lang="ru">выберите область</source>
-		<target xml:lang="uk">виберіть область</target>
+		<target xml:lang="uk">вибрати область</target>
 	</trans-unit>
 	<trans-unit id="select-city">
 		<source xml:lang="ru">выберите город</source>
-		<target xml:lang="uk">виберіть місто</target>
+		<target xml:lang="uk">вибрати місто</target>
 	</trans-unit>
 	<trans-unit id="in-what-city-you-are-right-now">
 		<source xml:lang="ru">Какой город Вас интересует?</source>
-		<target xml:lang="uk">З якого ви міста?</target>
+		<target xml:lang="uk">З якого ти міста?</target>
 	</trans-unit>
 	<trans-unit id="in-what-city-you-are-right-now-description">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Виберіть місто, щоб переглянути перелік звітів й обговорень наявних проблем</target>
+		<target xml:lang="uk">Вибери місто, щоб переглянути перелік звітів й обговорення наявних проблем</target>
 	</trans-unit>
 	<trans-unit id="specialists">
 		<source xml:lang="ru">Специалисты</source>

@@ -352,7 +352,7 @@ span.item-title {
 
 #footer {
 	text-align: center;
-	padding-top: 30px;
+	/*padding-top: 30px;*/
 	padding-bottom: 20px;
 	clear: both;
 }
@@ -613,6 +613,8 @@ span.item-title {
 
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+
+	padding: 20px 25px 25px;
 }
 
 #city-finder-select-control {
@@ -783,7 +785,7 @@ h2.comments {
 /* buttons */
 
 .large-column-button {
-	-moz-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
     
     margin-bottom: 10px;
     margin-top:10px;
@@ -795,6 +797,8 @@ h2.comments {
     display: block;
     text-align: center;
     line-height: 0.8em;
+
+    cursor: pointer;
 }
 
 #homepage-upload-link {
@@ -826,4 +830,84 @@ h2.comments {
 
 .news-description {
 	padding-bottom: 20px;
+}
+
+
+
+
+/* upload report */
+#quick-map-switch {
+	
+}
+
+.upload-report-text {
+	/*font-size: 1.2em;*/
+}
+
+.upload-report-text select {
+	font-size: 1.3em;
+	background: none repeat scroll 0 0 white;
+	border: 1px solid silver;
+	color: black;
+	cursor: pointer;
+	font-family: arial;
+}
+
+#quick-map-switch select {
+	font-size: 1.3em;
+	
+}
+
+#quick-map-switch img {
+	position: relative;
+	top: 7px;
+
+	display: block;
+    float: right;
+}
+
+#problem-description {
+	font-size: 1.4em;
+	border: 1px solid silver;
+	padding: 3px;
+	width: 98%;
+
+	color: black;
+	margin-bottom: 15px;
+}
+
+#category-selectbox {
+	margin-bottom: 15px;
+}
+
+#submit-report-button {
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    display: block;
+    font-size: 2em;
+    line-height: 0.8em;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+
+    display: block;
+    margin: auto;
+    width: 300px;
+
+    margin-top: 30px;
+
+    background-color: #D1FFCC;
+    color: #8AA887;
+}
+
+#submit-report-button:hover {
+	background-color: #bbffb2;
+	color: #7ca876;
+}
+
+#upload-report-form-container {
+	position: relative;
+	top: -20px;
 }

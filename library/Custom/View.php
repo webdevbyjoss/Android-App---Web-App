@@ -9,6 +9,7 @@ class Custom_View extends Zend_View
 	
 	private $_subnavigation = null;
 	private $_breadcrumbs = null;
+	private $_panels = null;
 	
 	public function __construct($options)
 	{
@@ -29,6 +30,38 @@ class Custom_View extends Zend_View
 		$url = parent::url($urlOptions, $name, $reset);
 		
 		return strtolower(trim(array_shift(explode('/', $server['SERVER_PROTOCOL'])))) . '://' . $server['HTTP_HOST'] . $url;
+	}
+	
+	/**
+	 * Panels functionality
+	 * Will add new panel (rendered HTML code)
+	 * 
+	 * @param string $content HTML code of the panel
+	 */
+	public function addPanel($content)
+	{
+		if (empty($content)) {
+			return;
+		}
+		
+		$this->_panels[] = $content;
+	}
+	
+	/**
+	 * Returns HTML code of all panels 
+	 * 
+	 */
+	public function renderPanels()
+	{
+		if (count($this->_panels) < 1) {
+			return '';
+		}
+		
+		$content = '';
+		foreach ($this->_panels as $panel) {
+			$content .= $panel;
+		}
+		return $content;
 	}
 	
 	/**
