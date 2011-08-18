@@ -16,6 +16,10 @@ class IndexController extends Custom_Controller_Action
 		$CountryCodeUkraine = 1;
 		$this->view->regions = $Regions->getItems($CountryCodeUkraine);
 		
+		// retrieve category information
+		$Categories = new Searchdata_Model_Category();
+		$this->view->categories = $Categories->getAllItems();
+		
 		// get recent additions
 		$problemsIndex = new Search_Model_Problems();
 		$this->view->lastItems = $problemsIndex->getLastItems();

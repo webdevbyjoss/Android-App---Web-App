@@ -1,4 +1,5 @@
 <?php
+
 // client side action specific functionality
 $this->headScript()->appendFile('/js/specialists.js');
 
@@ -21,6 +22,25 @@ $loc = $this->getLocale();
 $this->addPanel($this->partial('panel-social-share.phtml'));
 
 ?>
+
+<div id="homepage-workflow">
+	<div id="homepage-workflow-1">
+		<h2>1. Звітуй</h2>
+		<img alt="" src="/images/workflow_1.png">
+		<div><b>Анонімно</b> фотографуй та надсилай фото-звіти про проблеми у своєму місті.</div>
+	</div>
+	<div id="homepage-workflow-2">
+		<h2>2. Повідом владу</h2>
+		<img alt="" src="/images/workflow_2.png">
+		<div><b>Від свого імені подавай скарги в міськраду.</b> <br />Проявляй активну громадську позицію та відстоюй вирішення конкретних проблем.</div>
+	</div>
+	<div id="homepage-workflow-3">
+		<h2>3. Контролюй</h2>
+		<img alt="" src="/images/workflow_3.png">
+		<div><b>Анонімно</b> відвідуй проблемні місця, контролюй та звітуй про вирішення проблеми.</div>
+	</div>
+</div>
+
 <div class="city-finder">
 <h1><?php echo $this->T('in-what-city-you-are-right-now'); ?></h1>
 

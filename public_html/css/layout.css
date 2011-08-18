@@ -611,10 +611,13 @@ span.item-title {
 	background-color: #F2F9FF;
 	margin-bottom: 20px;
 
-	-moz-border-radius: 10px;
 	border-radius: 10px;
 
 	padding: 20px 25px 25px;
+	
+	float: left;
+	width: 99%;
+	margin-top: 20px;
 }
 
 #city-finder-select-control {
@@ -910,4 +913,34 @@ h2.comments {
 #upload-report-form-container {
 	position: relative;
 	top: -20px;
+}
+
+
+/* homepage */
+
+#homepage-workflow {
+	font-size: 0.8em;
+}
+
+#homepage-workflow h2 {
+	font-size: 2em;
+}
+
+#homepage-workflow-1, #homepage-workflow-2, #homepage-workflow-3 {
+	width: 32%;
+	float: left;
+	
+	margin-left: 10px;
+}
+
+#homepage-workflow-1 {
+	
+}
+
+#homepage-workflow-2 {
+	
+}
+
+#homepage-workflow-3 {
+	
 }
