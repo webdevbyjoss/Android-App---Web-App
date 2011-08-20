@@ -80,7 +80,7 @@
 	</trans-unit>
 	<trans-unit id="site-window-title">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Мережа громадських активістів для координованого вирішення проблем у кожному місті</target>
+		<target xml:lang="uk">Програмне забезпечення для координації діяльності спільнот громадських активістів</target>
 	</trans-unit>
 	<trans-unit id="help">
 		<source xml:lang="ru">Cправка</source>

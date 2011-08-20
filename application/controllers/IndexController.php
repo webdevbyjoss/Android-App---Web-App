@@ -23,6 +23,14 @@ class IndexController extends Custom_Controller_Action
 		// get recent additions
 		$problemsIndex = new Search_Model_Problems();
 		$this->view->lastItems = $problemsIndex->getLastItems();
+		
+		
+		// show latest new on homepage
+		require_once APPLICATION_PATH . '/models/News.php';
+		$News = new Default_Model_News();
+		
+		$newsList = $News->getLatestNews(3);
+		$this->view->newsList = $newsList;
     }
     
     public function postAction()

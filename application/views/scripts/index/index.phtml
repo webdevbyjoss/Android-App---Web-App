@@ -23,40 +23,35 @@ $this->addPanel($this->partial('panel-social-share.phtml'));
 
 ?>
 
+<div id="homepage-slogan-mobile">
+<h1>використовуй свій мобільний <br />щоб звітувати про проблеми <br /> які бачиш навколо себе</h1>
+</div>
+
 <div id="homepage-workflow">
 	<div id="homepage-workflow-1">
-		<h2>1. Звітуй</h2>
 		<img alt="" src="/images/workflow_1.png">
-		<div><b>Анонімно</b> фотографуй та надсилай фото-звіти про проблеми у своєму місті.</div>
+		<h2>звітуй про проблеми</h2>
+		<div><b>aнонімно</b> фотографуй та надсилай фото-звіти <br /> про проблеми у своєму місті</div>
 	</div>
 	<div id="homepage-workflow-2">
-		<h2>2. Повідом владу</h2>
 		<img alt="" src="/images/workflow_2.png">
-		<div><b>Від свого імені подавай скарги в міськраду.</b> <br />Проявляй активну громадську позицію та відстоюй вирішення конкретних проблем.</div>
+		<h2>повідом владу</h2>
+		<div><b>від свого імені</b> повідом владу у письмовій формі<br /> про кожну наявну проблему</div>
 	</div>
 	<div id="homepage-workflow-3">
-		<h2>3. Контролюй</h2>
 		<img alt="" src="/images/workflow_3.png">
-		<div><b>Анонімно</b> відвідуй проблемні місця, контролюй та звітуй про вирішення проблеми.</div>
+		<h2>контролюй</h2>
+		<div><b>анонімно</b> відвідуй проблемні місця, <br />контролюй та звітуй про стан вирішення проблеми</div>
 	</div>
 </div>
 
-<div class="city-finder">
-<h1><?php echo $this->T('in-what-city-you-are-right-now'); ?></h1>
 
-<div><?php echo $this->T('in-what-city-you-are-right-now-description'); ?></div>
-
-<select id="city-finder-regions" class="finder-selectbox-control">
-<option value="0">[ <?php echo $this->T('select-country-region'); ?> ]</option>
-<?php foreach ($this->regions as $region): ?>
-<option value="<?php echo $region->region_id ?>"><?php echo ($loc == 'uk') ? $region->name_uk : $region->name ?></option>
-<?php endforeach; ?>
-</select>
-<select id="city-finder-city" class="finder-selectbox-control hidden-element"></select>
-</div>
 
 <?php if ($this->lastItems): ?>
-<h1>Останні надходження</h1>
+
+<div style="clear:both;">
+<br /><br />
+<h1>Найсвіжіші звіти</h1>
 
 <div id="services-list">
 <?php 
@@ -69,6 +64,7 @@ $cityTitle = $item['name'];
 <a title="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" class="thumb" href="<?php echo $this->url(array('city' => $citySeoTitle, 'problem' => $item['seo_name'], 'id' => $item['id']) ,'city_problem_item'); ?>">
 <img alt="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" src="/images/problem/thumb/<?php echo $item['photo'] ?>" /></a>
 <?php endforeach; ?>
+</div>
 </div>
 <?php endif; ?>
 
@@ -84,3 +80,20 @@ $cityTitle = $item['name'];
 </form>
 </div>
 <?php */ ?>
+
+
+
+<div class="city-finder">
+
+<h1><?php echo $this->T('in-what-city-you-are-right-now'); ?></h1>
+
+<div><?php echo $this->T('in-what-city-you-are-right-now-description'); ?></div>
+
+<select id="city-finder-regions" class="finder-selectbox-control">
+<option value="0">[ <?php echo $this->T('select-country-region'); ?> ]</option>
+<?php foreach ($this->regions as $region): ?>
+<option value="<?php echo $region->region_id ?>"><?php echo ($loc == 'uk') ? $region->name_uk : $region->name ?></option>
+<?php endforeach; ?>
+</select>
+<select id="city-finder-city" class="finder-selectbox-control hidden-element"></select>
+</div>

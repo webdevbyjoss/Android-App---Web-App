@@ -1,6 +1,6 @@
 RewriteEngine On
-RewriteCond %{HTTP_HOST} ^www.nash-master\.com$ [NC]
-RewriteRule ^(.*)$ http://nash-master.com/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^www.povidom-vladu\.org\.ua$ [NC]
+RewriteRule ^(.*)$ http://povidom-vladu.org.ua/$1 [R=301,L]
 
 RewriteRule !.(js|css|ico|gif|jpg|png|php)$ index.php
 RewriteCond %{REQUEST_FILENAME} -s [OR]

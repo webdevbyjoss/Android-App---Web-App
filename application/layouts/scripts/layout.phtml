@@ -59,9 +59,9 @@
 </div>
 <div id="top-menu">
 <div id="top-menu-left">
-	<a <?php if ($this->getModuleName() == 'default' && ($this->getControllerName() == 'index' || $this->getControllerName() == 'catalog')): ?>class="active"<?php endif; ?> href="/">Перелік проблем</a>
-	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'download'): ?>class="active"<?php endif; ?> href="/download">Завантаження</a>
-	<a id="feedbackLink" title="<?php echo $this->T('send-us-your-feedback') ?>" href="#"><?php echo $this->T('feedback') ?></a>
+	<a <?php if ($this->getModuleName() == 'default' && ($this->getControllerName() == 'index' || $this->getControllerName() == 'catalog')): ?>class="active"<?php endif; ?> href="/">Як це працює?</a>
+	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'download'): ?>class="active"<?php endif; ?> href="/download">Завантажити</a>
+	<a id="feedbackLink" title="<?php echo $this->T('send-us-your-feedback') ?>" href="#">Зворотній зв’язок</a>
 	<?php $this->renderSubNavigation(); ?>
 	</div>
 </div>
@@ -89,28 +89,39 @@
 	endif; ?>
 	<?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'index'): ?>
 	
-	<div class="search-panel">
-	<h2>Зроби своє місто кращим</h2>
-	<b>Фотографуй</b> проблеми у своєму місті та <b>додавай</b> зроблені фото на сайт. Це просто, швидко та <b>анонімно</b>.
-	<div id="homepage-upload-link" class="large-column-button">Додати фото</div>
-	Використовуй мобільний телефон з <b>камерою</b> та <b>GPS</b> щоб швидше 
-	і зручніше збирати та надсилати матеріали.
+	<a href="/download">
+		<img alt="Завантажити програму для мобільного" src="/images/smartphones.jpg" />
+	</a>
+	
+	<?php /* ?>
 	<a href="/download" id="homepage-download-link" class="large-column-button">Завантажити програму<br /> для мобільного</a>
-	Кожен з нас може допомогти владі оперативно реагувати та вирішувати проблеми у власному місті.
-	<br /><a style="float: right;" href="/help">дізнатися більше...</a>
-	</div>
 	
 	<div class="search-panel">
-		<h2>Останні новини</h2>
-		
-		<p><i>4 липня 2011</i>. Вийшли на партнерську домовленість з громадською організацією "<a href="http://gpu.org.ua/">Громадянська позиція українця</a>" про передачу інформації з нашого сайту до їх мережі,
-		для подальшого розгляду та спільного вирішення проблем. Таке партнерство дозволить залучити до громадських ініціатив більшу кількість активних людей та надалі набагато ефективніше працювати з
-органами місцевого самоврядування.</p>
-
-		<p><i>9 червня 2011</i>. Додано функцію "<b>Додати фото</b>" що дозволить кожному додавати звіти про проблеми у своєму місті через сайт.</p>
-
-		<p><a href="/news">читати всі новини</a></p>
+	
+	Кожен з нас може допомогти владі оперативно реагувати та вирішувати проблеми у власному місті.
+	<br /><a style="float: right;" href="/help">дізнатися більше...</a>
+	
 	</div>
+	
+	
+	<?php */ ?>
+	
+	
+	<div class="search-panel">
+		<h2>Новини</h2>
+		<?php foreach ($this->newsList as $post): ?>
+		<p><i><?php echo $post->date ?></i>. <?php echo $post->title ?></p>
+		<?php endforeach; ?>
+		<p><a href="/news">Читати детальніше...</a></p>
+	</div>
+
+
+	<div class="search-panel">
+		<h2>Створити звіт без мобільного</h2>
+		<b>Фотографуй</b> звичайним фотоапаратом та звітуй про проблеми. Це так само просто, швидко та <b>анонімно</b>.
+		<div id="homepage-upload-link" class="large-column-button">Додати фото</div>
+	</div>
+	
 	
 	<?php endif; ?>
 	<?php /* ?>

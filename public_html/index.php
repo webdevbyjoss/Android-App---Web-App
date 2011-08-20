@@ -17,7 +17,7 @@ defined('APPLICATION_ENV')
  * FIXME: Move this to configuration
  */
 define('ADMIN_EMAIL', 'joseph.chereshnovsky@gmail.com,oleksiy.oliynyk@gmail.com');
-	
+
 if ('development' == APPLICATION_ENV) {
 	/*
 	 * Put errors ON for debugging this file
@@ -28,7 +28,7 @@ if ('development' == APPLICATION_ENV) {
 	define('DISABLE_FULL_PAGE_CACHE', true);
 	
 	// $paths = explode(PATH_SEPARATOR, get_include_path());
-	$paths[] = '/var/www/zend/';
+	$paths[] = '/usr/share/php/libzend-framework-php/';
 	
 } else {
 	define('DEBUG_ENABLE', false);

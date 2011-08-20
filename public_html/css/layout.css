@@ -616,7 +616,7 @@ span.item-title {
 	padding: 20px 25px 25px;
 	
 	float: left;
-	width: 99%;
+	width: 94%;
 	margin-top: 20px;
 }
 
@@ -927,10 +927,12 @@ h2.comments {
 }
 
 #homepage-workflow-1, #homepage-workflow-2, #homepage-workflow-3 {
-	width: 32%;
+	width: 31%;
 	float: left;
 	
 	margin-left: 10px;
+
+	text-align: center;
 }
 
 #homepage-workflow-1 {
@@ -943,4 +945,15 @@ h2.comments {
 
 #homepage-workflow-3 {
 	
+}
+
+#homepage-slogan-mobile {
+	text-align: center;
+	padding-top: 0px;
+	padding-bottom: 30px;
+}
+
+#homepage-slogan-mobile h1 {
+	font-size: 4em;
+	line-height: 0.93em;
 }
