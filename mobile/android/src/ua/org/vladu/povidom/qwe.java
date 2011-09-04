@@ -25,8 +25,12 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 	Camera camera;
 	SurfaceView cameraView;
 	SurfaceHolder surfaceHolder;
-	public static final int LARGEST_WIDTH = 200;
-	public static final int LARGEST_HEIGHT= 200;
+	
+	// these values are used to get an optimal camera resolution
+	public static final int DEFAULT_WIDTH = 800;
+	public static final int DEFAULT_HEIGHT= 600; // NOTE: we had a problem with Samsung Galaxy Ace when DEFAULT_HEIGHT = 320
+	
+	
 	Size mPreviewSize;   
 	List <Size> mSupportedPreviewSizes;
 
@@ -60,6 +64,7 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 		camera = Camera.open();
 		try {
 			Camera.Parameters parameters = camera.getParameters();
+			
 			if (this.getResources().getConfiguration().orientation !=Configuration.ORIENTATION_LANDSCAPE) {
 			parameters.set("orientation", "portrait");
 			parameters.setRotation(90);
@@ -68,9 +73,11 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 			parameters.setRotation(0);
 			}
 			parameters.setJpegQuality(100);
+			
 			mSupportedPreviewSizes = camera.getParameters().getSupportedPictureSizes();
-			mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, 480, 320);
+			mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 			parameters.setPictureSize(mPreviewSize.width, mPreviewSize.height);
+			
 			camera.setParameters(parameters);
 			camera.setPreviewDisplay(holder);
 			} catch (IOException exception) {
@@ -88,14 +95,14 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 	@Override
 	public void onPictureTaken(byte[] data, Camera camera) {
 		// TODO Auto-generated method stub				
-			 	tempPhoto tmp = new tempPhoto(this.getBaseContext());
-		        SQLiteDatabase sqlDb = tmp.getWritableDatabase(); 
-		        sqlDb.execSQL("delete from img");
-		        ContentValues values = new ContentValues();
-		        values.put("IMG", data);
-		        long n = sqlDb.insert("img", null, values);
-			    sqlDb.close();
-		    	finish();
+	 	tempPhoto tmp = new tempPhoto(this.getBaseContext());
+        SQLiteDatabase sqlDb = tmp.getWritableDatabase(); 
+        sqlDb.execSQL("delete from img");
+        ContentValues values = new ContentValues();
+        values.put("IMG", data);
+        long n = sqlDb.insert("img", null, values);
+	    sqlDb.close();
+    	finish();
 	}
 	@Override
 	public void onClick(View v) {
@@ -110,6 +117,8 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
         Size optimalSize = null;
         double minDiff = Double.MAX_VALUE;
         int targetHeight = h;
+        
+        // lets select the resolution with aspect ratio as close to the ideal as we can (see  DEFAULT_WIDTH, DEFAULT_HEIGHT)
         for (Size size : sizes) {
             double ratio = (double) size.width / size.height;
             if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
@@ -118,6 +127,8 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
                 minDiff = Math.abs(size.height - targetHeight);
             }
         }
+        
+        // in case the optimal resolution wasn't found, lets try to find the closest similar one
         if (optimalSize == null) {
             minDiff = Double.MAX_VALUE;
             for (Size size : sizes) {
@@ -127,6 +138,7 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
                 }
             }
         }
+        
         return optimalSize;
     }
 }
