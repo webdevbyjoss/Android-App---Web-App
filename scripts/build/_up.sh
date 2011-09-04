@@ -16,7 +16,7 @@ rsync -avz $APP_DIR/application/views/* $REMOTE_APP_DIR/application/views/
 rsync -avz $APP_DIR/application/Bootstrap.php $REMOTE_APP_DIR/application/Bootstrap.php
 
 # internal application resources deployment
-rsync -avz $APP_DIR/data/* $REMOTE_APP_DIR/data/
+rsync -avz $APP_DIR/data/locales/* $REMOTE_APP_DIR/data/locales/
 ./_up_public.sh
 
 # code libraries

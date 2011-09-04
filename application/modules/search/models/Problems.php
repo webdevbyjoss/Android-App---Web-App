@@ -58,7 +58,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	 * @param int $id
 	 * @return Zend_Db_Table_Row
 	 */
-	public function getreportById($id)
+	public function getReportById($id)
 	{
 		$select = $this->select();
 
@@ -78,7 +78,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	public function getLastItems($amount = 10)
 	{
 		$select = $this->getAdapter()->select();
-		$select->from('problems', array('id', 'msg', 'photo'));
+		$select->from('problems', array('id', 'msg', 'photo', 'sync_frn', 'sync_gpu'));
 		
 		// exclude reports being removed
 		$select->where('is_deleted = ?', self::IS_NOT_DELETED);
@@ -89,6 +89,17 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 		$select->joinLeft('category', 'problems.category_id = category.id', 'seo_name');
 		
 		return $this->getAdapter()->fetchAll($select);
+	}
+	
+	/**
+	 * Returns whole list of items
+	 */
+	public function getItems()
+	{
+		$select = $this->select();
+		$select->from('problems');
+		$select->order('id DESC');
+		return $this->fetchAll($select);
 	}
 	
 	/**

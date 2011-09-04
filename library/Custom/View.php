@@ -138,6 +138,17 @@ class Custom_View extends Zend_View
     {
         if ($this->_auth->hasIdentity()) {
             $userData = $this->_auth->getStorage()->read();
+            
+            return '<a href="/sync/">Синхронізація</a> <a href="' . $this->url(
+			array(
+				'lang' => $this->getLocale(),
+				'controller' => 'login',
+				'action' => 'logout',
+				'module' => 'default',
+			)
+			,'default') . '">Вихід</a>';
+            
+            /*
             return 'Profile: <a href="/profile/' . $userData['username'] . '">' . $userData['real_name'] .  '</a> <a href="' . $this->url(
 			array(
 				'lang' => $this->getLocale(),
@@ -146,8 +157,9 @@ class Custom_View extends Zend_View
 				'module' => 'default',
 			)
 			,'default') . '">' . $this->T('logout') . '</a>';
+			*/
         }
-        
+        /*
         return '<a ' . ( ($this->getModuleName() == 'default' && $this->getControllerName() == 'login') ? 'class="active"' : '' )  . ' href="' . $this->url(
 			array(
 				'lang' => $this->getLocale(),
@@ -156,7 +168,7 @@ class Custom_View extends Zend_View
 				'module' => 'default',
 			)
 			,'default') . '">' . $this->T('login') . '</a>';
-		
+		*/
     }
 
     /*

@@ -1,0 +1,50 @@
+<form action="/sync/process/" method="post">
+
+<table border="1">
+<tr>
+	<td>ID</td>
+	<td>Message</td>
+	<td>4road.net sync status</td>
+	<td>gpu.org.ua sync status</td>
+	<td>Actions</td>
+</tr>
+<tr>
+	<td colspan="4"></td>
+	<td>
+		<select class="action-selector" disabled="disabled">
+			<option>[ select action ]</option>
+			<option>Export to 4road.net</option>
+			<option>Export to gpu.org.ua</option>
+			<option>do nothing</option>
+		</select>
+	</td>
+</tr>
+<?php foreach ($this->problemsList as $problem): ?>
+<tr>
+	<td><?php echo $problem['id'] ?></td>
+	<td><?php echo $problem['msg'] ?>
+	<img src="/images/problem/thumb/<?php echo $problem['photo'] ?>" /></td>
+	<td></td>
+	<td><?php if (empty($problem['sync_gpu'])): ?>
+			<b>new</b>, <a href="/sync/process-gpu/id/<?php echo $problem['id'] ?>">publish &gt;</a> 
+		<?php else: ?>
+			<b>finished</b>
+		<?php endif; ?>
+	</td>
+	<td><input type="checkbox" name="problems[]" value="<?php echo $problem['id'] ?>" /></td>
+</tr>
+<?php endforeach; ?>
+<tr>
+	<td colspan="4"></td>
+	<td>
+		<select class="action-selector" disabled="disabled">
+			<option>[ select action ]</option>
+			<option>Export to 4road.net</option>
+			<option>Export to gpu.org.ua</option>
+			<option>do nothing</option>
+		</select>
+	</td>
+</tr>
+</table>
+
+</form>

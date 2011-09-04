@@ -63,6 +63,7 @@
 	<a <?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'download'): ?>class="active"<?php endif; ?> href="/download">Завантажити</a>
 	<a id="feedbackLink" title="<?php echo $this->T('send-us-your-feedback') ?>" href="#">Зворотній зв’язок</a>
 	<?php $this->renderSubNavigation(); ?>
+	<?php echo $this->profileLink(); ?>
 	</div>
 </div>
 <?php /* ?>
@@ -89,10 +90,6 @@
 	endif; ?>
 	<?php if ($this->getModuleName() == 'default' && $this->getControllerName() == 'index'): ?>
 	
-	<a href="/download">
-		<img alt="Завантажити програму для мобільного" src="/images/smartphones.jpg" />
-	</a>
-	
 	<?php /* ?>
 	<a href="/download" id="homepage-download-link" class="large-column-button">Завантажити програму<br /> для мобільного</a>
 	
@@ -106,6 +103,16 @@
 	
 	<?php */ ?>
 	
+
+
+	<div class="search-panel">
+		<h2>Додай фото вручну</h2>
+		Знімай проблемні місця будь-яким телефоном з камерою 
+		чи звичайним фотоапаратом та додавай свої фото. 
+		<div id="homepage-upload-link" class="large-column-button">Додати фото</div>
+	</div>
+	
+
 	
 	<div class="search-panel">
 		<h2>Новини</h2>
@@ -115,13 +122,6 @@
 		<p><a href="/news">Читати детальніше...</a></p>
 	</div>
 
-
-	<div class="search-panel">
-		<h2>Створити звіт без мобільного</h2>
-		<b>Фотографуй</b> звичайним фотоапаратом та звітуй про проблеми. Це так само просто, швидко та <b>анонімно</b>.
-		<div id="homepage-upload-link" class="large-column-button">Додати фото</div>
-	</div>
-	
 	
 	<?php endif; ?>
 	<?php /* ?>
