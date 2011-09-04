@@ -1,0 +1,5 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:visible="true" android:icon="@drawable/list" android:title="@string/listMenu" android:id="@+id/listMenu"></item> 
+<item android:visible="true" android:icon="@drawable/share" android:title="@string/shareMenu" android:id="@+id/shareMenu"></item>  
+<item android:visible="true" android:icon="@drawable/quit" android:title="@string/mainMenu" android:id="@+id/quitMenu"></item> 
+</menu>

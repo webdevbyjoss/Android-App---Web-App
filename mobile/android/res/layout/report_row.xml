@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+  
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_height="fill_parent"
+android:layout_width="fill_parent"
+android:padding="30dip"   
+android:id="@+id/llMain" 
+android:background="#ffffff"
+android:orientation="horizontal" >
+
+
+  <LinearLayout android:id="@+id/LinearLayout02"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent">
+                <TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:textStyle="bold"
+                        android:text="Mobile  " android:textSize="13sp"></TextView>
+                <TextView android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="Number"
+                        android:id="@+id/tvMobile" android:textSize="13sp"></TextView>
+        </LinearLayout> 
+
+</LinearLayout>

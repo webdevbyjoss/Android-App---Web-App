@@ -1,0 +1,4 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:visible="true" android:title="@string/createReport" android:id="@+id/addMenu" android:icon="@drawable/add"></item> 
+<item android:visible="true" android:title="@string/quitMenu" android:id="@+id/quitMenu" android:icon="@drawable/quit"></item>
+</menu>

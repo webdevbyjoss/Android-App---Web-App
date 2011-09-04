@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Повідом владу</string>
+    
+    <string name="createReportButton">ДОДАТИ ЗВІТ</string>
+    <string name="createReport">Додати звіт</string>
+    <string name="successfullUp">Ваш звіт успішно завантажено!</string>
+    <string name="webView">Переглянути на сайті</string>
+    <string name="share">Надіслати друзям</string>
+    <string name="chooseCategory">Виберіть категорію</string>
+    <string name="msg">Повідомлення</string>
+   	<string name="send">Надіслати</string>
+   	<string name="sendButton">НАДІСЛАТИ</string>
+   	<string name="location">Місцезнаходження (місто, вулиця)</string>
+   	<string name="enterMsgMin">Введіть повідомлення більше 5-и символів</string>
+   	<string name="enterMsgMax">Повідомлення не більше 120 символів</string>
+   	<string name="serverError">Проблема сервера</string>
+   	<string name="checkConnection">З\'єднання з Інтернет недоступне</string>
+   	<string name="takePhoto">Камери</string>
+	<string name="selectPhoto">SD карти</string>
+	<string name="createAction">Додати звіт</string>
+	<string name="listAction">Завантажено!</string>
+	<string name="takeMenu">Зробити фото</string>
+	<string name="openMenu">Відкрити фото</string>
+	<string name="sendMenu">Надіслати</string>
+	<string name="saveMenu">Зберегти</string>
+	<string name="listMenu">Переглянути</string>
+	<string name="shareMenu">Поділитись</string>
+	<string name="quitMenu">Вихід</string>
+	<string name="mainMenu">Головне меню</string>
+	<string name="prevReports">Попередні звіти:</string>
+	<string name="noReports"> Немає звітів </string>
+	<string name="imageChooser">Отримати фото з</string>
+	<string name="sync">Синхронізувати</string>
+	<string name="saved">Збережено</string>
+	<string name="uploaded">Завантажено</string>
+	<string name="status">Статус: </string>
+	<string name="date">Дата: </string>
+	<string name="checkGps">Увімкніть службу виявлення місцезнаходження</string>
+	<string name="pleaseMakePhoto">Зробіть фотографію</string>
+	<string name="reportSaved">Звіт збережено</string>
+	<string name="reportUploaded">Звіт завантажено. Ви можете видалити його з сервера протягом 15 хвилин</string>
+	<string name="wait">Зачекайте...</string>
+	<string name="noElementsToSync">Немає елементів для синхронізації</string>
+   	
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="fill_parent"
+        android:layout_height="fill_parent" android:background="#ffffff">
+<Button
+android:background="@drawable/greenbutton"
+  	android:layout_marginBottom="5dip"
+	android:layout_marginLeft="10dip"
+	android:layout_marginTop="10dip"
+	android:layout_marginRight="10dip"
+android:textSize="24dip"
+android:textStyle="bold"
+android:textColor="#ffffff"
+android:typeface="sans"
+android:layout_width="fill_parent"
+android:layout_height="75dip"
+android:text="@string/createReportButton" 
+android:id="@+id/CreateButton" />
+
+        <ListView android:id="@+id/ListView01" android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:cacheColorHint="#00000000"></ListView>
+</LinearLayout>
