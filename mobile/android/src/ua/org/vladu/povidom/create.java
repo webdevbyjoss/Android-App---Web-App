@@ -631,6 +631,8 @@ public class create extends Activity implements OnClickListener
 
 	            DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
 
+	            Log.d("joss", "HTTP init");
+	            
 	            HttpContext localContext = new BasicHttpContext();
 	            HttpPost httpPost = new HttpPost("http://povidom-vladu.org.ua/index/post/");
 	               
@@ -647,6 +649,9 @@ public class create extends Activity implements OnClickListener
 				}
 
 				tempPhoto tmp = new tempPhoto(create.this.getBaseContext());
+				
+				Log.d("joss", "get data from database");
+				
 	            SQLiteDatabase sqlDb = tmp.getReadableDatabase(); 
 	               
 	            Cursor curs = sqlDb.rawQuery("select IMG from img;", null);
@@ -684,8 +689,9 @@ public class create extends Activity implements OnClickListener
 	                    }
 	                }
 	                httpPost.setEntity(entity);
+	                Log.d("joss", "runnning HTTP request");
 	                HttpResponse response = httpClient.execute(httpPost, localContext);
-	   	    		    
+	                Log.d("joss", "HTTP DONE!!");    
 	                f1.delete();
 	              	String result = "";
 	              	InputStream in = response.getEntity().getContent();
@@ -707,6 +713,7 @@ public class create extends Activity implements OnClickListener
 						status = jObject.getString("status");
 						url0 = jObject.getString("url");
 						drophash = jObject.getString("drophash");
+						Log.d("joss", "parameters parsing DONE!!");
 					} catch (JSONException e) 
 					{
 						e.printStackTrace();

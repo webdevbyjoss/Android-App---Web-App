@@ -56,6 +56,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -454,7 +455,7 @@ public class povidom extends Activity implements OnClickListener
 			        		ConnectivityManager connec =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 			        		if (connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() || connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) //      ConnectivityManager.TYPE_WIFI   
 			      			{
-			        			syncronise(reportId0);
+			        			syncronise(entry.getId());
 			      			}
 			        		else
 			        		{
@@ -673,11 +674,9 @@ public class povidom extends Activity implements OnClickListener
 		     String img=path+"/test.jpg";
 		     OutputStream fOut = null;
 		     f1 = new File(path, "test.jpg");
-		     try 				
-		     {
+		     try {
 		    	 fOut = new FileOutputStream(f1);
-		     } catch (FileNotFoundException e) 
-		     {
+		     } catch (FileNotFoundException e) {
 		    	 e.printStackTrace();
 		     }
 		     reports r2 = new reports(povidom.this.getBaseContext());
@@ -688,22 +687,32 @@ public class povidom extends Activity implements OnClickListener
 
 	         if (curs.getCount() > 0 )
 	         {
-	        	 byte[] bitmapData = curs.getBlob(0);
-	             Bitmap bmp = BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length);
-	             bmp.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-	         }	         		
-	         curs.close();
-	         sqlDb.close();
-	               
-	         // Add your data  
-	         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);  
-	       	 nameValuePairs.add(new BasicNameValuePair("msg",this.tx));  
+	        	 // read the image from blob field...
+		        byte[] bitmapData = curs.getBlob(0);
+		        curs.close();
+		        sqlDb.close();
+		        
+		        // ... and turn it into the bitmap
+		        Bitmap bmp = BitmapFactory.decodeByteArray(bitmapData, 0, bitmapData.length);
+		        
+		        // lets free some memory
+		        bitmapData = null;
+		        System.gc();
+
+		        boolean result = bmp.compress(Bitmap.CompressFormat.JPEG, 99, fOut);
+		        String s = new Boolean(result).toString();
+		        Log.d("joss", new Boolean(s).toString());
+	         }
+	         
+	         // Add your data
+	         List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(5);
+	       	 nameValuePairs.add(new BasicNameValuePair("msg",this.tx));
 	       	 nameValuePairs.add(new BasicNameValuePair("lat", this.st1));
 	       	 nameValuePairs.add(new BasicNameValuePair("long", this.st2));
 	       	 nameValuePairs.add(new BasicNameValuePair("img", img));
 	       	 nameValuePairs.add(new BasicNameValuePair("type", this.s5));
-	               
-	       	 try 
+	         
+	       	 try
 	       	 {
 	       		 MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
                  for(int index=0; index < nameValuePairs.size(); index++) 
@@ -795,7 +804,7 @@ public class povidom extends Activity implements OnClickListener
 
 	        @Override
 	        public void run() 
-	        {         
+	        {
 	        	res0 = send.send();
 	            handler.sendEmptyMessage(0);
 	        }

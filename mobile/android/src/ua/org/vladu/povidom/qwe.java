@@ -30,7 +30,6 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 	public static final int DEFAULT_WIDTH = 800;
 	public static final int DEFAULT_HEIGHT= 600; // NOTE: we had a problem with Samsung Galaxy Ace when DEFAULT_HEIGHT = 320
 	
-	
 	Size mPreviewSize;   
 	List <Size> mSupportedPreviewSizes;
 
@@ -82,7 +81,7 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 			camera.setPreviewDisplay(holder);
 			} catch (IOException exception) {
 			camera.release();
-			Log.v("11",exception.getMessage());
+			Log.v("joss",exception.getMessage());
 			}
 			camera.startPreview();
 	}
