@@ -35,7 +35,7 @@ $(document).ready(function () {
 		var cityUrl = $(this).val();
 		
 		if (cityUrl != "") {
-			$('#city-finder-city').after('<img src="/images/ajax-loader-blue.gif" />');
+			$('#city-finder-city').after('<img src="/images/ajax-loader.gif" />');
 			location.href = cityUrl;
 		}
 
@@ -64,6 +64,6 @@ function loadCities(regionId)
 			elem.removeClass('hidden-element');
 			citiesCache[regionId] = $(this).html();
 		});
-		$('#city-finder-regions').after('<img id="loading-progress" src="/images/ajax-loader-blue.gif" />');
+		$('#city-finder-regions').after('<img id="loading-progress" src="/images/ajax-loader.gif" />');
 	}
 }

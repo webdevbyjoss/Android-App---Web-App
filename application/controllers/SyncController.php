@@ -2,6 +2,16 @@
 
 class SyncController extends Custom_Controller_Action 
 {
+	protected $_rest = null;
+	
+	public function __init()
+	{
+		$this->_rest['gpu'] = array(
+			'url' => 'http://dev.gpu.org.ua/instantcms.php',
+			'token' => 'QQQWWWEEERRRTTYYYYUUUUIIIOOO'
+		);
+	}
+	
 	public function indexAction()
 	{
 		$Problems = new Search_Model_Problems();
@@ -15,28 +25,35 @@ class SyncController extends Custom_Controller_Action
 		
 		$problem = $Problems->getReportById($request->getParam('id'));
 		
+		// send HTTP post data
+		$client = new Zend_Http_Client($this->_rest['gpu']);
 		
-		// get category information
-		// TODO: this is very pure code and needs to be revise to 
-		// grap category inforamtion with LEFT JOIN
-		// to avoid the additional query
-		$Categories = new Searchdata_Model_Category();
-		foreach ($Categories->getAllItems() as $cat) {
-			if ($cat->id == $problem->category_id) {
-				$catTitle = $cat->name; 
-			}
-		}
+		// set POST params
+		$client->setParameterPost(array(
+		    'title'  => $problem->msg,
+		    'token'   => $this->_rest['token'],
+		    'cat_id' => $problem->category_id,
+		    'addr_lat' => $problem->lat,
+		    'addr_lng' => $problem->lng,
+		));
 		
-		$toList = array(
-			'joseph.chereshnovsky@gmail.com' => 'Joseph Chereshnovsky',
-			'oleksiy.oliynyk@gmail.com' => 'Олексій Олійник',
-			// 'atom@mail.ua' => 'Артему для gpu.org.ua',  // Artem from gpu.org.ua
-		);
+		// Uploading an existing file
+		$filename = realpath(APPLICATION_PATH . '/../public_html/images/problem' ) . '/' . $problem->photo;
+		$client->setFileUpload($filename, 'imgfile');
 		
-		$mail = new Zend_Mail('UTF-8');
-		$mail->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
-	    
+		// Send the files
+		$client->request('POST');
+		
 		// new email report
+		$toList = array(
+	       	'joseph.chereshnovsky@gmail.com' => 'Joseph Chereshnovsky',
+            'oleksiy.oliynyk@gmail.com' => 'Олексій Олійник',
+            // 'atom@mail.ua' => 'Артему для gpu.org.ua',  // Artem from gpu.org.ua
+        );
+                
+        $mail = new Zend_Mail('UTF-8');
+        $mail->setHeaderEncoding(Zend_Mime::ENCODING_BASE64);
+
 		$mail->setBodyText("Привіт!
 
 Прийшов новий звіт з мобільного.
@@ -69,7 +86,7 @@ class SyncController extends Custom_Controller_Action
 	    $mail->setSubject('Новий звіт з мобільного');
 	    $mail->send();
 	    
-	    $problem->sync_gpu = 1;
+	    // $problem->sync_gpu = 1;
 	    $problem->save();
 	}
 	

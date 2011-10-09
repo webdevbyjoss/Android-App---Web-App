@@ -7,7 +7,8 @@ $this->headScript()->appendFile('/js/specialists.js');
 $this->headScript()->appendFile('/js/ajax-uploader/fileuploader.js')
 				   ->appendFile('/js/init-ajax-uploader.js');
 
-$this->headLink()->appendStylesheet('/js/ajax-uploader/fileuploader.css');
+$this->headLink()->appendStylesheet('/js/ajax-uploader/fileuploader.css')
+				 ->appendStylesheet('/css/homepage-layout.css');
 
 // load custom title
 $this->headTitle($this->T('site-window-title'));
@@ -16,13 +17,88 @@ $this->headMeta()
 	->setName('description', $this->T('meta-description'))
 	->setName('keywords', $this->T('meta-keywords'));
 
-// get locale to use for interface
+// get locale for city finder dialog
 $loc = $this->getLocale();
-
-$this->addPanel($this->partial('panel-social-share.phtml'));
 
 ?>
 
+<div id="homepage-container">
+	<div id="homepage-left-col">
+		<div class="phrase">
+		Програма для мобільного, щоб повідомляти про:
+		<ul>
+			<li>звалища сміття</li>
+			<li>вітсутнє освітлення</li>
+			<li>пошкодження асфальту</li>
+			<li>відкриті каналізаційні люки</li>
+			<li>брудні під'їзди, двори та графіті</li>
+			<li>невірно встановлені дорожні знаки</li>
+		</ul>
+		<?php /* ?>
+		<p>
+		Всі <b>звіти</b> надсилаються партнерським <b>громадським огранізаціям</b>, які працюють
+		з <b>державними службами</b>, щоб вирішити відповідні проблеми.
+		</p>
+		<?php */ ?>
+		<p>
+		Всі <b>звіти</b> надсилаються партнерській <b>громадській огранізації</b>,<br /> яка здійснює роботу
+		з <b>державними службами та установами</b>, щоб вирішити відповідні проблеми.
+		</p>
+		<a href="http://gpu.org.ua" target="_blank"><img alt="Громадянська позиція українця" src="/images/gpu.png" /></a>
+		
+		</div>
+		
+		
+		
+		<div class="homepage-buttons">
+		<a href="/download" id="homepage-download-link" class="large-column-button">Завантажити програму</a>
+		<a id="homepage-upload-link" class="large-column-button">Надіслати фото проблеми</a>
+
+		<div class="homepage-news-block">
+			<h2>Новини</h2>
+			<?php foreach ($this->newsList as $post): ?>
+			<p><i><?php echo $post->date ?></i>. <?php echo $post->title ?></p>
+			<?php endforeach; ?>
+			<p><a href="/news">Читати всі новини...</a></p>
+		</div>
+
+
+		<?php /* ?>
+		
+		<?php if ($this->lastItems): ?>
+		<div id="latest-items">
+		<?php 
+		foreach ($this->lastItems as $item):
+		// get locale to use for interface
+		// TODO: add multilingular cities names
+		$citySeoTitle = $item['city_seo_name'];
+		$cityTitle = $item['name'];
+		?>
+		<a title="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" class="thumb" href="<?php echo $this->url(array('city' => $citySeoTitle, 'problem' => $item['seo_name'], 'id' => $item['id']) ,'city_problem_item'); ?>">
+		<img alt="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" src="/images/problem/thumb/<?php echo $item['photo'] ?>" /></a>
+		<?php endforeach; ?>
+		</div>
+		<?php endif; ?>
+		
+		
+		<?php /* ?>
+		Перегляньте перелік проблем у своєму місті:
+		<div class="city-finder">
+			<select id="city-finder-regions" class="finder-selectbox-control">
+			<option value="0">[ <?php echo $this->T('select-country-region'); ?> ]</option>
+			<?php foreach ($this->regions as $region): ?>
+			<option value="<?php echo $region->region_id ?>"><?php echo ($loc == 'uk') ? $region->name_uk : $region->name ?></option>
+			<?php endforeach; ?>
+			</select>
+			<select id="city-finder-city" class="finder-selectbox-control hidden-element"></select>
+		</div>
+		<?php */ ?>
+		</div>
+	</div>
+
+</div>
+
+<?php /* ?>
 <div id="homepage-workflow">
 	<div id="homepage-workflow-1">
 		<img alt="" src="/images/workflow_1.png">
@@ -41,55 +117,41 @@ $this->addPanel($this->partial('panel-social-share.phtml'));
 	</div>
 </div>
 
-
-
-<?php if ($this->lastItems): ?>
-
-<div style="clear:both;">
-<br /><br />
-<h1>Найсвіжіші звіти</h1>
-
-<div id="services-list">
-<?php 
-foreach ($this->lastItems as $item):
-// get locale to use for interface
-// TODO: add multilingular cities names
-$citySeoTitle = $item['city_seo_name'];
-$cityTitle = $item['name'];
-?>
-<a title="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" class="thumb" href="<?php echo $this->url(array('city' => $citySeoTitle, 'problem' => $item['seo_name'], 'id' => $item['id']) ,'city_problem_item'); ?>">
-<img alt="<?php echo $item['msg'] ?>, <?php echo $cityTitle ?>" src="/images/problem/thumb/<?php echo $item['photo'] ?>" /></a>
-<?php endforeach; ?>
+<div id="homepage-workflow">
+	<div id="homepage-workflow-1">
+		<img alt="" src="/images/workflow_3.png">
+		<h2>звітуй про проблеми</h2>			
+	</div>
+	<div id="homepage-workflow-2">
+		<img alt="" src="/images/workflow_2.png">
+		<h2>звернення</h2>
+	</div>
 </div>
+
+
+
+<div class="homepage-buttons">
+	<a href="/download" id="homepage-download-link" class="large-column-button">Завантажити <br>програму для мобільного</a>
+	<div id="homepage-upload-link" class="large-column-button">Додати фото</div>
+	Знімай проблемні місця будь-яким телефоном з камерою <br>
+	чи звичайним фотоапаратом та додавай свої фото.
 </div>
-<?php endif; ?>
+
+<div class="homepage-news-block">
+		<h2>Новини</h2>
+		<?php foreach ($this->newsList as $post): ?>
+		<p><i><?php echo $post->date ?></i>. <?php echo $post->title ?></p>
+		<?php endforeach; ?>
+		<p><a href="/news">Читати всі новини...</a></p>
+</div>
+
+
+
 
 <?php /* ?>
-<div>
-<form action="/index/post" method="post" enctype="multipart/form-data">
-<input name="msg" type="text" value="this is a test message" />
-<input name="long" type="text" value="25.6" />
-<input name="lat" type="text" value="49.56" />
-<input name="type" type="text" value="1" />
-<input name="image" type="file" />
-<input type="submit" value="Post!" />
-</form>
+
+<div style="padding-top: 10px; float:left;width: 99%;text-align: center;">
+<a href="https://market.android.com/details?id=ua.org.vladu.povidom"><img alt="Повідом Владу на Android Market" src="/images/android-logo-white.png" border="0" /></a>
 </div>
+
 <?php */ ?>
-
-
-
-<div class="city-finder">
-
-<h1><?php echo $this->T('in-what-city-you-are-right-now'); ?></h1>
-
-<div><?php echo $this->T('in-what-city-you-are-right-now-description'); ?></div>
-
-<select id="city-finder-regions" class="finder-selectbox-control">
-<option value="0">[ <?php echo $this->T('select-country-region'); ?> ]</option>
-<?php foreach ($this->regions as $region): ?>
-<option value="<?php echo $region->region_id ?>"><?php echo ($loc == 'uk') ? $region->name_uk : $region->name ?></option>
-<?php endforeach; ?>
-</select>
-<select id="city-finder-city" class="finder-selectbox-control hidden-element"></select>
-</div>

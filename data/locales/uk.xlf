@@ -4,11 +4,11 @@
 <body>
 	<trans-unit id="site-name">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Повідом владу</target>
+		<target xml:lang="uk">Реєстратор вуличних проблем</target>
 	</trans-unit>
 	<trans-unit id="meta-description">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">повідомити владу про проблеми, які бачиш на вулиці</target>
+		<target xml:lang="uk">повідомити про проблеми, які бачиш на вулиці</target>
 	</trans-unit>
 	<trans-unit id="meta-keywords">
 		<source xml:lang="ru"></source>
@@ -16,11 +16,11 @@
 	</trans-unit>
 	<trans-unit id="slogan">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">вимагай кращі умови життя в своєму місті</target>
+		<target xml:lang="uk">маленька програма щоб підправити країну</target>
 	</trans-unit>
 	<trans-unit id="logo">
 		<source xml:lang="ru"></source>
-		<target xml:lang="uk">Повідом владу</target>
+		<target xml:lang="uk">Реєстратор вуличних проблем</target>
 	</trans-unit>
 	<trans-unit id="beta-version">
 		<source xml:lang="ru">сайт на стадии тестирования</source>
@@ -206,7 +206,7 @@
 	</trans-unit>
 	<trans-unit id="ff-option-partnership">
 		<source xml:lang="ru">предлагаю сотрудничество с моим сайтом</source>
-		<target xml:lang="uk">пропоную співпрацю з моїм сайтом</target>
+		<target xml:lang="uk">пропоную партнерство чи співпрацю</target>
 	</trans-unit>
 	<trans-unit id="ff-option-affiliate">
 		<source xml:lang="ru">хочу быть вашим представителем в своем городе</source>

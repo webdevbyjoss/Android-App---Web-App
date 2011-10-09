@@ -2,10 +2,10 @@
 
 class IndexController extends Custom_Controller_Action
 {
- 
     public function init()
     {
         /* Initialize action controller here */
+    	$this->_helper->layout->getLayoutInstance()->setLayout('single');
     }
  
     public function indexAction()
@@ -22,7 +22,7 @@ class IndexController extends Custom_Controller_Action
 		
 		// get recent additions
 		$problemsIndex = new Search_Model_Problems();
-		$this->view->lastItems = $problemsIndex->getLastItems();
+		$this->view->lastItems = $problemsIndex->getLastItems(4);
 		
 		
 		// show latest new on homepage

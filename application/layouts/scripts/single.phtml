@@ -2,7 +2,6 @@
 <html dir="ltr" lang="<?php echo $this->getLocale() ?>">
 <head>
 <?php echo $this->headMeta(); ?>
-
 <?php echo $this->headTitle($this->T('site-name'))->setSeparator(' — '); ?>
 <meta charset="utf-8" />
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -41,7 +40,6 @@
 <body>
 <script type="text/javascript">VK.init({apiId: 2224938});</script>
 <div id="page"><div id="page-inner">
-
 
 <div id="header">
 <div id="top-menu">
@@ -87,29 +85,44 @@
 	
 	Кожен з нас може допомогти владі оперативно реагувати та вирішувати проблеми у власному місті.
 	<br /><a style="float: right;" href="/help">дізнатися більше...</a>
+	
 	</div>
+	
+	
+
+	
+
+
+	<div class="search-panel">
+		<h2>Додай фото</h2>
+		Знімай проблемні місця будь-яким телефоном з камерою 
+		чи звичайним фотоапаратом та додавай свої фото. 
+		<div id="homepage-upload-link" class="large-column-button">Додати фото</div>
+	</div>
+	
+
+	
 	<?php */ ?>
 	
-	<div class="search-panel">
-		<h2>Новини</h2>
-		<?php foreach ($this->newsList as $post): ?>
-		<p><i><?php echo $post->date ?></i>. <?php echo $post->title ?></p>
-		<?php endforeach; ?>
-		<p><a href="/news">всі новини...</a></p>
-	</div>
-	
 	<?php endif; ?>
-
-	<?php if (!empty($this->mapCoords)) {
-		echo $this->partial('google-map.phtml', array(
-			'lat' => $this->mapCoords['lat'],
-			'lng' => $this->mapCoords['lng'],
-			'label' => $this->mapCoords['label']
-		));
-	} ?>
-	
+	<?php /* ?>
+	<div id="search-panel-extra" class="search-panel">
+		<div class="label">останні обговорення</div>
+		<div><a href="">як поставити штукатурку?</a></div>
+		<div><a href="">зняти пластикові вікна?</a></div>
+		<div><a href="">вибираємо свердло</a></div>
+		<div><a href="">кришиться цегла</a></div>
+		<div><a href="">як правильно підібрати колір ламінату?</a></div>
+		<div><a href="">як поставити штукатурку?</a></div>
+		<div><a href="">як поставити штукатурку?</a></div>
+	</div>
+	<div id="search-panel-info" class="search-panel">
+		<div class="label">останні пропозиції роботи</div>
+		<div><a href="">шукаємо грущиків для цікавої роботи</a></div>
+		<div><a href="">потрібні різноробочі</a></div>
+	</div>
 	<?php echo $this->renderPanels(); ?>
-
+	<?php */ ?>
 </div>
 </div>
 </div>

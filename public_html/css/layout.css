@@ -45,11 +45,11 @@ h1 {
 }
 
 h2 {
-	font-size:1.5em;
+	font-size:1.3em;
 }
 
 h3 {
-	font-size:1.3em;
+	font-size:1.2em;
 }
 
 h3 {
@@ -69,7 +69,8 @@ h4 {
 #top-menu {
 	padding: 0px;
 	padding-top: 5px;
-	font-size: 1.4em;
+	font-size: 1.3em;
+	float: right;
 }
 
 #top-menu a {
@@ -84,7 +85,6 @@ h4 {
 }
 
 #top-menu-right {
-	float: right;
 	padding-right: 10px;
 	font-size: 1.1em;
 	color: gray;
@@ -108,9 +108,8 @@ h4 {
 
 
 #top-menu-left {
-	float: left;
 	padding-left: 35px;
-	padding-top: 20px;
+	padding-top: 10px;
 }
 
 #top-menu a.active {
@@ -124,42 +123,28 @@ h4 {
 }
 
 #header {
-	padding: 10px;
-	padding-bottom: 0px;
-	padding-top: 5px;
+
 }
 
-#logo {
-	float:left;
-	width: 430px;
-}
-
-#logo img {
-	border:0;
-	float: left;
-}
-
-#beta-mark {
-	position: absolute;
-	left: 370px;
-	top: 7px;
+#header-logo {
+  display: block;
+  float: left;
+  padding: 7px;
 }
 
 #header-site-name {
-	font-size: 3em;
-	padding-left: 20px;
-	float: left;
-	padding-top: 15px;
+	font-size: 2.8em;
 	font-weight: bold;
+	text-transform: capitalize;
+
+	padding-top: 20px;
+	color: #333333;
 }
 
 #slogan {
-	float: left;
-	clear:both;
-	position: relative;
-	top: -20px;
-	left: 85px;
 	color: gray;
+	padding-top: 8px;
+	font-size: 1.1em;
 }
 
 #header-site-name a {
@@ -438,6 +423,24 @@ span.item-title {
 /**
  * Feedback form
  */
+#feedbackLink {
+	display: block;
+	bottom: 0;
+	margin: auto;
+	width: 200px;
+	text-align: center;
+
+	background-color: #D9ECFF;
+	padding: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+
+	text-decoration: none;
+
+	border-radius: 5px 0px 0px 5px;
+}
+
+
 #feedback-form {
 	width:80%;
 	position: absolute;
@@ -605,22 +608,14 @@ span.item-title {
  */
 
 .city-finder {
-	padding: 30px;
-	padding-top: 25px;
-	
-	background-color: #F2F9FF;
-	margin-bottom: 20px;
-
-	border-radius: 10px;
-
-	padding: 20px 25px 25px;
-	
-	float: left;
-	width: 94%;
-	margin-top: 20px;
+	padding: 5px;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	clear: both;
 }
 
 #city-finder-select-control {
+	
 }
 
 
@@ -629,11 +624,13 @@ span.item-title {
 	background: white;
     color: black;
     font-family: arial;
-    font-size: 1.7em;
+    font-size: 1.4em;
     /*padding: 3px 3px 4px 5px;*/
 
-    margin-top: 15px;
+    margin-top: 5px;
     cursor: pointer;
+
+    width: 90%;
 }
 
 .finder-select-control {
@@ -756,22 +753,22 @@ span.item-title {
 	float: left;
 }
 
-#services-list .thumb {
+.thumb {
 	float: left;
 	padding-right: 5px;
 	padding-bottom: 5px;
 }
 
-#services-list a.thumb img {
+a.thumb img {
 	border: 0;
 	display: block;
 
-	filter:alpha(opacity=90);
-	opacity: 0.9;
-	-moz-opacity:0.9;
+	filter:alpha(opacity=85);
+	opacity: 0.85;
+	-moz-opacity:0.85;
 }
 
-#services-list a.thumb:hover img {
+a.thumb:hover img {
 	filter:alpha(opacity=100);
 	opacity: 1;
 	-moz-opacity:1;
@@ -791,15 +788,16 @@ h2.comments {
 	border-radius: 5px 5px 5px 5px;
     
     margin-bottom: 10px;
-    margin-top:10px;
-    padding: 20px 20px 20px;
+    padding: 20px;
+    padding-top: 10px;
+    padding-bottom:10px;
     text-decoration: none;
     /*color: #333333;*/
     
-    font-size: 2em;
+    font-size: 1.6em;
     display: block;
     text-align: center;
-    line-height: 0.8em;
+    line-height: 1em;
 
     cursor: pointer;
 }
@@ -820,6 +818,8 @@ h2.comments {
 #homepage-download-link {
 	background-color: #d1ffcc;
 	color: #8aa887;
+	padding-top: 13px;
+	padding-bottom: 13px;
 }
 
 #homepage-download-link:hover {
@@ -931,8 +931,6 @@ h2.comments {
 	float: left;
 	
 	margin-left: 10px;
-
-	text-align: center;
 }
 
 #homepage-workflow-1 {
@@ -956,4 +954,16 @@ h2.comments {
 #homepage-slogan-mobile h1 {
 	font-size: 4em;
 	line-height: 0.93em;
+}
+
+.homepage-buttons {
+	width: 350px;
+	text-align: center;
+    float: left;
+}
+
+.homepage-news-block {
+    float: left;
+    text-align: left;
+    padding-top: 15px;
 }
