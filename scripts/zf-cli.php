@@ -80,10 +80,10 @@ $front = $application->getBootstrap()
 //
 // FIXME: I think this functionality should be moved to the routing
 //
-$params = array_reverse(explode('/', $getopt->getOption('a')));
-$module = array_pop($params);
-$controller = array_pop($params);
-$action = array_pop($params);
+$action_data = array_reverse(explode('/', $getopt->getOption('a')));
+$module = array_pop($action_data);
+$controller = array_pop($action_data);
+$action = array_pop($action_data);
 $request = new Zend_Controller_Request_Simple ($action, $controller, $module);
 
 // set front controller options to make everything operational from CLI

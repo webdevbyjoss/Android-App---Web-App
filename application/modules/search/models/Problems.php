@@ -113,14 +113,9 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 	 */
 	public function createItem($message, $lng, $lat, $type, $dropHash)
 	{
-		// validate message
-		// if (strlen($message) < 5) {
-		// 	
-		//}
-		
 	    // NOTE: the fix of ugly hosting bug with
-    	// megic quotes GPC turned on so all slashes are automatically escaped
-    	if (get_magic_quotes_gpc()) {
+    	// magic quotes GPC turned on so all slashes are automatically escaped
+    	if (get_magic_quotes_gpc() && !empty($message)) {
     		$message = stripslashes($message);
     	}
 
@@ -186,9 +181,9 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
     	 */
 		$upload = new Zend_File_Transfer_Adapter_Http();
 		
-		// Limit the extensions to jpg and png files
-		$upload->addValidator('IsImage', false);
-		$upload->addValidator('Extension', false, 'jpg,png');
+		// Limit the extensions to jpg files
+		$upload->addValidator('IsImage', true);
+		$upload->addValidator('Extension', true, 'jpg');
 
 		$upload->addFilter('Rename', array('target' => $imageFile));
 		$res = $upload->receive();
@@ -196,7 +191,7 @@ class Search_Model_Problems extends Zend_Db_Table_Abstract
 		if ($res === false) {
 			$messages = $upload->getMessages();
 			$db->rollBack();
-			throw new Search_Model_ProblemsException('Error during file upload.' . implode(' ', $messages));
+			throw new Search_Model_ProblemsException('Error during file upload. ' . implode("\n", $messages));
 		} else {
 			
 			// resize photo

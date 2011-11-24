@@ -41,6 +41,21 @@ $spr_to_gpu_categories = array(
 	'8' => '52', // Інші скарги	
 );
 
+$default_category_titles = array(
+	'0' => 'Яма на дорозі',
+	'1' => 'Відкритий каналізаційний люк',
+	'2' => 'Переповнений смітник',
+	'3' => 'Ігрові автомати в житлових районах',
+	'4' => 'Неприбрані під\'їзди',
+	'5' => 'Звалища сміття посеред міста',
+	'6' => 'Руйнування архітектури',
+	'7' => 'Відсутнє освітлення',
+	'8' => 'Інші скарги',
+);
+
+// default country
+define('DEFAULT_COUNTRY', 'Україна');
+
 // END Of CONFIGURATION
 // WARNING!!! DO NOT EDIT THE CODE UNDER THIS LINE
 
@@ -49,6 +64,7 @@ define('PATH', dirname(__FILE__));
 define("VALID_CMS", 1);
 
 include(PATH . '/core/cms.php');
+include(PATH . '/core/lib_tags.php');
 $inCore = cmsCore::getInstance();
 
 // lets check security token provided
@@ -66,6 +82,7 @@ $inDB       = cmsDatabase::getInstance();
 $inPage     = cmsPage::getInstance();
 $inConf     = cmsConfig::getInstance();
 $inUser     = cmsUser::getInstance();
+$cmsActions	= cmsActions::getInstance();
 
 // init maps module
 $inCore->includeGraphics();
@@ -75,11 +92,11 @@ $model = new cms_model_maps();
 // get maps specific configuration
 $cfg = $model->getConfig();
 
-// read values from request & save them to database
-$id         = $inCore->request('id', 'int', 0);
-$seolink    = $inCore->request('seolink', 'str', '');
-$do         = $inCore->request('do', 'str', 'view');
-$page       = $inCore->request('page', 'int', 1);
+// if this page was accessed via GET
+// then just show the OK status
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+	die('Status: OK');
+}
 
 // create new item
 $item                   = array();
@@ -89,7 +106,7 @@ $item['user_id']        = CMS_USER_ID;
 $item['vendor_id']      = 0;
 $item['tpl']            = 'com_inmaps_item.tpl';
 $item['is_comments']    = 0;
-$item['published']      = $cfg['published_add'];
+$item['published']      = 1; // lets publisheverything by default
 $item['on_moderate']    = ($item['published'] ? 0 : 1);
 $item['pubdate']        = date('Y-m-d H:i');
 $item['is_front']       = 0;
@@ -97,8 +114,20 @@ $item['cats']           = array();
 $item['auto_thumb']     = $inCore->request('auto_thumb', 'int', 1);
 
 // save problem information
-$item['category_id']    = $inCore->request('cat_id', 'int', 0); // cat_id
-$item['title']          = $inCore->request('title', 'str'); // title
+$mobile_cat_id = $inCore->request('cat_id', 'int', 0);
+$item['category_id']    = $spr_to_gpu_categories[$mobile_cat_id]; // cat_id
+
+// title can't be empty
+// because we need clickable link in instantCMS admin area
+// so in case title is not esterred - then lets enter the default 
+// title of the selected category
+$title = $inCore->request('title', 'str');
+if (empty($title)) {
+	$title = $default_category_titles[$mobile_cat_id];
+}
+
+$item['title']          = utf8_to_cp1251($title); // title
+
 // coordinates
 $item['addr_lat']       = $inCore->request('addr_lat', 'array'); // addr_lat
 $item['addr_lng']       = $inCore->request('addr_lng', 'array'); // addr_lng
@@ -125,43 +154,105 @@ $item['addr_room']      = $inCore->request('addr_room', 'array');
 // $item['contacts']       = $inCore->request('contacts', 'array');
 
 
-/*
-if (isset($_FILES["imgfile"]["name"]) && @$_FILES["imgfile"]["name"]!='') {
-	//generate image file			
-	$tmp_name = $_FILES["imgfile"]["tmp_name"];
-	$file = $_FILES["imgfile"]["name"];			
-	$path_parts = pathinfo($file);
-	$ext = $path_parts['extension'];	
-	$file = md5($file.time()).'.'.$ext;
-	$item['file'] = $file;
-	
-	//upload image and insert record in db		
-	if (@move_uploaded_file($tmp_name, $_SERVER['DOCUMENT_ROOT']."/upload/files/images/$file")){
-		@img_resize($_SERVER['DOCUMENT_ROOT']."/upload/files/images/$file", $_SERVER['DOCUMENT_ROOT']."/upload/files/images/small/$file.jpg", 100, 100);
-		@img_resize($_SERVER['DOCUMENT_ROOT']."/upload/files/images/$file", $_SERVER['DOCUMENT_ROOT']."/upload/files/images/medium/$file.jpg", 250, 250);
-	    @chmod($_SERVER['DOCUMENT_ROOT']."/upload/files/images/$file", 0755);
-		@chmod($_SERVER['DOCUMENT_ROOT']."/upload/files/images/small/$file.jpg", 0755);
-		@chmod($_SERVER['DOCUMENT_ROOT']."/upload/files/images/medium/$file.jpg", 0644);
-	}
-}
-*/
-
 
 
 // save information to database
 $item['id']             = $model->addItem($item);
 
-
-// report successfull information submition
+// let get the URL
 $seolink = $inDB->get_field('cms_map_items', "id={$item['id']}", 'seolink');
 $category = $inDB->get_fields('cms_map_cats', "id={$item['category_id']}", 'title, seolink');
 
-cmsActions::log('add_maps_obj', array(
-                'object' => $item['title'],
-                'object_url' =>  "/maps/{$seolink}.html",
-                'object_id' =>  $item['id'],
-                'target' => $category['title'],
-                'target_url' => "/maps/{$category['seolink']}",
-                'target_id' =>  $item['category_id'],
-                'description' => ''
-));
+$action_data = array(
+    'object' => $item['title'],
+    'object_url' =>  "/maps/{$seolink}.html",
+    'object_id' =>  $item['id'],
+    'target' => $category['title'],
+    'target_url' => "/maps/{$category['seolink']}",
+    'target_id' =>  $item['category_id'],
+	'description' => ''
+);
+
+// we should insert information into 
+// cms_map_items_cats - to assign category
+$sql = "INSERT INTO cms_map_items_cats SET
+	item_id = " . $item['id'] . ",
+	category_id = " . $item['category_id'] . ",
+	ordering = 1";
+$inDB->query($sql);
+
+// cms_map_markers - to place a marker on map
+$sql = "INSERT INTO cms_map_markers SET
+	item_id = " . $item['id'] . ",
+	category_id = " . $item['category_id'] . ",
+	addr_country = '" . DEFAULT_COUNTRY . "',
+	addr_city = '',
+	addr_prefix = '',
+	addr_street = '',
+	addr_house = '',
+	addr_room = '',
+	addr_hash = '" . md5('povidom-vladu.org.ua' . microtime()) . "',
+	lat = " . floatval($item['addr_lat']) . ",
+	lng = " . floatval($item['addr_lng']) . ",
+	marker = 'attention.png',
+	zoom = 0,
+	published = 1,
+	is_main = 0";
+
+var_dump($sql);
+
+$inDB->query($sql);
+
+// cms_map_attend - to set the relation between object on map & object type
+$sql = "INSERT INTO cms_map_attend SET 
+	object_id = " . $item['id'] . ",
+	object_type = 'item',
+	user_id = " . CMS_USER_ID . "
+";
+$inDB->query($sql);
+
+// cms_actions_log - to show the new item in actions log
+// report successfull information submition
+// cmsActions::log('add_maps_obj', $action_data);
+$action = cmsActions::getAction('add_maps_obj');
+if ($action) {
+	$action_data['object']      =  $inDB->escape_string(stripslashes(str_replace(array('\r', '\n'), ' ', $action_data['object'])));
+	$action_data['target']      =  $inDB->escape_string(stripslashes(str_replace(array('\r', '\n'), ' ', $action_data['target'])));
+	$action_data['description'] =  $inDB->escape_string(stripslashes(str_replace(array('\r', '\n'), ' ', $action_data['description'])));
+	$action_data['description'] =  preg_replace('/\[hide\](.*?)\[\/hide\]/i', '', $action_data['description']);
+	$action_data['description'] =  preg_replace('/\[hide\](.*?)$/i', '', $action_data['description']);
+	$action_data['user_id']     =  CMS_USER_ID;
+	
+	$sql = "INSERT INTO cms_actions_log (action_id, pubdate, user_id, object, object_url, object_id,
+	           target, target_url, target_id, description, is_friends_only, is_users_only)
+	        VALUES ('{$action['id']}', NOW(), '{$action_data['user_id']}',
+	                '{$action_data['object']}', '{$action_data['object_url']}', '{$action_data['object_id']}',
+	                '{$action_data['target']}', '{$action_data['target_url']}', '{$action_data['target_id']}',
+	                '{$action_data['description']}', '{$action_data['is_friends_only']}', '{$action_data['is_users_only']}')";
+	$inDB->query($sql);
+}
+
+// cms_map_chars_val - set the item status
+// char_id - means "Статус проблемы"
+$sql = "INSERT INTO `cms_map_chars_val` SET 
+`item_id` = " . $item['id'] . ",
+`char_id` = 40, 
+`val` = '" . utf8_to_cp1251('|Не решена|') . "'
+";
+$inDB->query($sql);
+
+
+// lets send the notification to email about new information submit
+mail('joseph.chereshnovsky@gmail.com', '[POVIDOM-VLADU] gpu.org.ua - report processed', cp1251_to_utf8(var_export($action_data, true)) . "\n" . cp1251_to_utf8(var_export($item, true)));
+
+
+// helper functions
+// Dumn.. InstantCMS only works with cp1251
+// to avoid dependency to iconv lets use some custom function
+function utf8_to_cp1251($s) {
+	return iconv('UTF-8', 'cp1251', $s);
+}
+// ... and another direction
+function cp1251_to_utf8($s) {
+	return iconv('cp1251', 'UTF-8', $s);
+}

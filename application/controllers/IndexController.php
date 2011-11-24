@@ -43,6 +43,12 @@ class IndexController extends Custom_Controller_Action
 		$data = $this->_request->getPost();
 		$Problems = new Search_Model_Problems();
 
+		// sent notification email about new report try 
+		$debug_data = "POST variable:" . var_export($data, true) 
+			. "REQUEST: " . var_export($this->_request->getParams(), true)
+			. "FILES: " . var_export($_FILES, true);
+		mail(ADMIN_EMAIL, '[POVIDOM-VLADU] Report TRY at povidom-vladu.org.ua', $debug_data);
+		
 		// to allow user to drop the report during some time (~15 minutes) after it was added
 		// we should generate a hash value - a special password to drop records from database
 		$dropHash = md5(microtime());
@@ -77,6 +83,13 @@ class IndexController extends Custom_Controller_Action
 		
 		$url = $this->view->absoluteUrl(array('city' => $cityInfo->seo_name_uk, 'problem' => $categoryInfo->seo_name, 'id' => $elem->id) ,'city_problem_item');
 		$this->view->shortUrl = $GooglShort->shorten($url);
+		
+		// sent notification email about new report 
+		mail(ADMIN_EMAIL, '[POVIDOM-VLADU] Report SUCCESS at povidom-vladu.org.ua', var_export($data, true));
+		
+		// post reported information to gpu.org.ua
+		$Service = new Custom_Gpuorgua();
+		$this->view->responce = $Service->send($elem);
    }
    
    /**
