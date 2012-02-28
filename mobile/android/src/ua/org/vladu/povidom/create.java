@@ -1035,7 +1035,7 @@ public class create extends TabActivity implements OnClickListener
 	         	if (shadow) {
 	                 return;
 	         	}
-	         	  
+	         	
 	         	Bitmap bmp  = BitmapFactory.decodeResource(getResources(), R.drawable.marker_default);
 	         	int bmpWidth = bmp.getWidth();
 	         	int bmpHeight = bmp.getHeight();
@@ -1056,6 +1056,13 @@ public class create extends TabActivity implements OnClickListener
 	             //pC.drawCircle(p01.x, p01.y, 5, lp3);
 	             pC.drawBitmap(bmp, p01.x - (bmpWidth), p01.y - (bmpHeight), lp3);
 	             pOsmv.invalidate();
+	             
+		         // temporary have to limit zoom level 
+	             // see: http://stackoverflow.com/questions/4146395/set-minimum-zoom-level-for-mapview
+	             // TODO: revise this to disable zoom button instead of just reverting zoom state
+		         if (pOsmv.getZoomLevel() > 16) {
+		         	pOsmv.getController().setZoom(16);
+		         }
 	         }
 
 	     }
