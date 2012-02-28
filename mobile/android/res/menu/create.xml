@@ -1,5 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"> 
 <item android:visible="true" android:icon="@drawable/save" android:title="@string/saveMenu" android:id="@+id/saveMenu"></item>
-<item android:visible="true" android:icon="@drawable/camera" android:title="@string/takeMenu" android:id="@+id/takeMenu"></item>  
-<item android:visible="true" android:icon="@drawable/home" android:title="Головне меню" android:id="@+id/quitMenu"></item> 
+<item android:visible="true" android:icon="@drawable/camera" android:title="@string/takeMenu" android:id="@+id/takeMenu"></item>   
 </menu>

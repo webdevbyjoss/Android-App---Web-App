@@ -51,13 +51,11 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
         cameraView.setOnClickListener(this);
 
     }
-	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		camera = Camera.open();
@@ -85,13 +83,11 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 			}
 			camera.startPreview();
 	}
-	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		camera.stopPreview();
 		camera.release();
 	}
-	@Override
 	public void onPictureTaken(byte[] data, Camera camera) {
 		// TODO Auto-generated method stub				
 	 	tempPhoto tmp = new tempPhoto(this.getBaseContext());
@@ -103,7 +99,6 @@ public class qwe extends Activity implements OnClickListener, SurfaceHolder.Call
 	    sqlDb.close();
     	finish();
 	}
-	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		camera.takePicture(null, null, null, this);

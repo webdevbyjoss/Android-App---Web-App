@@ -32,6 +32,7 @@ import org.apache.http.protocol.HttpContext;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -66,12 +67,15 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class povidom extends Activity implements OnClickListener
 {
+	QuickContactBadge badgeSmall;
 	Button startButton; 
 	TextView text;
 	String s5 = "";  String st1 = null, st2=null; LocationManager lm; LocationListener ll; 
@@ -80,14 +84,12 @@ public class povidom extends Activity implements OnClickListener
 	private JSONObject jObject0;
 	PhonebookAdapter adapter; ListView list; List<Phonebook> listOfPhonebook;
 	PhonebookAdapter adapter1; ListView list1; List<Phonebook> listOfPhonebook1;
-	
-	private final String MY_DATABASE_NAME = "database";
-    private final String MY_DATABASE_TABLE = "reports";
-    private ListView lv1;
-    private String lv_arr[]={"Android","iPhone","BlackBerry","AndroidPeople","Android","iPhone","BlackBerry","AndroidPeople"};
+
 	int prevOrientation;
 	int reportId0;
 
+	ImageView add;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -97,7 +99,6 @@ public class povidom extends Activity implements OnClickListener
         list = (ListView)findViewById(R.id.ListView01);
         listOfPhonebook = new ArrayList<Phonebook>();
         reports r0 = new reports(this.getBaseContext());
-        
         SQLiteDatabase sqlDb1 = r0.getReadableDatabase();
         Cursor curs = sqlDb1.rawQuery("select * from r0 order by STATUS, ID desc;", null);
        
@@ -113,7 +114,9 @@ public class povidom extends Activity implements OnClickListener
                 String date= curs.getString(8);
                 String drophash= curs.getString(9);
                 Long dateuntilremove= curs.getLong(10);
-                listOfPhonebook.add(new Phonebook(id, txt,url,status, date, drophash, dateuntilremove));
+                String city = curs.getString(11);
+                String street = curs.getString(12);
+                listOfPhonebook.add(new Phonebook(id, txt,url,status, date, drophash, dateuntilremove, city, street));
         	}
         }
         curs.close();
@@ -127,8 +130,20 @@ public class povidom extends Activity implements OnClickListener
         adapter = new PhonebookAdapter(this, listOfPhonebook);
         list.setAdapter(adapter);
         
-		startButton = (Button) this.findViewById(R.id.CreateButton);
-		startButton.setOnClickListener(this);	
+        add = (ImageView) findViewById(R.id.add1);
+        add.setOnClickListener(this);
+		
+		
+		
+		//startButton = (Button) this.findViewById(R.id.CreateButton);
+		//startButton.setOnClickListener(this);
+		/*startButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mQuickAction.show(v);
+				mQuickAction.setAnimStyle(QuickAction.ANIM_GROW_FROM_CENTER);
+			}
+		});*/
     }
     
     protected void onResume()
@@ -158,15 +173,15 @@ public class povidom extends Activity implements OnClickListener
 	public void onClick(View v) 
 	{
 		//GPS 
-    	lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if ( !lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
-        {
-        	Toast.makeText(povidom.this, R.string.checkGps, Toast.LENGTH_LONG).show();
-        	Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        	startActivity(intent);
-        }
-        else
-        {  		
+    	//lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //if ( !lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
+        //{
+        //	Toast.makeText(povidom.this, R.string.checkGps, Toast.LENGTH_LONG).show();
+       // 	Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+       // 	startActivity(intent);
+       // }
+     //   else
+     //   {  		
         	String FILENAME = "settings";
         	String string = "1";
         	FileOutputStream fos;
@@ -184,7 +199,7 @@ public class povidom extends Activity implements OnClickListener
         	}
         	Intent intent = new Intent(povidom.this, create.class);
         	startActivity(intent);
-        } 
+     //   } 
 	}
 	
 	
@@ -208,6 +223,8 @@ public class povidom extends Activity implements OnClickListener
 	        	String category = curs.getString(5);
 	            String status = curs.getString(7);
 	            String date= curs.getString(8);
+	            String city = curs.getString(11);
+	            String street = curs.getString(12);
 	            prevOrientation = getRequestedOrientation();
 	            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) 
 	            {
@@ -256,18 +273,15 @@ public class povidom extends Activity implements OnClickListener
 	{
 	   switch (item.getItemId()) 
 	   {
-	   		case R.id.quitMenu:
-	   			finish();
-	   			return true;
 	   		case R.id.addMenu:
 	   			//GPS 
-	   			lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	   			/*lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			    if ( !lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
 			    {
 			    	Toast.makeText(povidom.this, R.string.checkGps, Toast.LENGTH_LONG).show();
 			    }
 			    else
-			    {
+			    {*/
 			    	String FILENAME = "settings";
 			    	String string = "1";
 			    	FileOutputStream fos;
@@ -285,7 +299,7 @@ public class povidom extends Activity implements OnClickListener
 			    	}
 			    Intent intent = new Intent(povidom.this, create.class);
 			    startActivity(intent);
-			    }
+			    //}
 			    return true;
 	   		default:
 	   			return super.onOptionsItemSelected(item);
@@ -308,8 +322,10 @@ public class povidom extends Activity implements OnClickListener
 		                "STATUS" + " TEXT, " +
 		                "DATEOFCREATION" + " TEXT, " +
 		                "DROPHASH" + " TEXT, " +
-		                "DATEUNTILREMOVE" + " REAL);";
-			private static final String DATABASE_NAME = "reports3";
+		                "DATEUNTILREMOVE" + " REAL, " +
+		                "CITY" + " TEXT, " +
+		                "STREET" + " TEXT);";
+			private static final String DATABASE_NAME = "reports30";
 
 		    reports(Context context) 
 		    {
@@ -380,188 +396,212 @@ public class povidom extends Activity implements OnClickListener
 
 		    public View getView(int position, View convertView, ViewGroup viewGroup) 
 		    {
-		        final Phonebook entry = listPhonebook.get(position);
+		        final Phonebook entry = listPhonebook.get(position);	        
 		        if (convertView == null) 
 		        {
 		            LayoutInflater inflater = (LayoutInflater) context
 		                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		            convertView = inflater.inflate(R.layout.phone_row, null);
 		        }
-		        TextView tvContact = (TextView) convertView.findViewById(R.id.tvContact);
-		        tvContact.setText(entry.getTxt());
-
-		        TextView tvPhone = (TextView) convertView.findViewById(R.id.tvMobile);
-
-		        if (entry.getStatus().compareTo("saved") == 0)
-		        {
-		        	tvPhone.setText(R.string.saved);
-		        }
-		        else if (entry.getStatus().compareTo("uploaded") == 0)
-			    {
-		        	tvPhone.setText(R.string.uploaded);
-			    }
-
-		        TextView tvMail = (TextView) convertView.findViewById(R.id.tvMail);
-		        tvMail.setText(entry.getDate());
-
+		        
 		        reportId0 = entry.getId();
 		        final String url = entry.getUrl();
 		        final String message = entry.getTxt();
 		        final String drophash = entry.getDrophash();
 		        final Long dateuntilremove = entry.getDateuntilremove();
-		        // Set the onClick Listener on this button
-		        Button btnSync = (Button) convertView.findViewById(R.id.btnSync);
-		        Button btnRemove = (Button) convertView.findViewById(R.id.btnRemove);
-		        Button btnBrowse = (Button) convertView.findViewById(R.id.btnBrowse);
-		        Button btnShare = (Button) convertView.findViewById(R.id.btnShare);
+		        
+		        convertView.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						//Toast.makeText(getApplicationContext(), String.valueOf(entry.getId()), Toast.LENGTH_LONG).show();
+						
+				        if (entry.getStatus().compareTo("saved") == 0)
+				        {
+						 //Add action item
+		    	        ActionItem addAction = new ActionItem();
+		    			
+		    			addAction.setTitle("Синхронізувати");
+		    			addAction.setIcon(getResources().getDrawable(R.drawable.sync_icc));
 
+		    			//Upload action item
+		    			ActionItem upAction = new ActionItem();
+		    			
+		    			upAction.setTitle("Видалити");
+		    			upAction.setIcon(getResources().getDrawable(R.drawable.delete_icc));
+		    			
+		    			final QuickAction mQuickAction 	= new QuickAction(povidom.this);
+		    			
+		    			mQuickAction.addActionItem(addAction);
+		    			mQuickAction.addActionItem(upAction);
+		    			
+		    			//setup the action item click listener
+		    			mQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {			
+		    				public void onItemClick(int pos) {
+		    					
+		    					if (pos == 0) { //Add item selected
+		    						ConnectivityManager connec =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+					        		if (connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() || connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) //      ConnectivityManager.TYPE_WIFI   
+					      			{
+					        			syncronise(entry.getId());
+					      			}
+					        		else
+					        		{
+					        			Toast.makeText(povidom.this, R.string.checkConnection , Toast.LENGTH_LONG).show();
+					        		}
+		    					} else if (pos == 1) { //Accept item selected
+		    						AlertDialog.Builder builder = new AlertDialog.Builder(povidom.this);
+					            	builder.setMessage("Справді хочете видалити звіт?")
+					            	       .setCancelable(false)
+					            	       .setPositiveButton("Так", new DialogInterface.OnClickListener() {
+					            	           public void onClick(DialogInterface dialog, int id) {
+					  			        		 listPhonebook.remove(entry);
+								        	     notifyDataSetChanged();
+								        	     Toast.makeText(povidom.this, "Звіт видалено", Toast.LENGTH_LONG).show();    
+								        		reports r0 = new reports(povidom.this.getBaseContext());
+										        SQLiteDatabase sqlDb = r0.getWritableDatabase(); 
+										        sqlDb.execSQL("delete from r0 where ID = " + String.valueOf(reportId0));
+											    sqlDb.close();	
+					            	           }
+					            	       })
+					            	       .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
+					            	           public void onClick(DialogInterface dialog, int id) {
+					            	                dialog.cancel();
+					            	           }
+					            	       });
+					            	AlertDialog alert = builder.create();
+					            	alert.show();	
+		    					} 
+		    				}
+		    			});
+						mQuickAction.show(v);
+						mQuickAction.setAnimStyle(QuickAction.ANIM_GROW_FROM_CENTER);
+				        } else if (entry.getStatus().compareTo("uploaded") == 0)
+					     {
+				        	final QuickAction mQuickAction 	= new QuickAction(povidom.this);
+				        	
+			    			//Accept action item
+			    			ActionItem accAction = new ActionItem();
+			    			
+			    			accAction.setTitle("Поділитись");
+			    			accAction.setIcon(getResources().getDrawable(R.drawable.share_icc));
+			    			
+			    			//Upload action item
+			    			ActionItem upAction = new ActionItem();
+			    			
+			    			upAction.setTitle("Переглянути");
+			    			upAction.setIcon(getResources().getDrawable(R.drawable.browse_icc));
+			    			
+			    			mQuickAction.addActionItem(accAction);
+			    			mQuickAction.addActionItem(upAction);
+			    			
+				        	Calendar c = Calendar.getInstance(); 
+				            long milliToday = c.getTimeInMillis()/ 1000L;
+				            if ((milliToday - dateuntilremove) < 900 && (milliToday - dateuntilremove) > 0)
+				            {
+				        	 //Add action item
+			    	        ActionItem addAction = new ActionItem();
+			    			
+			    			addAction.setTitle("Видалити");
+			    			addAction.setIcon(getResources().getDrawable(R.drawable.delete_icc));
+			    			mQuickAction.addActionItem(addAction);
+				            }
+			    			
+			    			//setup the action item click listener
+			    			mQuickAction.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {			
+			    				public void onItemClick(int pos) {
+			    					
+			    					if (pos == 0) { //Add item selected
+						        		Intent share = new Intent(Intent.ACTION_SEND);
+						        	    share.setType("text/*");
+						        	    String msg = "";
+						        	    if (entry.getTxt().length()>100)
+						        	    msg = entry.getTxt().substring(0, 100);
+						        	    else msg = entry.getTxt();
+						        	    String url1 = msg + "... " + url;
+						        	    share.putExtra(android.content.Intent.EXTRA_TEXT, url1); //new String[]{url}
+						        	    startActivity(Intent.createChooser(share, "Поділитись через..."));
+			    					} else if (pos == 1) { //Accept item selected
+			    						Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse(url));
+						        		startActivity(browserIntent);
+			    					} else if (pos == 2) { //Upload item selected
+			    						AlertDialog.Builder builder = new AlertDialog.Builder(povidom.this);
+						            	builder.setMessage("Справді хочете видалити звіт?")
+						            	       .setCancelable(false)
+						            	       .setPositiveButton("Так", new DialogInterface.OnClickListener() 
+						            	       {
+						            	           public void onClick(DialogInterface dialog, int id) 
+						            	           {
+						            	        	   ConnectivityManager connec =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+										        		if (connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() || connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) //      ConnectivityManager.TYPE_WIFI   
+										        		{
+											        		prevOrientation = getRequestedOrientation();
+											                if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) 
+											                {
+											                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+											                } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 
+											                {
+											                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+											                } else 
+											                {
+											                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+											                }
+													        int n = deleteReport(drophash);
+													        setRequestedOrientation(prevOrientation);
+													        
+													        if (n == 0)
+													        {
+													        	listPhonebook.remove(entry);
+												        	    notifyDataSetChanged();    
+														        reports r0 = new reports(povidom.this.getBaseContext());
+														        SQLiteDatabase sqlDb = r0.getWritableDatabase(); 
+														        sqlDb.execSQL("delete from r0 where ID = " + String.valueOf(entry.getId()));
+															    sqlDb.close();
+													        }
+										        		}
+										        		else
+										        		{
+										        			Toast.makeText(povidom.this, R.string.checkConnection , Toast.LENGTH_LONG).show();
+										        		}
+						            	           	}
+						            	       	})
+						            	       .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
+						            	           public void onClick(DialogInterface dialog, int id) {
+						            	                dialog.cancel();
+						            	           }
+						            	       });
+						            	AlertDialog alert = builder.create();
+						            	alert.show();
+			    					}	
+			    				}
+			    			});
+							mQuickAction.show(v);
+							mQuickAction.setAnimStyle(QuickAction.ANIM_GROW_FROM_CENTER);
+					     }
+					}
+				});
+		        TextView tvContact = (TextView) convertView.findViewById(R.id.tvContact);
+		        tvContact.setText(entry.getTxt());
+
+		        TextView tvPhone = (TextView) convertView.findViewById(R.id.tvMobile);
+		        ImageView status = (ImageView) convertView.findViewById(R.id.statuspreview);
+		        
 		        if (entry.getStatus().compareTo("saved") == 0)
 		        {
-		        	btnSync.setVisibility(0);
-		        	btnRemove.setVisibility(0);
-		        	btnBrowse.setVisibility(8);
-		        	btnShare.setVisibility(8);
-			        btnRemove.setOnClickListener(new View.OnClickListener() 
-			        {        
-			        	public void onClick(View v) 
-			        	{
-			            	AlertDialog.Builder builder = new AlertDialog.Builder(povidom.this);
-			            	builder.setMessage("Справді хочете видалити звіт?")
-			            	       .setCancelable(false)
-			            	       .setPositiveButton("Так", new DialogInterface.OnClickListener() {
-			            	           public void onClick(DialogInterface dialog, int id) {
-			  			        		 listPhonebook.remove(entry);
-						        	     notifyDataSetChanged();
-						        	     Toast.makeText(povidom.this, "Звіт видалено", Toast.LENGTH_LONG).show();    
-						        		reports r0 = new reports(povidom.this.getBaseContext());
-								        SQLiteDatabase sqlDb = r0.getWritableDatabase(); 
-								        sqlDb.execSQL("delete from r0 where ID = " + String.valueOf(reportId0));
-									    sqlDb.close();	
-			            	           }
-			            	       })
-			            	       .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
-			            	           public void onClick(DialogInterface dialog, int id) {
-			            	                dialog.cancel();
-			            	           }
-			            	       });
-			            	AlertDialog alert = builder.create();
-			            	alert.show();			
-			        	}
-			        });
-			        btnSync.setOnClickListener(new View.OnClickListener() 
-			        {        
-			        	public void onClick(View v) 
-			        	{
-			        		ConnectivityManager connec =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-			        		if (connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() || connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) //      ConnectivityManager.TYPE_WIFI   
-			      			{
-			        			syncronise(entry.getId());
-			      			}
-			        		else
-			        		{
-			        			Toast.makeText(povidom.this, R.string.checkConnection , Toast.LENGTH_LONG).show();
-			        		}
-			        	}
-			        });
+		        	tvPhone.setText(R.string.saved);
+		        	status.setImageResource(R.drawable.statussaved);
 		        }
 		        else if (entry.getStatus().compareTo("uploaded") == 0)
-		        {
-		        	// check if can delete 
-		            Calendar c = Calendar.getInstance(); 
-		            long milliToday = c.getTimeInMillis()/ 1000L;
-		            if ((milliToday - dateuntilremove) < 900 && (milliToday - dateuntilremove) > 0)
-		            {
-			        	btnRemove.setVisibility(0);
-				        btnRemove.setOnClickListener(new View.OnClickListener() 
-				        {   
-				        	public void onClick(View v) 
-				        	{
-				        		AlertDialog.Builder builder = new AlertDialog.Builder(povidom.this);
-				            	builder.setMessage("Справді хочете видалити звіт?")
-				            	       .setCancelable(false)
-				            	       .setPositiveButton("Так", new DialogInterface.OnClickListener() 
-				            	       {
-				            	           public void onClick(DialogInterface dialog, int id) 
-				            	           {
-				            	        	   ConnectivityManager connec =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-								        		if (connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected() || connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) //      ConnectivityManager.TYPE_WIFI   
-								        		{
-									        		prevOrientation = getRequestedOrientation();
-									                if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) 
-									                {
-									                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-									                } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) 
-									                {
-									                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-									                } else 
-									                {
-									                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-									                }
-											        int n = deleteReport(drophash);
-											        setRequestedOrientation(prevOrientation);
-											        
-											        if (n == 0)
-											        {
-											        	listPhonebook.remove(entry);
-										        	    notifyDataSetChanged();    
-												        reports r0 = new reports(povidom.this.getBaseContext());
-												        SQLiteDatabase sqlDb = r0.getWritableDatabase(); 
-												        sqlDb.execSQL("delete from r0 where ID = " + String.valueOf(entry.getId()));
-													    sqlDb.close();
-											        }
-								        		}
-								        		else
-								        		{
-								        			Toast.makeText(povidom.this, R.string.checkConnection , Toast.LENGTH_LONG).show();
-								        		}
-				            	           	}
-				            	       	})
-				            	       .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
-				            	           public void onClick(DialogInterface dialog, int id) {
-				            	                dialog.cancel();
-				            	           }
-				            	       });
-				            	AlertDialog alert = builder.create();
-				            	alert.show();
-				        	}
-				        });
-		        	}
-		        	else
-		        	{
-			        	btnRemove.setVisibility(8);
-		        	}
-		        	
-		            btnSync.setVisibility(8);
-		        	btnBrowse.setVisibility(0);
-		        	btnShare.setVisibility(0);
-		        	btnBrowse.setOnClickListener(new View.OnClickListener() 
-			        {        
-			        	public void onClick(View v) 
-			        	{
-			         		Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse(url));
-			        		startActivity(browserIntent);
-			        	}
-			        });
-		        	btnShare.setOnClickListener(new View.OnClickListener() 
-			        {        
-			        	public void onClick(View v) 
-			        	{
-			        		Intent share = new Intent(Intent.ACTION_SEND);
-			        	    share.setType("text/*");
-			        	    String msg = "";
-			        	    if (entry.getTxt().length()>100)
-			        	    msg = entry.getTxt().substring(0, 100);
-			        	    else msg = entry.getTxt();
-			        	    String url1 = msg + "... " + url;
-			        	    share.putExtra(android.content.Intent.EXTRA_TEXT, url1); //new String[]{url}
-			        	    startActivity(Intent.createChooser(share, "Поділитись через..."));
-			        	}
-			        });
-		        } 
+			    {
+		        	tvPhone.setText(R.string.uploaded);
+		        	status.setImageResource(R.drawable.statusonline);
+			    }
+
+		        TextView tvMail = (TextView) convertView.findViewById(R.id.tvMail);
+		        tvMail.setText(entry.getDate());
+		        
+		        
 		        return convertView;
 		    }
 
-		    @Override
 		    public void onClick(View view) {
 		    	
 		    }
@@ -575,8 +615,10 @@ public class povidom extends Activity implements OnClickListener
 	        private String date;
 	        private String drophash;
 	        private Long dateuntilremove;
+	        private String city;
+	        private String street;
 	        
-	        public Phonebook(int id, String txt, String url, String status, String date, String drophash, Long dateuntilremove) 
+	        public Phonebook(int id, String txt, String url, String status, String date, String drophash, Long dateuntilremove, String city, String street) 
 	        {
 	                super();
 	                this.id = id;
@@ -586,6 +628,8 @@ public class povidom extends Activity implements OnClickListener
 	                this.date = date;
 	                this.drophash = drophash;
 	                this.dateuntilremove = dateuntilremove;
+	                this.city = city;
+	                this.street = street;
 	        }
 
 	        public int getId() 
@@ -932,7 +976,9 @@ public class povidom extends Activity implements OnClickListener
 		    		 String date= curs.getString(8);
 		    		 String drophash= curs.getString(9);
 		    		 Long dateuntilremove= curs.getLong(10);
-		    		 listOfPhonebook.add(new Phonebook(id, txt,url,status, date, drophash, dateuntilremove));
+		    		 String city = curs.getString(11);
+		    		 String street = curs.getString(12);
+		    		 listOfPhonebook.add(new Phonebook(id, txt,url,status, date, drophash, dateuntilremove, city, street));
 		         }
 		     }
 		     curs.close();

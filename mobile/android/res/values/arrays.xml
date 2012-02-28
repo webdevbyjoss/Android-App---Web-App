@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="listArray">
+   <item>By name</item>
+   <item>By name inverted</item>
+   <item>From old to new</item>
+   <item>From new to old</item>
+</string-array>
+ 
+<string-array name="listValues">
+   <item>TXT</item>
+   <item>TXT DESC</item>
+   <item>ID</item>
+   <item>ID DESC</item>
+</string-array>
+</resources>

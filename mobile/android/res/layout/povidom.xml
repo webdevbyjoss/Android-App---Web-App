@@ -1,4 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/db1_root"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:background="@color/title_background"
+    android:id="@+id/admob"
+	android:visibility="gone" /> 
+
+
+    <LinearLayout style="@style/TitleBar">
+        <ImageButton style="@style/TitleBarAction"
+            android:src="@drawable/title_home_default"
+            android:id="@+id/home" />
+        <!-- <ImageView style="@style/TitleBarLogo"
+        	android:id="@+id/home"
+            android:contentDescription="@string/description_logo"
+            android:src="@drawable/title_home_default" />
+			 <TextView style="@style/TitleBarText" 
+			android:text="Lists"/> -->
+        <ImageView style="@style/TitleBarSeparator" />
+        <TextView style="@style/TitleBarText" 
+        	android:text="Твої звіти"/>
+        <ImageView style="@style/TitleBarSeparator" />
+		<!-- <ImageButton style="@style/TitleBarAction"
+            android:src="@drawable/refresh"
+            android:id="@+id/addList" /> -->
+        <ImageButton style="@style/TitleBarAction"
+            android:src="@drawable/add2"
+            android:id="@+id/add1" />
+</LinearLayout>
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:padding="0dip"
+    android:gravity="center_horizontal">
+    
+<!-- <Button
+android:background="@drawable/greenbutton"
+  	android:layout_marginBottom="5dip"
+	android:layout_marginLeft="10dip"
+	android:layout_marginTop="10dip"
+	android:layout_marginRight="10dip"
+android:textSize="24dip"
+android:textStyle="bold"
+android:textColor="#ffffff"
+android:typeface="sans"
+android:layout_width="fill_parent"
+android:layout_height="75dip"
+android:text="@string/createReportButton" 
+android:id="@+id/CreateButton" /> -->
+
+        <ListView android:id="@+id/ListView01" android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:cacheColorHint="#00000000"></ListView>
+
+</LinearLayout>
+
+
+</LinearLayout>
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="fill_parent"
         android:layout_height="fill_parent" android:background="#ffffff">
@@ -20,3 +90,4 @@ android:id="@+id/CreateButton" />
         <ListView android:id="@+id/ListView01" android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:cacheColorHint="#00000000"></ListView>
 </LinearLayout>
+ -->

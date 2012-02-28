@@ -1,6 +1,7 @@
 package ua.org.vladu.povidom;
 
 import ua.org.vladu.povidom.tempPhoto;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,25 +33,35 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.overlay.Overlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.TabActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.Paint.Style;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -66,6 +77,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -73,12 +85,17 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class create extends Activity implements OnClickListener
+public class create extends TabActivity implements OnClickListener
 {
 	Button startButton;
 	ImageView preview;
@@ -104,21 +121,34 @@ public class create extends Activity implements OnClickListener
 	private String array_spinner[]; int isPhotoSet = 0;
 	Spinner s; int res0;
 	ProgressBar mProgress;
-	ProgressDialog pd; Uri imgUri;
+	ProgressDialog progreeDialog; Uri imgUri;
 	Location loc; String bestProvider;
 	int res;
 	private JSONObject jObject;
 	int prevOrientation;
 	AlertDialog alert; AlertDialog.Builder builder;
 	boolean exitCode = false;
-	
-	
+	ImageButton  home, upload;
+	TabHost tabs;
+	TextView gpsstatus;
+	Button setGps;
+	LinearLayout gpsAuto, gpsManual;
+	Spinner sp1, sp2;
+	EditText street;
+	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
+	MapView mapView;
+	boolean mapIsSet = false;
+	TabHost tabHost;
+	double st1Raw;
+	double st2Raw;
 	
 	/** Register for the updates when Activity is in foreground */
 	@Override
 	protected void onResume() {
 		super.onResume();
-		lm.requestLocationUpdates(bestProvider, 0, 0, ll);
+		if (bestProvider != null) {
+			lm.requestLocationUpdates(bestProvider, 0, 0, ll);
+		}
 		tempPhoto tmp = new tempPhoto(this.getBaseContext());
 	    SQLiteDatabase sqlDb = tmp.getReadableDatabase(); 
 	    Cursor curs = sqlDb.rawQuery("select IMG from img;", null);
@@ -133,11 +163,13 @@ public class create extends Activity implements OnClickListener
 		sqlDb.close();
 	}
 
-	/** Stop the updates when Activity is paused */
+
 	@Override
 	protected void onPause() {
 		super.onPause();
-		lm.removeUpdates(ll);
+		if (bestProvider != null) {
+			lm.removeUpdates(ll);
+		}
 	}
 	
 	@Override
@@ -145,56 +177,130 @@ public class create extends Activity implements OnClickListener
 	{
 	    if ((keyCode == KeyEvent.KEYCODE_BACK)) 
 	    {
-	    	builder = new AlertDialog.Builder(create.this);
-	     	builder.setMessage("Звіт не збережено. Вийти?")
-	     	       .setCancelable(false)
-	     	       .setPositiveButton("Так", new DialogInterface.OnClickListener() {
-	     	           public void onClick(DialogInterface dialog, int id) {
-	     	        	   finish();
-	     	           }
-	     	       })
-	     	       .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
-	     	           public void onClick(DialogInterface dialog, int id) {
-	     	                dialog.cancel();
-	     	                exitCode = false;
-	     	           }
-	     	       });
-	     	builder.show();
+	    	home();
 	    }
 	    return exitCode;
 	}
 
 	
-	/** Called when the activity is first created. */
+	public void home() {
+		builder = new AlertDialog.Builder(create.this);
+     	builder.setMessage("Звіт не збережено. Вийти?")
+     	       .setCancelable(false)
+     	       .setPositiveButton("Так", new DialogInterface.OnClickListener() {
+     	           public void onClick(DialogInterface dialog, int id) {
+     	        	   finish();
+     	           }
+     	       })
+     	       .setNegativeButton("Ні", new DialogInterface.OnClickListener() {
+     	           public void onClick(DialogInterface dialog, int id) {
+     	                dialog.cancel();
+     	                exitCode = false;
+     	           }
+     	       });
+     	builder.show();
+	}
+	
+	
     @Override
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create);
+        
+        home = (ImageButton) findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() 
+        {        
+        	public void onClick(View v) 
+        	{
+        		home();
+        	}
+        });
+        
+        Resources res = getResources(); 
+        tabHost = getTabHost(); 
+        TabHost.TabSpec spec;  
+
+        spec = tabHost.newTabSpec("edit").setIndicator("",
+                          res.getDrawable(R.drawable.tabedit))
+                      .setContent(R.id.t2);
+        tabHost.addTab(spec);
+
+        spec = tabHost.newTabSpec("photo").setIndicator("",
+                          res.getDrawable(R.drawable.tabcamera))
+                      .setContent(R.id.t3);
+        tabHost.addTab(spec);
+        
+        spec = tabHost.newTabSpec("geo").setIndicator("",
+                res.getDrawable(R.drawable.tabcompass))
+            .setContent(R.id.t4);
+        
+        tabHost.addTab(spec);
+                
+        getTabWidget().getChildAt(2).setOnClickListener(new OnClickListener() { 
+            public void onClick(View v) { 
+
+                Log.d("qwe", getTabHost().getCurrentTabTag());
+
+                if (getTabHost().getCurrentTabTag().equals("geo")) { 
+
+                	Log.d("qwe", "yeah");
+                	
+	               	 GeoPoint point2 = new GeoPoint(50.441327,30.545998);
+	               	 if (mapIsSet == true) {
+	               		point2 = new GeoPoint(st1Raw, st2Raw);
+	               	 }
+	               	 
+	               	mapView.getOverlays().clear();
+	               	
+	                 MapController mapController = mapView.getController();
+	                 mapController.setZoom(15);
+	                 mapController.setCenter(point2);
+	                 
+	                 MapOverlay mmapOverlay = new MapOverlay(create.this, point2);
+	                 List<Overlay> listOfOverlays = mapView.getOverlays();
+	                 listOfOverlays.add(mmapOverlay);
+	                 mapView.invalidate();
+                	
+                } else {
+                	tabHost.setCurrentTabByTag("geo");
+                }
+            } 
+        });
+
+        mapView = (MapView) findViewById(R.id.mapmain);
+        mapView.setClickable(true);
+        mapView.setBuiltInZoomControls(true);
+        mapView.setMultiTouchControls(true);
+        //mapView.setUseDataConnection(false);
+        GeoPoint point2 = new GeoPoint(50.441327,30.545998);
+
+        MapController mapController = mapView.getController();
+        mapController.setZoom(15);
+        mapController.setCenter(point2);
+        
+        MapOverlay mmapOverlay = new MapOverlay(this, point2);
+        List<Overlay> listOfOverlays = mapView.getOverlays();
+        listOfOverlays.add(mmapOverlay);
+        mapView.invalidate();
+        
+        
+        upload = (ImageButton) findViewById(R.id.upload);
         chosenImageView = (ImageView) this.findViewById(R.id.PreviewImage);
-        final Button button = (Button) findViewById(R.id.SendReport);
+
         //GPS 
     	lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     	Criteria criteria = new Criteria();
-		bestProvider = lm.getBestProvider(criteria, true);
-        if ( !lm.isProviderEnabled(bestProvider ) )
+		//bestProvider = lm.getBestProvider(criteria, true);
+        //if ( !lm.isProviderEnabled(bestProvider ) )
+    	if ( lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) )
         {
-     	   Toast.makeText(create.this, R.string.checkGps, Toast.LENGTH_LONG).show();
-     	   button.setClickable(false);
-     	   button.setEnabled(false);
-     	   return;
-        }
-        else if ( lm.isProviderEnabled( bestProvider) )
-        {
-             ll = new mylocationlistener();
-             lm.requestLocationUpdates(bestProvider, 0, 0, ll);
-             if (st1 == "" || st2 == "")
-         	{
-         		button.setClickable(false);
-         		button.setEnabled(false);
-         		button.setTextSize(14);
-          	    button.setText("Зачекайте. Пошук місцезнаходження...");
-         	}
+        	bestProvider = lm.getBestProvider(criteria, true);
+        	if ( lm.isProviderEnabled( bestProvider) ) {
+        		ll = new mylocationlistener();
+        		lm.requestLocationUpdates(bestProvider, 0, 0, ll);
+        	}
+
         } 
         array_spinner=new String [8];
         array_spinner[0]="Яма на дорозі";
@@ -210,12 +316,11 @@ public class create extends Activity implements OnClickListener
         adapter.setDropDownViewResource(R.layout.selecteditem);
         s.setAdapter(adapter);
         s.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
+			
 			public void onItemSelected(AdapterView<?> arg0, View arg1,	int arg2, long arg3) {
 				s5 = String.valueOf(arg3);
 			}
 
-			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				Toast.makeText(create.this, "No selected", Toast.LENGTH_LONG).show();
 			}
@@ -224,7 +329,7 @@ public class create extends Activity implements OnClickListener
         
         txt = (EditText) this.findViewById(R.id.Text);
         String tx = txt.getText().toString();
-        button.setOnClickListener(new View.OnClickListener() 
+        upload.setOnClickListener(new View.OnClickListener() 
         {        
         	public void onClick(View v) 
         	{
@@ -237,25 +342,20 @@ public class create extends Activity implements OnClickListener
         			curs5.close();
         			sqlDb5.close();
         			Toast.makeText(create.this, R.string.pleaseMakePhoto, Toast.LENGTH_LONG).show();
+        			tabHost.setCurrentTabByTag("tag2");
         			return;
         		}
         		curs5.close();
         		sqlDb5.close();
     	    	String tx = txt.getText().toString();
-	           	if (tx.trim().length() > 120)
-	           	{
-	           		Toast.makeText(create.this, R.string.enterMsgMax, Toast.LENGTH_LONG).show();  
-	           		return;
-	           	}    
-	           	if ( !lm.isProviderEnabled(bestProvider ) )
+
+	           	if ( mapIsSet == false )
 	            {
-	           		Toast.makeText(create.this, R.string.checkGps, Toast.LENGTH_LONG).show();
-	           		button.setClickable(false);
-	           		button.setEnabled(false);
+	           		Toast.makeText(create.this, "Необхідні координати вашого місцеположення", Toast.LENGTH_LONG).show();
+             		tabHost.setCurrentTabByTag("tag3");
 	           		return;
 	            }
-	           	else 
-        		if (lm.isProviderEnabled( bestProvider ) == true && st1!="" && st2!="")
+	           	else if (st1.compareTo("") != 0 && st2.compareTo("") != 0)
         		{	          	   
         			// Check internet connection	
 	        		ConnectivityManager connec =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -272,7 +372,7 @@ public class create extends Activity implements OnClickListener
 		                {
 		                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 		                }	                
-	        			pd = ProgressDialog.show(create.this, "", "Зачекайте...", true, false);
+	        			progreeDialog = ProgressDialog.show(create.this, "", "Зачекайте...", true, false);
 	        			Send send = new Send(st1, st2, s5, tx);
 	        		    httpThread httpthread = new httpThread(send);
 	        		    httpthread.start();
@@ -287,10 +387,6 @@ public class create extends Activity implements OnClickListener
 	            			finish();
 	            		}
 	            	}
-        		}
-        		else
-        		{
-             		Toast.makeText(create.this, "Ще немає даних GPS", Toast.LENGTH_LONG).show();
         		}
             }
         });
@@ -330,8 +426,8 @@ public class create extends Activity implements OnClickListener
 		}
 	    else if (st01.compareTo("1") == 0)
         {
-	    	Intent intent = new Intent(create.this, qwe.class);
-        	startActivity(intent);
+	    	Intent intent1 = new Intent(create.this, qwe.class);
+        	startActivity(intent1);
        		string = "0";
 			FileOutputStream fos;
 			try 
@@ -422,7 +518,7 @@ public class create extends Activity implements OnClickListener
 		}
 	    curs.close();
 	    sqlDb.close();
-		if (lm.isProviderEnabled( bestProvider ) == true && st1!="" && st2!="")
+		if (st1.compareTo("") != 0 && st2.compareTo("") != 0)
 		{	
             tx = txt.getText().toString();
        	    if (tx.trim().length() < 5)
@@ -456,6 +552,8 @@ public class create extends Activity implements OnClickListener
 	        values.put("DATEOFCREATION", getDate());
 	        values.put("DROPHASH", "");
 	        values.put("DATEUNTILREMOVE", "");
+	        values.put("CITY", "");
+	        values.put("STREET", "");
 	        long n = sqlDb1.insert("r0", null, values);
 	        sqlDb1.close();
 		
@@ -541,9 +639,11 @@ public class create extends Activity implements OnClickListener
 		                "STATUS" + " TEXT, " +
 		                "DATEOFCREATION" + " TEXT, " +
 		                "DROPHASH" + " TEXT, " +
-		                "DATEUNTILREMOVE" + " REAL);";
+		                "DATEUNTILREMOVE" + " REAL, " +
+		                "CITY" + " TEXT, " +
+		                "STREET" + " TEXT);";
 		    
-			private static final String DATABASE_NAME = "reports3";
+			private static final String DATABASE_NAME = "reports30";
 
 		    reports(Context context) 
 		    {
@@ -589,7 +689,7 @@ public class create extends Activity implements OnClickListener
 	            @Override
 	            public void handleMessage(Message msg) 
 	            {
-	                pd.dismiss();
+	                progreeDialog.dismiss();
 	                setRequestedOrientation(prevOrientation);
 	                if (res == -1)
 	                {
@@ -747,6 +847,8 @@ public class create extends Activity implements OnClickListener
 		       	        values.put("DATEOFCREATION", getDate());
 		       	        values.put("DROPHASH", drophash);
 		       	        values.put("DATEUNTILREMOVE", unixTime);
+		       	        values.put("CITY", "");
+		       	     	values.put("STREET", "");
 		       	        long n = sqlDb1.insert("r0", null, values);
 		       	        sqlDb1.close();
 		       	        
@@ -770,33 +872,40 @@ public class create extends Activity implements OnClickListener
 	 	
 	 	private class mylocationlistener implements LocationListener 
 	    {
-	        @Override
 	        public void onLocationChanged(Location location) 
 	        {
-	            if (location != null) 
+	            if (location != null && mapIsSet == false) 
 	            {
 	            	loc = location;
 	         		st1 = String.valueOf(location.getLatitude());
 	         		st2 = String.valueOf(location.getLongitude());
-	                final Button button = (Button) findViewById(R.id.SendReport);
-	            	button.setClickable(true);
-	            	button.setEnabled(true);
-	            	button.setTextSize(21);
-	          	    button.setText("НАДІСЛАТИ");
+	         		st1Raw = location.getLatitude();
+	         		st2Raw = location.getLongitude();
 	            	Log.d("LOCATION CHANGED", location.getLatitude() + "");
 	            	Log.d("LOCATION CHANGED", location.getLongitude() + "");
 	            	//Toast.makeText(create.this, "Зловили спутнік!" , Toast.LENGTH_LONG).show();
+	            	
+	            	 GeoPoint point2 = new GeoPoint(location.getLatitude(), location.getLongitude());
+
+	                 MapController mapController = mapView.getController();
+	                 mapController.setZoom(15);
+	                 mapController.setCenter(point2);
+	                 
+	                 mapView.getOverlays().clear();
+	                 mapIsSet = true;
+	                 
+	                 MapOverlay mmapOverlay = new MapOverlay(create.this, point2);
+	                 List<Overlay> listOfOverlays = mapView.getOverlays();
+	                 listOfOverlays.add(mmapOverlay);
+	                 mapView.invalidate();
 	            }
 	        }
-	        @Override
 	        public void onProviderDisabled(String provider) 
 	        {
 	        }
-	        @Override
 	        public void onProviderEnabled(String provider) 
 	        {
 	        }
-	        @Override
 	        public void onStatusChanged(String provider, int status, Bundle extras) 
 	        {
 	        }
@@ -890,4 +999,64 @@ public class create extends Activity implements OnClickListener
 	        	}
 	        	return 0;
 			}
+	 	
+	 	 public class MapOverlay extends org.osmdroid.views.overlay.Overlay {
+
+	     	GeoPoint point;
+	         public MapOverlay(Context ctx, GeoPoint point) {
+	             super(ctx);
+	             this.point = point; 
+	             // TODO Auto-generated constructor stub
+	         }
+
+	         @Override
+	         public boolean onTouchEvent(MotionEvent event, MapView mapView) 
+	         {
+	             if (event.getAction() == 1) {                
+	                 GeoPoint p = (GeoPoint) mapView.getProjection().fromPixels((int) event.getX(), (int) event.getY());
+	                 //Toast.makeText(getBaseContext(),  p.getLatitudeE6() / 1E6 + "," +  p.getLongitudeE6() /1E6 , Toast.LENGTH_SHORT).show();
+	                 this.point = p;
+	                 
+	                 st1Raw = p.getLatitudeE6() / 1E6;
+	                 st2Raw = p.getLongitudeE6() /1E6;
+	                 st1 = String.valueOf(st1Raw);
+	                 st2 = String.valueOf(st2Raw);
+	                 
+	                 //mapView.getController().setCenter(p);
+	                 mapView.invalidate();
+	                 
+	                 mapIsSet = true;
+	             }                            
+	             return false;
+	         }        
+	         
+	         @Override
+	         protected void draw(Canvas pC, MapView pOsmv, boolean shadow) {   
+	         	if (shadow) {
+	                 return;
+	         	}
+	         	  
+	         	Bitmap bmp  = BitmapFactory.decodeResource(getResources(), R.drawable.marker_default);
+	         	int bmpWidth = bmp.getWidth();
+	         	int bmpHeight = bmp.getHeight();
+	         	
+	             Paint lp3;
+	             lp3 = new Paint();
+	             lp3.setColor(Color.RED);
+	             lp3.setAntiAlias(true);
+	             lp3.setStyle(Style.FILL);
+	             lp3.setStrokeWidth(1);
+	             lp3.setTextAlign(Paint.Align.LEFT);
+	             lp3.setTextSize(12);
+	             final Rect viewportRect = new Rect();
+	             final Projection projection = pOsmv.getProjection();
+	             viewportRect.set(projection.getScreenRect());
+	             
+	             Point p01 = pOsmv.getProjection().toPixels(this.point, null);
+	             //pC.drawCircle(p01.x, p01.y, 5, lp3);
+	             pC.drawBitmap(bmp, p01.x - (bmpWidth), p01.y - (bmpHeight), lp3);
+	             pOsmv.invalidate();
+	         }
+
+	     }
 	}

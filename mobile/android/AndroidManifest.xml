@@ -6,6 +6,8 @@
       android:versionName="1.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".povidom"
+        android:screenOrientation="portrait"
+        android:theme="@android:style/Theme.NoTitleBar"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -13,6 +15,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".create"
+        android:screenOrientation="portrait"
          android:theme="@android:style/Theme.NoTitleBar">
                   android:label="@string/createAction">
         </activity>
@@ -38,4 +41,6 @@
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> 
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> 
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 </manifest> 

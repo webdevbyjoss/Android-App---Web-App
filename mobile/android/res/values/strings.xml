@@ -37,7 +37,7 @@
 	<string name="status">Статус: </string>
 	<string name="date">Дата: </string>
 	<string name="checkGps">Увімкніть службу виявлення місцезнаходження</string>
-	<string name="pleaseMakePhoto">Зробіть фотографію</string>
+	<string name="pleaseMakePhoto">Зробіть фото для звіту</string>
 	<string name="reportSaved">Звіт збережено</string>
 	<string name="reportUploaded">Звіт завантажено. Ви можете видалити його з сервера протягом 15 хвилин</string>
 	<string name="wait">Зачекайте...</string>
