@@ -254,7 +254,7 @@ public class create extends TabActivity implements OnClickListener
 	               	mapView.getOverlays().clear();
 	               	
 	                 MapController mapController = mapView.getController();
-	                 mapController.setZoom(15);
+	                 mapController.setZoom(16);
 	                 mapController.setCenter(point2);
 	                 
 	                 MapOverlay mmapOverlay = new MapOverlay(create.this, point2);
@@ -273,7 +273,7 @@ public class create extends TabActivity implements OnClickListener
         mapView.setBuiltInZoomControls(true);
         mapView.setMultiTouchControls(true);
         //mapView.setUseDataConnection(false);
-        GeoPoint point2 = new GeoPoint(50.441327,30.545998);
+        GeoPoint point2 = new GeoPoint(50.441327,30.545998); // temporary default value for Kyiv
 
         MapController mapController = mapView.getController();
         mapController.setZoom(15);
@@ -888,7 +888,7 @@ public class create extends TabActivity implements OnClickListener
 	            	 GeoPoint point2 = new GeoPoint(location.getLatitude(), location.getLongitude());
 
 	                 MapController mapController = mapView.getController();
-	                 mapController.setZoom(15);
+	                 mapController.setZoom(16);
 	                 mapController.setCenter(point2);
 	                 
 	                 mapView.getOverlays().clear();
